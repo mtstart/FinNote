@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
   title = 'FinNote';
 
@@ -28,7 +28,7 @@ export class AppComponent {
 
   inProgress: Task[] = [];
   done: Task[] = [];
-  
+
   newTask(): void {
     const dialogRef = this.dialog.open(TaskDialogComponent, {
       width: '270px',
@@ -38,7 +38,7 @@ export class AppComponent {
     });
     dialogRef
       .afterClosed()
-      .subscribe((result: TaskDialogResult|undefined) => {
+      .subscribe((result: TaskDialogResult | undefined) => {
         if (!result) {
           return;
         }
