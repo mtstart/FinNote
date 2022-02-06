@@ -1,3 +1,19 @@
+<mat-toolbar color="primary">
+  <mat-icon>local_fire_department</mat-icon>
+  <span>Kanban Fire</span>
+</mat-toolbar>
+
+<div class="content-wrapper">
+  <button (click)="newTask()" mat-button>
+    <mat-icon>add</mat-icon> Add Task
+  </button>
+
+  <div class="container-wrapper">
+    <div class="container">
+      ...
+    </div>
+</div>
+
 <div class="container-wrapper">
   <div class="container">
     <h2>Backlog</h2>
@@ -26,6 +42,7 @@
       [cdkDropListConnectedTo]="[todoList, doneList]"
       (cdkDropListDropped)="drop($event)"
       class="list">
+      <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
       <p class="empty-label" *ngIf="inProgress.length === 0">Empty list</p>
       <app-task (edit)="editTask('inProgress', $event)" *ngFor="let task of inProgress" cdkDrag [task]="task"></app-task>
     </mat-card>
@@ -42,6 +59,7 @@
       [cdkDropListConnectedTo]="[todoList, inProgressList]"
       (cdkDropListDropped)="drop($event)"
       class="list">
+      <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
       <p class="empty-label" *ngIf="done.length === 0">Empty list</p>
       <app-task (edit)="editTask('done', $event)" *ngFor="let task of done" cdkDrag [task]="task"></app-task>
     </mat-card>
