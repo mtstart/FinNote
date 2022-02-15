@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "finnote2-70a8c": {
+      "hosting": {
+        "FinNote": [
+          "finnote2-70a8c"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "finnote2-70a8c"
+  }
+}

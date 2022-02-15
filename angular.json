@@ -105,6 +105,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "FinNote:build:production",
+            "firebaseProject": "finnote2-70a8c",
+            "firebaseHostingSite": "finnote2-70a8c"
+          }
         }
       }
     }
