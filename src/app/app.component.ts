@@ -6,7 +6,7 @@ import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
-import { DatasetService } from 'service/dataset.service';
+import { CollectionList, DatasetService } from 'service/dataset.service';
 
 @Component({
   selector: 'app-root',
@@ -16,19 +16,13 @@ import { DatasetService } from 'service/dataset.service';
 export class AppComponent {
   constructor(private dialog: MatDialog, private store: AngularFirestore, private dataset: DatasetService) { }
 
-  // todo = this.store.collection('todo').valueChanges({ idField: 'id' }) as Observable<Task[]>;
-  // inProgress = this.store.collection('inProgress').valueChanges({ idField: 'id' }) as Observable<Task[]>;
-  // done = this.store.collection('done').valueChanges({ idField: 'id' }) as Observable<Task[]>;
+  title = 'FinNote';
+  dialogWidth: string = "270px";
 
   todo: Observable<Task[]> | undefined;
   inProgress: Observable<Task[]> | undefined;
   done: Observable<Task[]> | undefined;
   
-  // todo: Observable<Task[]> = this.dataset.syncTodo();
-  // inProgress: Observable<Task[]> = this.dataset.syncInProgress();
-  // done: Observable<Task[]> = this.dataset.syncDone();
-
-  title = 'FinNote';
 
   syncTask() {
 
@@ -37,9 +31,9 @@ export class AppComponent {
     // this.done = this.store.collection('done').valueChanges({ idField: 'id' }) as Observable<Task[]>;
 
     console.log("start sync " + new Date().toISOString().slice(0, 19));
-    this.todo = this.dataset.syncTodo();
-    this.inProgress = this.dataset.syncInProgress();
-    this.done = this.dataset.syncDone();
+    this.todo = this.dataset.getTodo();
+    this.inProgress = this.dataset.getInProgress();
+    this.done = this.dataset.getDone();
     
     this.todo.subscribe(thingList => {
       console.log("sync todo time: " + new Date().toLocaleString());
@@ -67,14 +61,12 @@ export class AppComponent {
 
   newTask(): void {
     const dialogRef = this.dialog.open(TaskDialogComponent, {
-      width: '270px',
+      width: this.dialogWidth,
       data: {
         task: {},
       },
     });
-    dialogRef
-      .afterClosed()
-      .subscribe((result: TaskDialogResult) => {
+    dialogRef.afterClosed().subscribe((result: TaskDialogResult) => {
         if (!result) {
           return;
         }
@@ -82,9 +74,9 @@ export class AppComponent {
       });
   }
 
-  editTask(list: 'done' | 'todo' | 'inProgress', task: Task): void {
+  editTask(list: CollectionList, task: Task): void {
     const dialogRef = this.dialog.open(TaskDialogComponent, {
-      width: '270px',
+      width: this.dialogWidth,
       data: {
         task,
         enableDelete: true,
@@ -95,12 +87,11 @@ export class AppComponent {
         return;
       }
       if (result.delete) {
-        this.store.collection(list).doc(task.id).delete();
+        this.dataset.deleteTask(list, task);
       } else {
-        this.store.collection(list).doc(task.id).update(task);
+        this.dataset.updateTask(list, task);
       }
     });
-    // this.dataset.editTask(dialogRef, list, task);
   }
 
   drop(event: CdkDragDrop<Task[] | null>): void {
@@ -110,11 +101,14 @@ export class AppComponent {
     if (!event.previousContainer.data || !event.container.data) {
       return;
     }
-    const item = event.previousContainer.data[event.previousIndex];
+    const item: Task = event.previousContainer.data[event.previousIndex];
+
+    const idP = event.previousContainer.id as CollectionList;
+
     this.store.firestore.runTransaction(() => {
       const promise = Promise.all([
-        this.store.collection(event.previousContainer.id).doc(item.id).delete(),
-        this.store.collection(event.container.id).add(item),
+        this.dataset.deleteTask(event.previousContainer.id as CollectionList, item),
+        this.dataset.insertTask(event.container.id as CollectionList, item)
       ]);
       return promise;
     });
