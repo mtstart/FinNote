@@ -25,38 +25,28 @@ export class AppComponent {
   
 
   syncTask() {
-
-    // this.todo = this.store.collection('todo').valueChanges({ idField: 'id' }) as Observable<Task[]>;
-    // this.inProgress = this.store.collection('inProgress').valueChanges({ idField: 'id' }) as Observable<Task[]>;
-    // this.done = this.store.collection('done').valueChanges({ idField: 'id' }) as Observable<Task[]>;
-
     console.log("start sync " + new Date().toISOString().slice(0, 19));
     this.todo = this.dataset.getTodo();
     this.inProgress = this.dataset.getInProgress();
     this.done = this.dataset.getDone();
     
     this.todo.subscribe(thingList => {
-      console.log("sync todo time: " + new Date().toLocaleString());
       thingList.forEach(thing => {
         console.log("> todo: " + thing.title + ", " + thing.description);
       })
     });
     
     this.inProgress.subscribe(thingList => {
-      console.log("sync inProgress time: " + new Date().toLocaleString());
       thingList.forEach(thing => {
         console.log("> inProgress: " + thing.title + ", " + thing.description);
       })
     });
 
     this.done.subscribe(thingList => {
-      console.log("sync done time: " + new Date().toLocaleString());
       thingList.forEach(thing => {
         console.log("> done: " + thing.title + ", " + thing.description);
       })
     });
-    
-
   }
 
   newTask(): void {
@@ -70,7 +60,7 @@ export class AppComponent {
         if (!result) {
           return;
         }
-        this.store.collection('todo').add(result.task);
+        this.dataset.insertTask("todo", result.task);
       });
   }
 
