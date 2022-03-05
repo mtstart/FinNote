@@ -13,7 +13,8 @@ export const environment = {
     appId: "1:581170754601:web:fb581b4bedf0c99b82d838",
     measurementId: "G-0QHKF4ZQQW"
   },
-  production: false
+  production: false,
+  passwordHash: "be178c0543eb17f5f3043021c9e5fcf30285e557a4fc309cce97ff9ca6182912"
 };
 
 // Initialize Firebase
