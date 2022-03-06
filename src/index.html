@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>FinNote</title>
@@ -9,8 +10,70 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js">
+
+    // Initialize the FirebaseUI Widget using Firebase.
+    // var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+    ui.start('#firebaseui-auth-container', {
+      signInOptions: [
+        {
+          provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+          requireDisplayName: false,
+          signInMethod: firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD,
+          forceSameDevice: false,
+          handleCodeInApp: true,    // Always true for email link sign-in.
+        }
+      ],
+    });
+
+    // Is there an email link sign-in?
+    if (ui.isPendingRedirect()) {
+      ui.start('#firebaseui-auth-container', uiConfig);
+    }
+    // This can also be done via:
+    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+      ui.start('#firebaseui-auth-container', uiConfig);
+    }
+
+    var uiConfig = {
+      callbacks: {
+        signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+          // Return type determines whether we continue the redirect automatically
+          // or whether we leave that to developer to handle.
+          return true;
+        },
+        uiShown: function () {
+          // The widget is rendered.
+          document.getElementById('loader').style.display = 'none';   // Hide the loader.
+        }
+
+      },
+      // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+      signInFlow: 'popup',
+      signInSuccessUrl: 'https://www.youtube.com/watch?v=EqNuXSkLh88',
+      signInOptions: [
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      ],      
+      tosUrl: '<your-tos-url>',   // Terms of service url.
+      privacyPolicyUrl: '<your-privacy-policy-url>'   // Privacy policy url.
+    };
+
+    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+    ui.start('#firebaseui-auth-container', uiConfig);
+
+  </script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
+
 </head>
+
 <body class="mat-typography">
   <app-root></app-root>
+  <div id="firebaseui-auth-container">
+    <button id="sign-in-with-popup">Sign In with Popup</button>
+  </div>
+  <div id="loader">Loading...</div>
 </body>
+
 </html>

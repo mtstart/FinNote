@@ -41,7 +41,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
     MatDialogModule,
     MatInputModule,
 
-    
+    // now is using finnotedb, not finnote2
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     // provideFirebaseApp(() => initializeApp(environment.firebase)),
