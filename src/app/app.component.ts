@@ -14,7 +14,7 @@ import { CollectionList, DatasetService } from 'service/dataset.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private dialog: MatDialog, private store: AngularFirestore, private dataset: DatasetService) { }
+  constructor() { }
 
   title = 'FinNote';
 }
