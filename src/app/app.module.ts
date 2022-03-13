@@ -23,6 +23,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { TaskManagementComponent } from './task-management/task-management.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { AuthService } from 'service/auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
     // provideFirebaseApp(() => initializeApp(environment.firebase)),
     // provideFirestore(() => getFirestore()),
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

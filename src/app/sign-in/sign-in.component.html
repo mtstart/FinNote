@@ -1,1 +1,18 @@
-<button id="sign-in-with-popup" (click)="signInEmail()">Sign In with Popup</button>
+<!-- <button id="sign-in-with-popup" (click)="signInEmail()">Sign In with Popup</button> -->
+
+<div class="authBlock">
+    <div class="formGroup">
+        <input type="text" class="formControl" placeholder="Username" #userEmail required />
+    </div>
+    <div class="formGroup">
+        <input type="password" class="formControl" placeholder="Password" #userPassword required />
+    </div>
+    <div class="formGroup">
+        <input type="button" class="btn btnPrimary" value="Sign Up" (click)="
+        signUp(userEmail.value, userPassword.value)" />
+    </div>
+    <div class="formGroup">
+        <input type="button" class="btn btnPrimary" value="Log in" (click)="
+        login(userEmail.value, userPassword.value)" />
+    </div>
+</div>

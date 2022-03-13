@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from 'service/auth/auth.service';
 import { TaskDialogComponent, TaskDialogResult } from '../task-dialog/task-dialog.component';
 
 @Component({
@@ -9,7 +10,7 @@ import { TaskDialogComponent, TaskDialogResult } from '../task-dialog/task-dialo
 })
 export class SignInComponent implements OnInit {
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, public authService: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -18,17 +19,27 @@ export class SignInComponent implements OnInit {
 
   signInEmail() {
     
-    const dialogRef = this.dialog.open(TaskDialogComponent, {
-      width: this.dialogWidth,
-      data: {
-        task: {},
-      },
-    });
-    dialogRef.afterClosed().subscribe((result: TaskDialogResult) => {
-        if (!result) {
-          return;
-        }
-      });
+    // const dialogRef = this.dialog.open(TaskDialogComponent, {
+    //   width: this.dialogWidth,
+    //   data: {
+    //     task: {},
+    //   },
+    // });
+    // dialogRef.afterClosed().subscribe((result: TaskDialogResult) => {
+    //     if (!result) {
+    //       return;
+    //     }
+    //   });
+  }
+
+  public signUp(email: string, password: string): void {
+    // this.authService.SignUp(email, password);
+    this.authService.signUpEmailPassword(email, password);    
+  }
+
+  public login(email: string, password: string): void {
+    // this.authService.SignUp(email, password);
+    this.authService.loginWithEmailPassword(email, password);    
   }
 
 }
