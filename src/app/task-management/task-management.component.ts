@@ -6,7 +6,7 @@ import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
-import { CollectionList, DatasetService } from 'service/dataset.service';
+import { DatasetService, CollectionList } from 'service/dataset/dataset.service';
 
 @Component({
   selector: 'app-task-management',
