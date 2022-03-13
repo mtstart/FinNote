@@ -22,13 +22,15 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { TaskManagementComponent } from './task-management/task-management.component';
+import { SignInComponent } from './sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TaskComponent,
     TaskDialogComponent,
-    TaskManagementComponent
+    TaskManagementComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
