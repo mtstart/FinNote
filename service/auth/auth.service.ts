@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { createUserWithEmailAndPassword, getAuth } from "@angular/fire/auth";
-import { fetchSignInMethodsForEmail, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, User, user, signOut } from "@angular/fire/auth";
+import { onAuthStateChanged } from 'firebase/auth';
+import { Router } from '@angular/router';
 // import { getAuth, createUserWithEmailAndPassword } from "@angular/fire/compat/auth";
 
 @Injectable({
@@ -9,7 +10,7 @@ import { fetchSignInMethodsForEmail, signInWithEmailAndPassword } from 'firebase
 })
 export class AuthService {
 
-  constructor(public afAuth: AngularFireAuth) { }
+  constructor(public afAuth: AngularFireAuth, private route: Router) { }
 
   public SignUp(email: string, password: string) {
     return this.afAuth
@@ -57,8 +58,11 @@ export class AuthService {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        window.alert("login user ok: " + user.email);
-        console.log("login user ok" + user.email);
+        window.alert("Successfully logged in: " + user.email);
+        console.log("Successfully logged in" + user.email);
+
+        this.route.navigate(['/project-management']);
+
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -67,5 +71,40 @@ export class AuthService {
         console.log(errorCode + ": " + errorMessage);
       });
   }
+
+  public logout(): void {
+    const auth = getAuth();
+    console.log("current User: " + auth.currentUser?.email)
+
+
+    signOut(auth).then(() => {
+      window.alert("successfully logout");
+      console.log("successfully logout");
+    })
+  }
+
+  public authStateChange(): void {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user: User | null) => {
+      if (user) {
+        const uid = user.uid;
+        window.alert("current user: " + user.email)
+        console.log("current user: " + user.email)
+      } else {
+        window.alert("user is logged out")
+        console.log("user is logged out")
+      }
+    });
+  }
+
+  public getUserProfile(): User | null {
+    const auth = getAuth();
+    const user: User | null = auth.currentUser;
+
+    if (user !== null) return user;
+
+    return null;
+  }
+
 
 }
