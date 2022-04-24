@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'service/auth/auth.service';
 import { TaskDialogComponent, TaskDialogResult } from '../task-dialog/task-dialog.component';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,6 +15,12 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  profileForm = new FormGroup({
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    userEmail: new FormControl(''),
+  });
 
   dialogWidth: string = "270px";
 

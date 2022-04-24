@@ -46,10 +46,29 @@
 <!-- <button id="sign-in-with-popup" (click)="signInEmail()">Sign In with Popup</button> -->
 
 <div class="authBlock">
-    <div class="formGroup">
+    <form [formGroup]="profileForm">
+
+        <label for="first-name">First Name: </label>
+        <input id="first-name" type="text" formControlName="firstName">
+
+        <label for="last-name">Last Name: </label>
+        <input id="last-name" type="text" formControlName="lastName">
+
+        <label for="userEmail">User Email: </label>
+        <input id="userEmail" type="text" formControlName="Username">
+
+        <!-- <button type="button" class="mdc-button cancel">Cancel</button> -->
+        <button id="basic" type="button" mat-button >
+            Basic button
+          </button>
+
+
+    </form>
+
+    <!-- <div class="formGroup">
         <input type="text" class="formControl" placeholder="Username" #userEmail required />
-    </div>
-    <div class="formGroup">
+    </div> -->
+    <!-- <div class="formGroup">
         <input type="password" class="formControl" placeholder="Password" #userPassword required />
     </div>
     <div class="formGroup">
@@ -63,7 +82,7 @@
     <div class="formGroup">
         <input type="button" class="btn btnPrimary" value="Log out" (click)="
         logout()" />
-    </div>
+    </div> -->
 
     <div id="firebaseui-auth-container">container</div>
     <div id="loader">Loading...</div>

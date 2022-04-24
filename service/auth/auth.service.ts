@@ -3,6 +3,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, User, user, signOut } from "@angular/fire/auth";
 import { onAuthStateChanged } from 'firebase/auth';
 import { Router } from '@angular/router';
+import { AuthResponse, AuthResponseUser } from './authControl';
+import { FirebaseError } from '@angular/fire/app';
 // import { getAuth, createUserWithEmailAndPassword } from "@angular/fire/compat/auth";
 
 @Injectable({
@@ -12,6 +14,7 @@ export class AuthService {
 
   constructor(public afAuth: AngularFireAuth, private route: Router) { }
 
+  // version 1
   public SignUp(email: string, password: string) {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
@@ -20,7 +23,7 @@ export class AuthService {
         console.log(result.user);
       })
       .catch((error) => {
-        window.alert(error.message);
+        this.ShowError(error);
       });
   }
 
@@ -31,10 +34,11 @@ export class AuthService {
         console.log(result);
       })
       .catch((error) => {
-        window.alert(error.message);
+        this.ShowError(error);
       });
   }
-
+  
+  // version 2
   public signUpEmailPassword(email: string, password: string): void {
     const auth = getAuth();
 
@@ -45,10 +49,7 @@ export class AuthService {
         console.log("create user ok" + user.email);
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        window.alert(errorCode + ": " + errorMessage);
-        console.log(errorCode + ": " + errorMessage);
+        this.ShowError(error);
       });
   }
 
@@ -58,17 +59,12 @@ export class AuthService {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        window.alert("Successfully logged in: " + user.email);
         console.log("Successfully logged in" + user.email);
 
-        this.route.navigate(['/project-management']);
-
+        this.StartApp();
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        window.alert(errorCode + ": " + errorMessage);
-        console.log(errorCode + ": " + errorMessage);
+        this.ShowError(error);
       });
   }
 
@@ -104,6 +100,18 @@ export class AuthService {
     if (user !== null) return user;
 
     return null;
+  }
+
+  // Main Activities
+  private StartApp(): void {
+    this.route.navigate(['/project-management']);
+  }
+
+  private ShowError(error: FirebaseError): void {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    window.alert(errorCode + ": " + errorMessage);
+    console.log(errorCode + ": " + errorMessage);
   }
 
 
