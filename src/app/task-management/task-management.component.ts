@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { DatasetService, CollectionList } from 'service/dataset/dataset.service';
+import { AuthService } from 'service/auth/auth.service';
 
 @Component({
   selector: 'app-task-management',
@@ -15,9 +16,11 @@ import { DatasetService, CollectionList } from 'service/dataset/dataset.service'
 })
 export class TaskManagementComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private store: AngularFirestore, private dataset: DatasetService) { }
+  constructor(private dialog: MatDialog, private store: AngularFirestore, private dataset: DatasetService, public authService: AuthService) { }
 
+  isAuthenticated: any;
   ngOnInit(): void {
+    this.authService.currentAuthStatus.subscribe(authService => this.isAuthenticated = authService);
   }
   
   dialogWidth: string = "270px";
@@ -113,5 +116,8 @@ export class TaskManagementComponent implements OnInit {
     );
   }
 
+  public logout(): void {
+    this.authService.logout();
+  }
 
 }

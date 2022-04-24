@@ -46,44 +46,34 @@
 <!-- <button id="sign-in-with-popup" (click)="signInEmail()">Sign In with Popup</button> -->
 
 <div class="authBlock">
-    <form [formGroup]="profileForm">
 
-        <label for="first-name">First Name: </label>
-        <input id="first-name" type="text" formControlName="firstName">
 
-        <label for="last-name">Last Name: </label>
-        <input id="last-name" type="text" formControlName="lastName">
+    <form [formGroup]="signInForm">
 
-        <label for="userEmail">User Email: </label>
-        <input id="userEmail" type="text" formControlName="Username">
 
-        <!-- <button type="button" class="mdc-button cancel">Cancel</button> -->
-        <button id="basic" type="button" mat-button >
-            Basic button
-          </button>
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="Email" type="email" formControlName="email">
+                <!-- <mat-error>{{errors.email}}</mat-error> -->
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="Password" type="password" formControlName="password">
+                <!-- <mat-error>{{errors.password}}</mat-error> -->
+            </mat-form-field>
+        </div>
+
+        <div>
+            <button mat-raised-button type="submit" id="SignIn" (click)="signIn_v2()">Sign In</button>
+            <button mat-raised-button type="submit" id="SignUp" (click)="signUp_v2()">Sign Up</button>
+        </div>
 
 
     </form>
 
-    <!-- <div class="formGroup">
-        <input type="text" class="formControl" placeholder="Username" #userEmail required />
-    </div> -->
-    <!-- <div class="formGroup">
-        <input type="password" class="formControl" placeholder="Password" #userPassword required />
-    </div>
-    <div class="formGroup">
-        <input type="button" class="btn btnPrimary" value="Sign Up" (click)="
-        signUp(userEmail.value, userPassword.value)" />
-    </div>
-    <div class="formGroup">
-        <input type="button" class="btn btnPrimary" value="Log in" (click)="
-        login(userEmail.value, userPassword.value)" />
-    </div>
-    <div class="formGroup">
-        <input type="button" class="btn btnPrimary" value="Log out" (click)="
-        logout()" />
-    </div> -->
 
-    <div id="firebaseui-auth-container">container</div>
-    <div id="loader">Loading...</div>
+    <!-- <div id="firebaseui-auth-container">container</div>
+    <div id="loader">Loading...</div> -->
 </div>

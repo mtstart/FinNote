@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'service/auth/auth.service';
 import { TaskDialogComponent, TaskDialogResult } from '../task-dialog/task-dialog.component';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { forbiddenNameValidator } from 'service/service/form-validation';
+import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 
 @Component({
   selector: 'app-sign-in',
@@ -11,16 +13,39 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class SignInComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, public authService: AuthService) { }
+  constructor(private dialog: MatDialog, public authService: AuthService, private fb: FormBuilder) { }
+
+  isAuthenticated: any;
 
   ngOnInit(): void {
+    
+    this.authService.currentAuthStatus.subscribe(authService => this.isAuthenticated = authService);
+
   }
 
-  profileForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    userEmail: new FormControl(''),
+  signInForm = this.fb.group({
+    // name: new FormControl('', [Validators.minLength(2), forbiddenNameValidator(/bob/i)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
   });
+  
+  get emailControl(): FormControl {
+    return this.signInForm.get('email') as FormControl;
+  }
+  
+  get passwordControl(): FormControl {
+    return this.signInForm.get('password') as FormControl;
+  }
+
+  signIn_v2(): void {
+    this.authService.loginWithEmailPassword(this.emailControl.value, this.passwordControl.value);
+  }
+
+  signUp_v2(): void {
+    this.authService.signUpEmailPassword(this.emailControl.value, this.passwordControl.value);
+  }
+
+
 
   dialogWidth: string = "270px";
 
@@ -39,6 +64,7 @@ export class SignInComponent implements OnInit {
     //   });
   }
 
+
   public signUp(email: string, password: string): void {
     // this.authService.SignUp(email, password);
     this.authService.signUpEmailPassword(email, password);    
@@ -47,10 +73,6 @@ export class SignInComponent implements OnInit {
   public login(email: string, password: string): void {
     // this.authService.SignUp(email, password);
     this.authService.loginWithEmailPassword(email, password);    
-  }
-
-  public logout(): void {
-    this.authService.logout();
   }
 
 }

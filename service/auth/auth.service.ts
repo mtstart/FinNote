@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, User, user, signOut } from "@angular/fire/auth";
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, reauthenticateWithCredential, UserCredential } from 'firebase/auth';
 import { Router } from '@angular/router';
 import { AuthResponse, AuthResponseUser } from './authControl';
 import { FirebaseError } from '@angular/fire/app';
+import { BehaviorSubject } from 'rxjs';
 // import { getAuth, createUserWithEmailAndPassword } from "@angular/fire/compat/auth";
 
 @Injectable({
@@ -12,7 +13,13 @@ import { FirebaseError } from '@angular/fire/app';
 })
 export class AuthService {
 
-  constructor(public afAuth: AngularFireAuth, private route: Router) { }
+  constructor(public afAuth: AngularFireAuth, private route: Router) {
+    this.detectUserStatusChange();
+
+  }
+
+  private authStatusSub = new BehaviorSubject(this.getUserProfile);
+  currentAuthStatus = this.authStatusSub.asObservable();
 
   // version 1
   public SignUp(email: string, password: string) {
@@ -37,7 +44,7 @@ export class AuthService {
         this.ShowError(error);
       });
   }
-  
+
   // version 2
   public signUpEmailPassword(email: string, password: string): void {
     const auth = getAuth();
@@ -61,7 +68,8 @@ export class AuthService {
         const user = userCredential.user;
         console.log("Successfully logged in" + user.email);
 
-        this.StartApp();
+        // this.StartApp();
+        this.route.navigate(['/project-management']);
       })
       .catch((error) => {
         this.ShowError(error);
@@ -70,27 +78,58 @@ export class AuthService {
 
   public logout(): void {
     const auth = getAuth();
-    console.log("current User: " + auth.currentUser?.email)
-
+    // console.log("current User: " + auth.currentUser?.email)
 
     signOut(auth).then(() => {
       window.alert("successfully logout");
       console.log("successfully logout");
+      this.route.navigate(['/signIn']);
     })
+    .catch((error) => {
+      this.ShowError(error);
+    });
   }
 
-  public authStateChange(): void {
+  private detectUserStatusChange(): void {
     const auth = getAuth();
+    const currentNav: string = this.route.url;
+
     onAuthStateChanged(auth, (user: User | null) => {
+      
       if (user) {
         const uid = user.uid;
-        window.alert("current user: " + user.email)
-        console.log("current user: " + user.email)
+        // window.alert("current user onAuthStateChanged: " + user.email)
       } else {
-        window.alert("user is logged out")
-        console.log("user is logged out")
+        if (currentNav !== "/signIn") {
+          this.route.navigate(['/signIn']);
+          window.alert("Please log in first.");
+          console.log("Please log in first.: " + this.route.url);
+        }
       }
     });
+
+  }
+
+  public getAuthStatus(): void {
+    // getauthstat
+  }
+
+  public reAuthUser(): void {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const credential = promptForCredentials();
+
+    if (user != null) {
+      // reauthenticateWithCredential(user, credential)
+      //   .then(() => {
+      //     console.log("re-auth success");
+      //   })
+      //   .catch((error) => {
+      //     this.ShowError(error);
+      //   });
+
+    }
+
   }
 
   public getUserProfile(): User | null {
@@ -104,7 +143,7 @@ export class AuthService {
 
   // Main Activities
   private StartApp(): void {
-    this.route.navigate(['/project-management']);
+    this.route.navigate(['/signIn']);
   }
 
   private ShowError(error: FirebaseError): void {
@@ -116,3 +155,7 @@ export class AuthService {
 
 
 }
+function promptForCredentials() {
+  throw new Error('Function not implemented.');
+}
+
