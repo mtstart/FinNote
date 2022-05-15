@@ -43,37 +43,30 @@
 
 </head>
 
-<!-- <button id="sign-in-with-popup" (click)="signInEmail()">Sign In with Popup</button> -->
-
 <div class="authBlock">
 
-
     <form [formGroup]="signInForm">
+        <div id="theForm">
+            <div>
+                <mat-form-field>
+                    <input matInput placeholder="Email" type="email" formControlName="email">
+                    <!-- <mat-error>{{errors.email}}</mat-error> -->
+                </mat-form-field>
+            </div>
 
+            <div>
+                <mat-form-field>
+                    <input matInput placeholder="Password" type="password" formControlName="password">
+                    <!-- <mat-error>{{errors.password}}</mat-error> -->
+                </mat-form-field>
+            </div>
 
-        <div>
-            <mat-form-field>
-                <input matInput placeholder="Email" type="email" formControlName="email">
-                <!-- <mat-error>{{errors.email}}</mat-error> -->
-            </mat-form-field>
+            <div>
+                <button mat-raised-button type="submit" id="SignIn" (click)="signIn_v2()">Sign In</button>
+                <button mat-raised-button type="submit" id="SignUp" (click)="signUp_v2()">Sign Up</button>
+            </div>
+
         </div>
-
-        <div>
-            <mat-form-field>
-                <input matInput placeholder="Password" type="password" formControlName="password">
-                <!-- <mat-error>{{errors.password}}</mat-error> -->
-            </mat-form-field>
-        </div>
-
-        <div>
-            <button mat-raised-button type="submit" id="SignIn" (click)="signIn_v2()">Sign In</button>
-            <button mat-raised-button type="submit" id="SignUp" (click)="signUp_v2()">Sign Up</button>
-        </div>
-
 
     </form>
-
-
-    <!-- <div id="firebaseui-auth-container">container</div>
-    <div id="loader">Loading...</div> -->
 </div>

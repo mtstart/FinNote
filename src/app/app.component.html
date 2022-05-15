@@ -6,10 +6,17 @@
     </mat-toolbar>
   </div>
   <div id="main">
+
     <div id="nav">
-      <app-navigation></app-navigation>
+        <div><button mat-button (click)="changeRoute()">Change route</button></div>
+        <div><button mat-button (click)="logout()">Log Out</button></div>
     </div>
-    <div id="content">
+
+    <div class="main-content">
+      <div id="content">
+        <router-outlet></router-outlet>
+      </div>
     </div>
+
   </div>
 </div>
