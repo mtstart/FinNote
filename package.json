@@ -21,6 +21,8 @@
     "@angular/platform-browser": "~13.2.0",
     "@angular/platform-browser-dynamic": "~13.2.0",
     "@angular/router": "~13.2.0",
+    "@material/radio": "^14.0.0",
+    "angular-material-sidenav": "^0.1.1",
     "firebase": "^9.4.0",
     "rxfire": "^6.0.0",
     "rxjs": "~7.5.0",

@@ -10,14 +10,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-
-
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [],
   exports: [
     CommonModule,
-    
+
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
@@ -28,6 +28,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
+    MatSidenavModule,
+    MatRadioModule
+
   ]
 })
 export class MaterialModule { }

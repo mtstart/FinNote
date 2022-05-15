@@ -21,6 +21,8 @@ export class TaskManagementComponent implements OnInit {
   isAuthenticated: any;
   ngOnInit(): void {
     this.authService.currentAuthStatus.subscribe(authService => this.isAuthenticated = authService);
+
+    this.syncTask();
   }
   
   dialogWidth: string = "270px";

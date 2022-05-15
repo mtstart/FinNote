@@ -16,6 +16,7 @@ import { TaskManagementComponent } from './task-management/task-management.compo
 import { SignInComponent } from './sign-in/sign-in.component';
 import { AuthService } from 'service/auth/auth.service';
 import { MaterialModule } from "./material/material.module";
+import { NavigationComponent } from './navigation/navigation.component';
 
 
 
@@ -25,7 +26,8 @@ import { MaterialModule } from "./material/material.module";
     TaskComponent,
     TaskDialogComponent,
     TaskManagementComponent,
-    SignInComponent
+    SignInComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
