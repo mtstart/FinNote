@@ -1,0 +1,11 @@
+.shared-button {
+
+    display: flex;
+    flex-direction: column;
+
+    padding-left: 12px;
+
+    mat-icon {
+        padding-right: 8px;
+    }
+}

@@ -1,0 +1,16 @@
+<button 
+    mat-button
+    [style.selected]="selected"
+    [disabled]="disabled"
+    [class.mat-stroked-button]="selected"
+    
+    [style.color]="buttonColor"
+    [style.background]="backgroundColor"
+    class="shared-button"
+    (click)="buttonClicked($event)" >
+
+    <mat-icon *ngIf="leadingIcon as icon">{{icon}}</mat-icon>
+
+    <span>{{buttonSpec.displayName}}</span>
+
+</button>

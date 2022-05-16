@@ -8,8 +8,16 @@
   <div id="main">
 
     <div id="nav">
-        <div><button mat-button (click)="changeRoute()">Change route</button></div>
-        <div><button mat-button (click)="logout()">Log Out</button></div>
+      <div><button mat-button (click)="logout()">Log Out</button></div>
+      <shared-button 
+        *ngFor="let spec of buttonSpecList"
+        [buttonSpec]="spec"
+        [selected]="false"  
+        [disabled]="false"
+        leadingIcon="format_color_fill"
+        [showSelectedIcon]="true"
+        (ClickEvent)="changeRoute(spec.key)"
+      ></shared-button>
     </div>
 
     <div class="main-content">

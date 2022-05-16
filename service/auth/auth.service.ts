@@ -95,15 +95,17 @@ export class AuthService {
     const currentNav: string = this.route.url;
 
     onAuthStateChanged(auth, (user: User | null) => {
+      alert("status changed: " + currentNav );
       
       if (user) {
         const uid = user.uid;
         // window.alert("current user onAuthStateChanged: " + user.email)
       } else {
-        if (currentNav !== "/signIn") {
+        if (currentNav == "/signIn" || currentNav == "/") {
+        } else {          
           this.route.navigate(['/signIn']);
-          window.alert("Please log in first.");
-          console.log("Please log in first.: " + this.route.url);
+          window.alert("It is logged out.");
+          console.log("It is logged out.: " + this.route.url);
         }
       }
     });

@@ -17,6 +17,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { AuthService } from 'service/auth/auth.service';
 import { MaterialModule } from "./material/material.module";
 import { NavigationComponent } from './navigation/navigation.component';
+import { ButtonComponent } from './shared/button/button.component';
 
 
 
@@ -27,7 +28,8 @@ import { NavigationComponent } from './navigation/navigation.component';
     TaskDialogComponent,
     TaskManagementComponent,
     SignInComponent,
-    NavigationComponent
+    NavigationComponent,
+    ButtonComponent
   ],
   imports: [
     BrowserModule,
