@@ -18,6 +18,7 @@ import { AuthService } from 'service/auth/auth.service';
 import { MaterialModule } from "./material/material.module";
 import { NavigationComponent } from './navigation/navigation.component';
 import { ButtonComponent } from './shared/button/button.component';
+import { TextEditorComponent } from './text-editor/text-editor.component';
 
 
 
@@ -29,7 +30,8 @@ import { ButtonComponent } from './shared/button/button.component';
     ProjectManagementComponent,
     SignInComponent,
     NavigationComponent,
-    ButtonComponent
+    ButtonComponent,
+    TextEditorComponent
   ],
   imports: [
     BrowserModule,

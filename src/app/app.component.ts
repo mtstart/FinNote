@@ -15,28 +15,52 @@ export class AppComponent {
   title = 'FinNote';
   mode = new FormControl('over');
 
-  buttonSpecList: ButtonLabelSpec.AsObject[] = [{
-    key: "key ha",
-    displayName: "key name 1",
-    color: "red",
+  buttonSpecList: ButtonLabelSpec.AsObject[] = [
+  // {
+  //   key: "key ha",
+  //   displayName: "key name 1",
+  //   color: "red",
+  //   order: 0,
+  //   description: "",
+  //   shortcutKey: "T",
+  //   // itemCount: 0,
+  // }, {
+  //   key: "signIn",
+  //   displayName: "Sign In",
+  //   color: "red",
+  //   order: 0,
+  //   description: "",
+  //   shortcutKey: "T",
+  //   // itemCount: 0,
+  // },
+  
+  {
+    key: "pm",
+    displayName: "Project Management",
+    ref: "project-management",
     order: 0,
-    description: "",
-    shortcutKey: "T",
+    description: "Go to PM",
+    shortcutKey: "P",
+    color: "red",
+    icon: "group_work", 
     // itemCount: 0,
-  }, {
-    key: "signIn",
-    displayName: "Sign In",
-    color: "red",
-    order: 0,
-    description: "",
+  },
+  {
+    key: "te",
+    displayName: "Text Editor",
+    ref: "text-editor",
+    order: 1,
+    description: "Go to TE",
     shortcutKey: "T",
+    color: "green",
+    icon: "article", 
     // itemCount: 0,
   },
   ];
 
-  changeRoute(page: string) {
-    if (page == undefined) {
-      this.route.navigate(['/project-management']);
+  changeRoute(spec: ButtonLabelSpec.AsObject) {
+    if (spec.ref != undefined) {
+      this.route.navigate(['/' + spec.ref]);
     } else {
       this.logout();
     }

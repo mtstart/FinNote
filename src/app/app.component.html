@@ -1,23 +1,23 @@
 <div id="app">
   <div id="top-banner">
     <mat-toolbar color="primary">
-      <mat-icon>local_fire_department</mat-icon>
-      <span>Kanban Fire - App component</span>
+    <mat-icon>flight_takeoff</mat-icon>
+    <span>Kanban Fire - App component</span>
     </mat-toolbar>
   </div>
   <div id="main">
 
     <div id="nav">
-      <div><button mat-button (click)="logout()">Log Out</button></div>
       <shared-button 
         *ngFor="let spec of buttonSpecList"
         [buttonSpec]="spec"
         [selected]="false"  
         [disabled]="false"
-        leadingIcon="format_color_fill"
+        leadingIcon="{{ spec.icon ? spec.icon : 'lens_blur' }}"
         [showSelectedIcon]="true"
-        (ClickEvent)="changeRoute(spec.key)"
+        (ClickEvent)="changeRoute(spec)"
       ></shared-button>
+      <div><button mat-button (click)="logout()">Log Out</button></div>
     </div>
 
     <div class="main-content">

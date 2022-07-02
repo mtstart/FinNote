@@ -8,7 +8,7 @@ mat-toolbar > span {
 }
 
 #top-banner {
-  max-height: 10%;
+  height: fit-content;
 }
 
 #main {
@@ -18,7 +18,9 @@ mat-toolbar > span {
 }
 
 #nav {
-  width: 15%;
+  min-width: 188px;
+  max-width: 20%;
+  padding-top: 10px;
   border-right: 1px solid rgb(164, 164, 164);
 }
 
