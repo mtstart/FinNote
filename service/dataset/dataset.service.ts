@@ -78,5 +78,9 @@ export class DatasetService {
     this.store.collection(list).doc(task.id).update(task);
   }
 
+  public changeAll(list: CollectionList, task: Task): void {
+    this.store.collection(list).doc(task.id).update(task);
+  }
+
 
 }
