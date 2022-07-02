@@ -11,10 +11,10 @@ import { AuthService } from 'service/auth/auth.service';
 
 @Component({
   selector: 'app-task-management',
-  templateUrl: './task-management.component.html',
-  styleUrls: ['./task-management.component.scss', '../app.component.scss']
+  templateUrl: './project-management.component.html',
+  styleUrls: ['./project-management.component.scss', '../app.component.scss']
 })
-export class TaskManagementComponent implements OnInit {
+export class ProjectManagementComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private store: AngularFirestore, private dataset: DatasetService, public authService: AuthService) { }
 

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { SignInComponent } from './sign-in/sign-in.component';
-import { TaskManagementComponent } from './task-management/task-management.component';
+import { ProjectManagementComponent } from './project-management/project-management.component';
 
 const routes: Routes = [
   {
@@ -17,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: 'project-management',
-    component: TaskManagementComponent,
+    component: ProjectManagementComponent,
   },
 ];
 

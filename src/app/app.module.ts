@@ -12,7 +12,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
-import { TaskManagementComponent } from './task-management/task-management.component';
+import { ProjectManagementComponent } from './project-management/project-management.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { AuthService } from 'service/auth/auth.service';
 import { MaterialModule } from "./material/material.module";
@@ -26,7 +26,7 @@ import { ButtonComponent } from './shared/button/button.component';
     AppComponent,
     TaskComponent,
     TaskDialogComponent,
-    TaskManagementComponent,
+    ProjectManagementComponent,
     SignInComponent,
     NavigationComponent,
     ButtonComponent
