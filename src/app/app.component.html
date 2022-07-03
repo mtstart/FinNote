@@ -8,19 +8,24 @@
   <div id="main">
 
     <div id="nav">
-      <shared-button 
-        *ngFor="let spec of buttonSpecList"
-        [buttonSpec]="spec"
-        [selected]="false"  
-        [disabled]="false"
-        leadingIcon="{{ spec.icon ? spec.icon : 'lens_blur' }}"
-        [showSelectedIcon]="true"
-        (ClickEvent)="changeRoute(spec)"
-      ></shared-button>
+      <div>
+        <shared-button 
+          *ngFor="let spec of buttonSpecList"
+          [buttonSpec]="spec"
+          [selected]="false"  
+          [disabled]="false"
+          leadingIcon="{{ spec.icon ? spec.icon : 'lens_blur' }}"
+          [showSelectedIcon]="true"
+          (ClickEvent)="changeRoute(spec)"
+        ></shared-button>
+      </div>
       
       <div>      
-        <!-- <mat-icon>logout</mat-icon> -->
-        <button mat-button *ngIf="!loginStatus" (click)="logout()">Log Out</button>
+        
+        <button mat-button *ngIf="!loginStatus" (click)="logout()">
+          Log Out
+          <mat-icon>logout</mat-icon>
+        </button>
       </div>
       
     </div>

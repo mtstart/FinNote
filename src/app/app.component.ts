@@ -42,7 +42,7 @@ export class AppComponent {
     description: "Go to PM",
     shortcutKey: "P",
     // color: "red",
-    icon: "group_work", 
+    icon: "table_view", 
     // itemCount: 0,
   },
   {

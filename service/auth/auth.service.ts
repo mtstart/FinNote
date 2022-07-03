@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, User, user, signOut } from "@angular/fire/auth";
 import { onAuthStateChanged, reauthenticateWithCredential, UserCredential } from 'firebase/auth';
@@ -13,7 +13,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AuthService {
 
-  constructor(public afAuth: AngularFireAuth, private route: Router) {
+  constructor(public afAuth: AngularFireAuth, private route: Router, private zone: NgZone) {
     this.detectUserStatusChange();
   }
 
@@ -68,7 +68,7 @@ export class AuthService {
         console.log("Successfully logged in" + user.email);
 
         // this.StartApp();
-        this.route.navigate(['/project-management']);
+        this.navigatePage("project-management");
       })
       .catch((error) => {
         this.ShowError(error);
@@ -94,6 +94,7 @@ export class AuthService {
 
     onAuthStateChanged(auth, (user: User | null) => {
       console.log("status changed: " + currentNav );
+      this.navigatePage("project-management", user == undefined);
     });
 
   }
@@ -103,11 +104,12 @@ export class AuthService {
 
     const auth = getAuth();
     const user = auth.currentUser;
-    const currentNav: string = this.route.url;
 
     if (user) {
       const uid = user.uid;
-      this.route.navigate(['/' + page]);
+      this.zone.run(()=> {
+        this.route.navigate(['/' + page]);
+      })
     } 
     else {
       if (leave) {
@@ -115,7 +117,9 @@ export class AuthService {
       } else {
         window.alert("Please sign in first.");
       }
-      this.route.navigate(['/signIn']);
+      this.zone.run(()=> {
+        this.route.navigate(['/signIn']);
+      });
     }
   }
 
@@ -152,7 +156,9 @@ export class AuthService {
 
   // Main Activities
   private StartApp(): void {
-    this.route.navigate(['/signIn']);
+    this.zone.run(()=> {
+      this.route.navigate(['/signIn']);
+    });
   }
 
   private ShowError(error: FirebaseError): void {

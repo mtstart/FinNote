@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [],
@@ -29,7 +30,8 @@ import { MatRadioModule } from '@angular/material/radio';
     FormsModule,
     ReactiveFormsModule,
     MatSidenavModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSnackBarModule,
 
   ]
 })
