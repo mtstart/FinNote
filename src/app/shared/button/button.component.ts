@@ -23,7 +23,7 @@ export class ButtonComponent implements OnInit {
   }
   
   get buttonColor(): string | undefined {
-    return this.disabled ? undefined : this.selected ? 'white' : 'gray' || undefined;
+    return this.disabled ? undefined : this.selected ? 'white' : 'DimGray' || undefined;
   }
 
   get backgroundColor(): string | undefined {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'service/auth/auth.service';
@@ -35,32 +35,37 @@ export class AppComponent {
   // },
   
   {
-    key: "pm",
+    key: "p",
     displayName: "Project Management",
     ref: "project-management",
     order: 0,
     description: "Go to PM",
     shortcutKey: "P",
-    color: "red",
+    // color: "red",
     icon: "group_work", 
     // itemCount: 0,
   },
   {
-    key: "te",
+    key: "t",
     displayName: "Text Editor",
     ref: "text-editor",
     order: 1,
     description: "Go to TE",
     shortcutKey: "T",
-    color: "green",
+    // color: "green",
     icon: "article", 
     // itemCount: 0,
   },
   ];
 
+  // @HostListener('keydown.p', ['$event'])
+  // @HostListener('keydown.t', ['$event'])
+  // documentKeyDown(event: KeyboardEvent): void {
+  // }
+  
   changeRoute(spec: ButtonLabelSpec.AsObject) {
     if (spec.ref != undefined) {
-      this.route.navigate(['/' + spec.ref]);
+      this.authService.navigatePage(spec.ref);
     } else {
       this.logout();
     }
@@ -68,6 +73,10 @@ export class AppComponent {
 
   logout() {
     this.authService.logout();
+  }
+  
+  get loginStatus(): boolean {
+    return this.authService.getUserProfile() == null;
   }
 
 }

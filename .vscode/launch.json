@@ -4,11 +4,10 @@
   "configurations": [
     {
       "name": "ng serve",
-      "type": "chrome",
+      "type": "pwa-chrome",
       "request": "launch",
-      // "preLaunchTask": "npm: watch",
-      "url": "http://localhost:4200/",
-      "webRoot": "${workspaceFolder}"
+      "preLaunchTask": "npm: start",
+      "url": "http://localhost:4200/"
     },
     {
       "name": "ng test",

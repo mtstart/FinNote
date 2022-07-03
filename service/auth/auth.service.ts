@@ -15,7 +15,6 @@ export class AuthService {
 
   constructor(public afAuth: AngularFireAuth, private route: Router) {
     this.detectUserStatusChange();
-
   }
 
   private authStatusSub = new BehaviorSubject(this.getUserProfile);
@@ -79,11 +78,10 @@ export class AuthService {
   public logout(): void {
     const auth = getAuth();
     // console.log("current User: " + auth.currentUser?.email)
+    if (!confirm("Sure to log out? ")) return;
 
     signOut(auth).then(() => {
-      window.alert("successfully logout");
-      console.log("successfully logout");
-      this.route.navigate(['/signIn']);
+      this.navigatePage('signIn', true);
     })
     .catch((error) => {
       this.ShowError(error);
@@ -95,21 +93,30 @@ export class AuthService {
     const currentNav: string = this.route.url;
 
     onAuthStateChanged(auth, (user: User | null) => {
-      alert("status changed: " + currentNav );
-      
-      if (user) {
-        const uid = user.uid;
-        // window.alert("current user onAuthStateChanged: " + user.email)
-      } else {
-        if (currentNav == "/signIn" || currentNav == "/") {
-        } else {          
-          this.route.navigate(['/signIn']);
-          window.alert("It is logged out.");
-          console.log("It is logged out.: " + this.route.url);
-        }
-      }
+      console.log("status changed: " + currentNav );
     });
 
+  }
+
+  public navigatePage(page: string, leave?: boolean) {
+    if (page == undefined) return;
+
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const currentNav: string = this.route.url;
+
+    if (user) {
+      const uid = user.uid;
+      this.route.navigate(['/' + page]);
+    } 
+    else {
+      if (leave) {
+        window.alert("Sucessfullly logged out.");        
+      } else {
+        window.alert("Please sign in first.");
+      }
+      this.route.navigate(['/signIn']);
+    }
   }
 
   public getAuthStatus(): void {

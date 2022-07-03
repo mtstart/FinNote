@@ -17,7 +17,12 @@
         [showSelectedIcon]="true"
         (ClickEvent)="changeRoute(spec)"
       ></shared-button>
-      <div><button mat-button (click)="logout()">Log Out</button></div>
+      
+      <div>      
+        <!-- <mat-icon>logout</mat-icon> -->
+        <button mat-button *ngIf="!loginStatus" (click)="logout()">Log Out</button>
+      </div>
+      
     </div>
 
     <div class="main-content">

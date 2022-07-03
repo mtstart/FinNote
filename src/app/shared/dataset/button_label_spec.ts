@@ -8,7 +8,7 @@ export namespace ButtonLabelSpec {
         order: number,
         description: string,
         shortcutKey: string,
-        color: string,
+        color?: string,
         icon?: string,
         // itemCount: number,
     }
