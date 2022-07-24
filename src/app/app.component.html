@@ -20,8 +20,7 @@
         ></shared-button>
       </div>
       
-      <div>      
-        
+      <div>
         <button mat-button *ngIf="!loginStatus" (click)="logout()">
           Log Out
           <mat-icon>logout</mat-icon>
@@ -30,7 +29,7 @@
       
     </div>
 
-    <div class="main-content">
+    <div id="main-content">
       <div id="content">
         <router-outlet></router-outlet>
       </div>

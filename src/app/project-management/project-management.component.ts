@@ -12,7 +12,7 @@ import { AuthService } from 'service/auth/auth.service';
 @Component({
   selector: 'app-task-management',
   templateUrl: './project-management.component.html',
-  styleUrls: ['./project-management.component.scss', '../app.component.scss']
+  styleUrls: ['./project-management.component.scss', '../app.component.scss', '../shared/shared-style.scss']
 })
 export class ProjectManagementComponent implements OnInit {
 
@@ -25,7 +25,7 @@ export class ProjectManagementComponent implements OnInit {
     this.syncTask();
   }
   
-  dialogWidth: string = "270px";
+  dialogWidth: string = "400px";
 
   todo: Observable<Task[]> | undefined;
   inProgress: Observable<Task[]> | undefined;

@@ -1,48 +1,46 @@
-
 /* Animate items as they're being sorted. */
 .cdk-drop-list-dragging .cdk-drag {
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-  }
-  
-  /* Animate an item that has been dropped. */
-  .cdk-drag-animating {
-    transition: transform 250ms;
-    // transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
-  }
-  
-  .cdk-drag-placeholder {
-    opacity: 0;
-  }
-  
-  .content-wrapper {
-    max-width: 1400px;
-    margin: auto;
-  }
-  
-  .container-wrapper {
-    display: flex;
-    justify-content: space-around;
-  }
-  
-  .container {
-    width: 400px;
-    margin: 0 25px 25px 0;
-  }
-  
-  .list {
-    border: solid 1px #ccc;
-    min-height: 60px;
-    border-radius: 4px;
-  }
-  
-  app-new-task {
-    margin-bottom: 30px;
-  }
-  
-  .empty-label {
-    font-size: 2em;
-    padding-top: 10px;
-    text-align: center;
-    opacity: 0.2;
-  }
-  
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Animate an item that has been dropped. */
+.cdk-drag-animating {
+  transition: transform 250ms;
+  // transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.content-wrapper {
+  padding: 24px 24px 0px 24px;
+  // height: 550px;
+  overflow: auto;
+  height: 95%;
+}
+
+.content-real {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.task-list-container {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  overflow: auto;
+  width: 100%;
+}
+
+.task-block-list {
+  min-width: 400px;
+  padding: 0 25px 25px 0;
+}
+
+.task-list {
+  overflow: auto;
+  min-height: 50px;
+  max-height:450px;
+}
