@@ -35,12 +35,13 @@
 }
 
 .task-block-list {
-  min-width: 400px;
+  min-width: 270px;
   padding: 0 25px 25px 0;
 }
 
 .task-list {
   overflow: auto;
+  max-width: 300px;
   min-height: 50px;
   max-height:450px;
 }

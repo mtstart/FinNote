@@ -7,7 +7,7 @@ import { ButtonLabelSpec } from './shared/dataset/button_label_spec';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss', './shared/shared-style.scss']
 })
 export class AppComponent {
   constructor(private route: Router, public authService: AuthService) { }

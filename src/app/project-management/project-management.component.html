@@ -2,7 +2,7 @@
 <div class="content-wrapper">
   <div class="content-real">
 
-    <div class="ordinary-row">
+    <div class="ordinary-section">
       <button mat-raised-button color="primary" (click)="syncTask()">
         Refresh <mat-icon>refresh</mat-icon>
       </button>
@@ -25,18 +25,6 @@
           (cdkDropListDropped)="drop($event)"
           class="list task-list">
           <p class="empty-label" *ngIf="(todo | async)?.length === 0">Empty list</p>
-
-
-          <div>
-            <div style="
-              height: 1000px;
-              background-color: yellow;
-              border: 1px solid blue;
-            ">
-              haha long div
-            </div>
-          </div>
-
           <app-task (edit)="editTask('todo', $event)" *ngFor="let task of todo | async" cdkDrag [task]="task"></app-task>
         </mat-card>
       </div>
@@ -72,39 +60,18 @@
           <app-task (edit)="editTask('done', $event)" *ngFor="let task of done | async" cdkDrag [task]="task"></app-task>
         </mat-card>
       </div>
-  
-      <div class="task-block-list">
-        <h2>Done</h2>
-  
-        <mat-card
-          cdkDropList
-          id="done"
-          #doneList="cdkDropList"
-          [cdkDropListData]="done | async"
-          [cdkDropListConnectedTo]="[todoList, inProgressList]"
-          (cdkDropListDropped)="drop($event)"
-          class="list task-list">
-          <p class="empty-label" *ngIf="(done | async)?.length === 0">Empty list</p>
-          <app-task (edit)="editTask('done', $event)" *ngFor="let task of done | async" cdkDrag [task]="task"></app-task>
-        </mat-card>
-      </div>
-  
-      <div class="task-block-list">
-        <h2>Done</h2>
-  
-        <mat-card
-          cdkDropList
-          id="done"
-          #doneList="cdkDropList"
-          [cdkDropListData]="done | async"
-          [cdkDropListConnectedTo]="[todoList, inProgressList]"
-          (cdkDropListDropped)="drop($event)"
-          class="list task-list">
-          <p class="empty-label" *ngIf="(done | async)?.length === 0">Empty list</p>
-          <app-task (edit)="editTask('done', $event)" *ngFor="let task of done | async" cdkDrag [task]="task"></app-task>
-        </mat-card>
-      </div>
     </div>
+
+    <!-- <div>
+      <div style="
+        height: 1000px;
+        background-color: yellow;
+        border: 1px solid blue;
+      ">
+        haha long div
+      </div>
+    </div> -->
+
   </div>
 
 </div>

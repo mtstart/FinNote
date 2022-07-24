@@ -25,7 +25,7 @@ export class ProjectManagementComponent implements OnInit {
     this.syncTask();
   }
   
-  dialogWidth: string = "400px";
+  dialogWidth: string = "270px";
 
   todo: Observable<Task[]> | undefined;
   inProgress: Observable<Task[]> | undefined;
