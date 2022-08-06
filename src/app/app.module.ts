@@ -19,6 +19,8 @@ import { MaterialModule } from "./material/material.module";
 import { NavigationComponent } from './navigation/navigation.component';
 import { ButtonComponent } from './shared/button/button.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
+import { TypeBubbleComponent } from './shared/type-bubble/type-bubble.component';
+import { BudgetPlannerComponent } from './budget-planner/budget-planner.component';
 
 
 
@@ -31,7 +33,9 @@ import { TextEditorComponent } from './text-editor/text-editor.component';
     SignInComponent,
     NavigationComponent,
     ButtonComponent,
-    TextEditorComponent
+    TextEditorComponent,
+    TypeBubbleComponent,
+    BudgetPlannerComponent
   ],
   imports: [
     BrowserModule,

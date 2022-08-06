@@ -56,6 +56,16 @@ export class AppComponent {
     icon: "article", 
     // itemCount: 0,
   },
+  {
+    key: "t",
+    displayName: "Budget Planner",
+    ref: "budget-planner",
+    order: 1,
+    description: "Go to C",
+    shortcutKey: "C",
+    color: "yellow",
+    icon: "article", 
+  },
   ];
 
   // @HostListener('keydown.p', ['$event'])

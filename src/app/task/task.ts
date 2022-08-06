@@ -4,4 +4,12 @@ export interface Task {
     description: string;
     createdDT?: Date;
     lastUpdate?: Date;
+    type?: string;
+    urgency?: Urgency;
+}
+
+export enum Urgency {
+    Low,
+    Moderate,
+    High
 }

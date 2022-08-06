@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { ProjectManagementComponent } from './project-management/project-management.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
+import { BudgetPlannerComponent } from './budget-planner/budget-planner.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'text-editor',
     component: TextEditorComponent,
+  },
+  {
+    path: 'budget-planner',
+    component: BudgetPlannerComponent,
   },
 ];
 

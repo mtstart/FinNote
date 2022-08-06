@@ -1,7 +1,11 @@
 <mat-card class="item" *ngIf="task" (dblclick)="edit.emit(task)" >
-    <h2>{{ task.title }}</h2>
-    <p>
-        {{ task.description }}
-    </p>
-    Last Update: <p> {{ task.lastUpdate?.toString() }} </p>
+    <div><h2>{{ task.title }}</h2></div>
+    <div>
+        <p>{{ task.description }}</p>
+    </div>
+    <div>Last Update: <p> {{ task.lastUpdate?.toString() }} </p></div>
+    <div>
+        {{ task.type }}
+        {{ task.urgency }}
+    </div>
 </mat-card>
