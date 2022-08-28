@@ -6,7 +6,10 @@
     
     [style.color]="buttonColor"
     [style.background]="backgroundColor"
-    class="shared-button"
+    [style.height.px]="buttonHeight"
+    [style.width.px]="buttonWidth"
+    [class]="buttonClass"
+    
     (click)="buttonClicked($event)" >
 
     <mat-icon *ngIf="leadingIcon as icon">{{icon}}</mat-icon>

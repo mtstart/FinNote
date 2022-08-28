@@ -28,7 +28,12 @@ const routes: Routes = [
   {
     path: 'budget-planner',
     component: BudgetPlannerComponent,
+    children: [
+      // {path: 'PayTogether', component: DatasetListComponent, pathMatch: 'full'},
+      // {path: 'Planner', component: DatasetCreateComponent, pathMatch: 'full'},
+    ],
   },
+  { path: "*", redirectTo: "signIn" }
 ];
 
 @NgModule({

@@ -19,7 +19,7 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.authService.currentAuthStatus.subscribe(authService => this.isAuthenticated = authService);
+    this.authService?.currentAuthStatus.subscribe(authService => this.isAuthenticated = authService);
 
   }
 

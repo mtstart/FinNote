@@ -64,7 +64,7 @@ export class AppComponent {
     description: "Go to C",
     shortcutKey: "C",
     color: "yellow",
-    icon: "article", 
+    icon: "calendar_month", 
   },
   ];
 

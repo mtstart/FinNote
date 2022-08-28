@@ -1,17 +1,21 @@
 .shared-button {
-
     display: flex;
     flex-direction: column;
+
     width: 100%;
 
     padding-left: 12px;
+}
 
-    mat-icon {
-        padding-right: 8px;
-    }
+.grid {
+    align-items: center;
+    justify-content: center;
+}
 
-    span {
-        text-overflow: ellipsis;
-    }
+mat-icon {
+    padding-right: 8px;
+}
 
+span {
+    text-overflow: ellipsis;
 }

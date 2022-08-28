@@ -1,3 +1,4 @@
+import { ButtonHeight } from "../button/button.component"
 
 
 export namespace ButtonLabelSpec {
@@ -5,6 +6,7 @@ export namespace ButtonLabelSpec {
         key: string,
         displayName: string,
         ref?: string,
+        size?: ButtonHeight,
         order: number,
         description: string,
         shortcutKey: string,

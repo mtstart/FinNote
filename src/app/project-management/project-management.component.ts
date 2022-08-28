@@ -18,13 +18,13 @@ export class ProjectManagementComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private store: AngularFirestore, private dataset: DatasetService, public authService: AuthService) { }
 
-  isAuthenticated: any;
   ngOnInit(): void {
-    this.authService.currentAuthStatus.subscribe(authService => this.isAuthenticated = authService);
+    this.authService?.currentAuthStatus?.subscribe(authService => this.isAuthenticated = authService);
 
     this.syncTask();
   }
   
+  isAuthenticated: any;
   dialogWidth: string = "270px";
 
   todo: Observable<Task[]> | undefined;

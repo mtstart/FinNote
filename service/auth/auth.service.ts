@@ -5,7 +5,7 @@ import { onAuthStateChanged, reauthenticateWithCredential, UserCredential } from
 import { Router } from '@angular/router';
 import { AuthResponse, AuthResponseUser } from './authControl';
 import { FirebaseError } from '@angular/fire/app';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 // import { getAuth, createUserWithEmailAndPassword } from "@angular/fire/compat/auth";
 
 @Injectable({
@@ -18,7 +18,7 @@ export class AuthService {
   }
 
   private authStatusSub = new BehaviorSubject(this.getUserProfile);
-  currentAuthStatus = this.authStatusSub.asObservable();
+  currentAuthStatus: Observable<() => User | null> = this.authStatusSub.asObservable();
 
   // version 1
   public SignUp(email: string, password: string) {
@@ -83,18 +83,21 @@ export class AuthService {
     signOut(auth).then(() => {
       this.navigatePage('signIn', true);
     })
-    .catch((error) => {
-      this.ShowError(error);
-    });
+      .catch((error) => {
+        this.ShowError(error);
+      });
   }
 
   private detectUserStatusChange(): void {
     const auth = getAuth();
     const currentNav: string = this.route.url;
+    this.authStatusSub = new BehaviorSubject(this.getUserProfile);
 
-    onAuthStateChanged(auth, (user: User | null) => {
-      console.log("status changed: " + currentNav );
-      this.navigatePage("project-management", user == undefined);
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // console.log("status changed: " + currentNav);
+        this.navigatePage("project-management", user == undefined);
+      }
     });
 
   }
@@ -107,17 +110,17 @@ export class AuthService {
 
     if (user) {
       const uid = user.uid;
-      this.zone.run(()=> {
+      this.zone.run(() => {
         this.route.navigate(['/' + page]);
       })
-    } 
+    }
     else {
       if (leave) {
-        window.alert("Sucessfullly logged out.");        
+        window.alert("Sucessfullly logged out.");
       } else {
         window.alert("Please sign in first.");
       }
-      this.zone.run(()=> {
+      this.zone.run(() => {
         this.route.navigate(['/signIn']);
       });
     }
@@ -156,7 +159,7 @@ export class AuthService {
 
   // Main Activities
   private StartApp(): void {
-    this.zone.run(()=> {
+    this.zone.run(() => {
       this.route.navigate(['/signIn']);
     });
   }

@@ -1,1 +1,16 @@
-<p>budget-planner works!</p>
+<div>
+    <div>Choose Task</div>
+
+    <div style="display: flex; flex-direction: row;">
+        <shared-button 
+        *ngFor="let spec of plannerSpecList"
+        [buttonSpec]="spec"
+        leadingIcon="{{ spec.icon ? spec.icon : 'lens_blur' }}"
+        [grid]="true"
+        [showSelectedIcon]="true"
+        (ClickEvent)="changeRoute(spec)"
+        [selected]="false"  
+        [disabled]="false"
+        ></shared-button>
+    </div>
+</div>
