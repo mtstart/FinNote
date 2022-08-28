@@ -7,6 +7,14 @@ export enum ButtonHeight {
   Large = 200
 }
 
+export enum DefaultButtonSpec {
+  key = "Button", 
+  displayName = "Button",
+  shortcutKey = "z", 
+  description = "Button", 
+  icon = "touch_app"
+}
+
 @Component({
   selector: 'shared-button',
   templateUrl: './button.component.html',
@@ -14,9 +22,10 @@ export enum ButtonHeight {
 })
 export class ButtonComponent implements OnInit {
   
-  @Input() buttonSpec!: ButtonLabelSpec.AsObject;
+  @Input() buttonSpec?: ButtonLabelSpec.AsObject = DefaultButtonSpec;
 
   @Input() showSelectedIcon = true;
+  @Input() displayName?: string;
   @Input() leadingIcon?: string;
   @Input() grid? = false;
   
@@ -43,11 +52,11 @@ export class ButtonComponent implements OnInit {
   }
   
   get buttonHeight(): number | undefined {
-    return this.buttonSpec.size == undefined ? ButtonHeight.Small: this.buttonSpec.size;
+    return this.buttonSpec?.size == undefined ? ButtonHeight.Small: this.buttonSpec.size;
   }
   
   get buttonWidth(): number | undefined {
-    return this.grid && this.buttonSpec.size == ButtonHeight.Large ? this.buttonHeight: undefined;
+    return this.grid && this.buttonSpec?.size == ButtonHeight.Large ? this.buttonHeight: undefined;
   }
   
   buttonClicked($event: MouseEvent): void {

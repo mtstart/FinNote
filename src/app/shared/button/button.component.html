@@ -12,8 +12,8 @@
     
     (click)="buttonClicked($event)" >
 
-    <mat-icon *ngIf="leadingIcon as icon">{{icon}}</mat-icon>
+    <mat-icon *ngIf="(leadingIcon || buttonSpec?.icon) as icon">{{icon}}</mat-icon>
 
-    <span>{{buttonSpec.displayName}}</span>
+    <span>{{displayName || buttonSpec?.displayName}}</span>
 
 </button>

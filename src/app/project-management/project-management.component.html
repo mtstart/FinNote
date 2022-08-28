@@ -8,7 +8,7 @@
       </button>
     
       <button (click)="newTask()" mat-button>
-        <mat-icon>add</mat-icon> Add Task
+        New Task <mat-icon>add</mat-icon>
       </button>
     </div>
   
@@ -26,6 +26,18 @@
           class="list task-list">
           <p class="empty-label" *ngIf="(todo | async)?.length === 0">Empty list</p>
           <app-task (edit)="editTask('todo', $event)" *ngFor="let task of todo | async" cdkDrag [task]="task"></app-task>
+          
+          <!-- <mat-card class="item" (click)="newTask()"> -->
+            <shared-button
+              [selected]="false"  
+              [disabled]="false"
+              displayName="add"
+              leadingIcon="add"
+              [showSelectedIcon]="true"
+              (click)="newTask()" >
+            </shared-button>
+          <!-- </mat-card> -->
+          
         </mat-card>
       </div>
   

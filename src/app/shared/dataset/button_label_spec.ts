@@ -7,7 +7,7 @@ export namespace ButtonLabelSpec {
         displayName: string,
         ref?: string,
         size?: ButtonHeight,
-        order: number,
+        order?: number,
         description: string,
         shortcutKey: string,
         color?: string,
