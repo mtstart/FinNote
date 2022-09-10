@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Task } from '../task/task';
 import { TaskDialogComponent, TaskDialogResult } from '../task-dialog/task-dialog.component';
 
@@ -8,6 +8,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { DatasetService, CollectionList } from 'service/dataset/dataset.service';
 import { AuthService } from 'service/auth/auth.service';
+import {v4 as uuid} from 'uuid';
 
 @Component({
   selector: 'app-task-management',
@@ -30,7 +31,16 @@ export class ProjectManagementComponent implements OnInit {
   todo: Observable<Task[]> | undefined;
   inProgress: Observable<Task[]> | undefined;
   done: Observable<Task[]> | undefined;
-  
+
+  @HostListener('document:keydown', ['$event'])
+  documentKeyDown(event: KeyboardEvent): void {
+    if (event.key == 'r') {
+      this.syncTask();
+    } else if (event.ctrlKey && event.key == 'a') {
+      this.newTask();
+    }
+
+  }
 
   syncTask() {
     console.log("start sync " + new Date().toISOString().slice(0, 19));
@@ -68,7 +78,10 @@ export class ProjectManagementComponent implements OnInit {
         if (!result) {
           return;
         }
-        this.dataset.insertTask("todo", result.task);
+        this.dataset.insertTask("todo", {
+          id: uuid(),
+          ...result.task,
+        });
       });
   }
 
