@@ -1,113 +1,99 @@
-import { Component } from '@angular/core';
-import { Task } from './task/task';
-import { TaskDialogComponent, TaskDialogResult } from './task-dialog/task-dialog.component';
-
-import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
-import { MatDialog } from '@angular/material/dialog';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
-import { CollectionList, DatasetService } from 'service/dataset.service';
+import { Component, HostListener } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'service/auth/auth.service';
+import { ButtonLabelSpec } from './shared/dataset/button_label_spec';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss', './shared/shared-style.scss']
 })
 export class AppComponent {
-  constructor(private dialog: MatDialog, private store: AngularFirestore, private dataset: DatasetService) { }
+  constructor(private route: Router, public authService: AuthService, private activeRoute: ActivatedRoute) { }
 
   title = 'FinNote';
-  dialogWidth: string = "270px";
+  mode = new FormControl('over');
 
-  todo: Observable<Task[]> | undefined;
-  inProgress: Observable<Task[]> | undefined;
-  done: Observable<Task[]> | undefined;
+  buttonSpecList: ButtonLabelSpec.AsObject[] = [
+  // {
+  //   key: "key ha",
+  //   displayName: "key name 1",
+  //   color: "red",
+  //   order: 0,
+  //   description: "",
+  //   shortcutKey: "T",
+  //   // itemCount: 0,
+  // }, {
+  //   key: "signIn",
+  //   displayName: "Sign In",
+  //   color: "red",
+  //   order: 0,
+  //   description: "",
+  //   shortcutKey: "T",
+  //   // itemCount: 0,
+  // },
   
+  {
+    key: "p",
+    displayName: "Project Management",
+    ref: "project-management",
+    order: 0,
+    description: "Go to PM",
+    shortcutKey: "P",
+    // color: "red",
+    icon: "table_view", 
+    // itemCount: 0,
+  },
+  {
+    key: "t",
+    displayName: "Text Editor",
+    ref: "text-editor",
+    order: 1,
+    description: "Go to TE",
+    shortcutKey: "T",
+    // color: "green",
+    icon: "article", 
+    // itemCount: 0,
+  },
+  {
+    key: "t",
+    displayName: "Budget Planner",
+    ref: "budget-planner",
+    order: 1,
+    description: "Go to C",
+    shortcutKey: "C",
+    color: "yellow",
+    icon: "calendar_month", 
+  },
+  ];
 
-  syncTask() {
-    console.log("start sync " + new Date().toISOString().slice(0, 19));
-    this.todo = this.dataset.getTodo();
-    this.inProgress = this.dataset.getInProgress();
-    this.done = this.dataset.getDone();
-    
-    this.todo.subscribe(thingList => {
-      thingList.forEach(thing => {
-        console.log("> todo: " + thing.title + ", " + thing.description);
-      })
-    });
-    
-    this.inProgress.subscribe(thingList => {
-      thingList.forEach(thing => {
-        console.log("> inProgress: " + thing.title + ", " + thing.description);
-      })
-    });
+  // @HostListener('keydown.p', ['$event'])
+  // @HostListener('keydown.t', ['$event'])
+  // documentKeyDown(event: KeyboardEvent): void {
+  // }
+  
+  changeRoute(spec: ButtonLabelSpec.AsObject) {
+    console.log("changeRoute app")
+    if (spec.ref != undefined) {
 
-    this.done.subscribe(thingList => {
-      thingList.forEach(thing => {
-        console.log("> done: " + thing.title + ", " + thing.description);
-      })
-    });
-  }
-
-  newTask(): void {
-    const dialogRef = this.dialog.open(TaskDialogComponent, {
-      width: this.dialogWidth,
-      data: {
-        task: {},
-      },
-    });
-    dialogRef.afterClosed().subscribe((result: TaskDialogResult) => {
-        if (!result) {
-          return;
-        }
-        this.dataset.insertTask("todo", result.task);
-      });
-  }
-
-  editTask(list: CollectionList, task: Task): void {
-    const dialogRef = this.dialog.open(TaskDialogComponent, {
-      width: this.dialogWidth,
-      data: {
-        task,
-        enableDelete: true,
-      },
-    });
-    dialogRef.afterClosed().subscribe((result: TaskDialogResult) => {
-      if (!result) {
-        return;
-      }
-      if (result.delete) {
-        this.dataset.deleteTask(list, task);
+      if (spec.ref == "paytgt") {
+        this.authService.navigatePage("./paytgt");
       } else {
-        this.dataset.updateTask(list, task);
+        this.authService.navigatePage(spec.ref);
       }
-    });
+
+    } else {
+      this.logout();
+    }
   }
 
-  drop(event: CdkDragDrop<Task[] | null>): void {
-    if (event.previousContainer === event.container) {
-      return;
-    }
-    if (!event.previousContainer.data || !event.container.data) {
-      return;
-    }
-    const item: Task = event.previousContainer.data[event.previousIndex];
-
-    const idP = event.previousContainer.id as CollectionList;
-
-    this.store.firestore.runTransaction(() => {
-      const promise = Promise.all([
-        this.dataset.deleteTask(event.previousContainer.id as CollectionList, item),
-        this.dataset.insertTask(event.container.id as CollectionList, item)
-      ]);
-      return promise;
-    });
-    transferArrayItem(
-      event.previousContainer.data,
-      event.container.data,
-      event.previousIndex,
-      event.currentIndex
-    );
+  logout() {
+    this.authService.logout();
+  }
+  
+  get loginStatus(): boolean {
+    return this.authService.getUserProfile() == null;
   }
 
 }

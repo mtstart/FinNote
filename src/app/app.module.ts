@@ -3,51 +3,54 @@ import { AppComponent } from './app.component';
 import { TaskComponent } from './task/task.component';
 
 import { NgModule } from '@angular/core';
-import { DragDropModule } from "@angular/cdk/drag-drop";
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { TaskDialogComponent } from './task-dialog/task-dialog.component';
-import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import { DragDropModule } from "@angular/cdk/drag-drop";
 
 import { environment } from '../environments/environment';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { TaskDialogComponent } from './task-dialog/task-dialog.component';
+import { ProjectManagementComponent } from './project-management/project-management.component';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { AuthService } from 'service/auth/auth.service';
+import { MaterialModule } from "./material/material.module";
+import { NavigationComponent } from './navigation/navigation.component';
+import { ButtonComponent } from './shared/button/button.component';
+import { TextEditorComponent } from './text-editor/text-editor.component';
+import { TypeBubbleComponent } from './shared/type-bubble/type-bubble.component';
+import { BudgetPlannerComponent } from './budget-planner/budget-planner.component';
+import { PaytgtComponent } from './budget-planner/paytgt/paytgt.component';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     TaskComponent,
-    TaskDialogComponent
+    TaskDialogComponent,
+    ProjectManagementComponent,
+    SignInComponent,
+    NavigationComponent,
+    ButtonComponent,
+    TextEditorComponent,
+    TypeBubbleComponent,
+    BudgetPlannerComponent,
+    PaytgtComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     DragDropModule,
-    FormsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatCardModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatInputModule,
-
+    MaterialModule,
     
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     // provideFirebaseApp(() => initializeApp(environment.firebase)),
     // provideFirestore(() => getFirestore()),
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

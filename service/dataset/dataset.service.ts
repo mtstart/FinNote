@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Task } from '../src/app/task/task';
+import { Task } from 'src/app/task/task';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { map, Observable } from 'rxjs';
 import { TaskDialogComponent, TaskDialogResult } from 'src/app/task-dialog/task-dialog.component';
@@ -75,6 +75,10 @@ export class DatasetService {
   }
 
   public updateTask(list: CollectionList, task: Task): void {
+    this.store.collection(list).doc(task.id).update(task);
+  }
+
+  public changeAll(list: CollectionList, task: Task): void {
     this.store.collection(list).doc(task.id).update(task);
   }
 

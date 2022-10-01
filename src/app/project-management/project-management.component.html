@@ -1,0 +1,89 @@
+
+<div class="content-wrapper">
+  <div class="content-real">
+
+    <div class="ordinary-section">
+      <button mat-raised-button color="primary" (click)="syncTask()">
+        Refresh <mat-icon>refresh</mat-icon>
+      </button>
+    
+      <button (click)="newTask()" mat-button>
+        New Task <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  
+    <!-- <mdc-linear-progress *ngIf="navigating"></mdc-linear-progress> -->
+
+    <div class="task-list-container">
+      <div class="task-block-list">
+        <h2>Backlog</h2>
+  
+        <mat-card
+          cdkDropList
+          id="todo"
+          #todoList="cdkDropList"
+          [cdkDropListData]="todo | async"
+          [cdkDropListConnectedTo]="[doneList, inProgressList]"
+          (cdkDropListDropped)="drop($event)"
+          class="list task-list">
+          <p class="empty-label" *ngIf="(todo | async)?.length === 0">Empty list</p>
+          <app-task (edit)="editTask('todo', $event)" *ngFor="let task of todo | async" cdkDrag [task]="task"></app-task>
+          
+          <shared-button
+            [selected]="false"  
+            [disabled]="false"
+            displayName="add"
+            leadingIcon="add"
+            [showSelectedIcon]="true"
+            (click)="newTask()" >
+          </shared-button>
+        
+        </mat-card>
+      </div>
+  
+      <div class="task-block-list">
+        <h2>In progress</h2>
+  
+        <mat-card
+          cdkDropList
+          id="inProgress"
+          #inProgressList="cdkDropList"
+          [cdkDropListData]="inProgress | async"
+          [cdkDropListConnectedTo]="[todoList, doneList]"
+          (cdkDropListDropped)="drop($event)"
+          class="list task-list">
+          <p class="empty-label" *ngIf="(inProgress | async)?.length === 0">Empty list</p>
+          <app-task (edit)="editTask('inProgress', $event)" *ngFor="let task of inProgress | async" cdkDrag [task]="task"></app-task>
+        </mat-card>
+      </div>
+  
+      <div class="task-block-list">
+        <h2>Done</h2>
+  
+        <mat-card
+          cdkDropList
+          id="done"
+          #doneList="cdkDropList"
+          [cdkDropListData]="done | async"
+          [cdkDropListConnectedTo]="[todoList, inProgressList]"
+          (cdkDropListDropped)="drop($event)"
+          class="list task-list">
+          <p class="empty-label" *ngIf="(done | async)?.length === 0">Empty list</p>
+          <app-task (edit)="editTask('done', $event)" *ngFor="let task of done | async" cdkDrag [task]="task"></app-task>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- <div>
+      <div style="
+        height: 1000px;
+        background-color: yellow;
+        border: 1px solid blue;
+      ">
+        haha long div
+      </div>
+    </div> -->
+
+  </div>
+
+</div>
