@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'service/auth/auth.service';
 import { ButtonHeight } from '../shared/button/button.component';
 import { ButtonLabelSpec } from '../shared/dataset/button_label_spec';
+
 
 @Component({
   selector: 'app-budget-planner',
@@ -11,13 +12,19 @@ import { ButtonLabelSpec } from '../shared/dataset/button_label_spec';
 })
 export class BudgetPlannerComponent implements OnInit {
 
-  constructor(private route: Router, public authService: AuthService) { }
+  constructor(private route: Router, public authService: AuthService, private activeRoute: ActivatedRoute) {
+    route.events.subscribe((thing) => {
+      this.currentRoute = route.url;
+    })
+  }
+
+  currentRoute!: string;
 
   plannerSpecList: ButtonLabelSpec.AsObject[] = [
     {
       key: "t",
       displayName: "Pay Together",
-      ref: "pay-together",
+      ref: "paytgt",
       size: ButtonHeight.Medium,
       order: 0,
       description: "Go to PT",
@@ -27,6 +34,7 @@ export class BudgetPlannerComponent implements OnInit {
     {
       key: "p",
       displayName: "Planner",
+      ref: "Planner",
       size: ButtonHeight.Medium,
       order: 0,
       description: "Go to P",
@@ -36,14 +44,13 @@ export class BudgetPlannerComponent implements OnInit {
   ]
 
   ngOnInit(): void {
+    console.log("currentRoute: " + this.currentRoute);
+    // console.log(this.currentRoute === '/budget-planner');
   }
 
-  changeRoute(spec: ButtonLabelSpec.AsObject) {
-    // if (spec.ref != undefined) {
-    //   this.authService.navigatePage(spec.ref);
-    // } else {
-    //   this.logout();
-    // }
+  changeRouteBP(spec: ButtonLabelSpec.AsObject) {
+    // this.route.navigate(["paytgt"], { relativeTo: this.activeRoute });
+    this.authService.navigatePage(spec.ref, false, this.currentRoute)
   }
 
   logout() {

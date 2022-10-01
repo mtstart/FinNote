@@ -5,12 +5,13 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { ProjectManagementComponent } from './project-management/project-management.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
 import { BudgetPlannerComponent } from './budget-planner/budget-planner.component';
+import { PaytgtComponent } from './budget-planner/paytgt/paytgt.component';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: '/signIn'
+    redirectTo: 'signIn'
   },
   {
     path: 'signIn',
@@ -29,11 +30,11 @@ const routes: Routes = [
     path: 'budget-planner',
     component: BudgetPlannerComponent,
     children: [
-      // {path: 'PayTogether', component: DatasetListComponent, pathMatch: 'full'},
+      {path: 'paytgt', component: PaytgtComponent, pathMatch: 'full'},
       // {path: 'Planner', component: DatasetCreateComponent, pathMatch: 'full'},
     ],
   },
-  { path: "*", redirectTo: "signIn" }
+  // { path: "*", redirectTo: "signIn" }
 ];
 
 @NgModule({

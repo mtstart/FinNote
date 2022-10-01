@@ -10,6 +10,7 @@ export enum ButtonHeight {
 export enum DefaultButtonSpec {
   key = "Button", 
   displayName = "Button",
+  ref = "",
   shortcutKey = "z", 
   description = "Button", 
   icon = "touch_app"

@@ -5,7 +5,7 @@ export namespace ButtonLabelSpec {
     export type AsObject = {
         key: string,
         displayName: string,
-        ref?: string,
+        ref: string,
         size?: ButtonHeight,
         order?: number,
         description: string,

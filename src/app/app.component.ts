@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'service/auth/auth.service';
 import { ButtonLabelSpec } from './shared/dataset/button_label_spec';
 
@@ -10,7 +10,7 @@ import { ButtonLabelSpec } from './shared/dataset/button_label_spec';
   styleUrls: ['./app.component.scss', './shared/shared-style.scss']
 })
 export class AppComponent {
-  constructor(private route: Router, public authService: AuthService) { }
+  constructor(private route: Router, public authService: AuthService, private activeRoute: ActivatedRoute) { }
 
   title = 'FinNote';
   mode = new FormControl('over');
@@ -74,8 +74,15 @@ export class AppComponent {
   // }
   
   changeRoute(spec: ButtonLabelSpec.AsObject) {
+    console.log("changeRoute app")
     if (spec.ref != undefined) {
-      this.authService.navigatePage(spec.ref);
+
+      if (spec.ref == "paytgt") {
+        this.authService.navigatePage("./paytgt");
+      } else {
+        this.authService.navigatePage(spec.ref);
+      }
+
     } else {
       this.logout();
     }

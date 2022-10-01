@@ -21,6 +21,7 @@ import { ButtonComponent } from './shared/button/button.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
 import { TypeBubbleComponent } from './shared/type-bubble/type-bubble.component';
 import { BudgetPlannerComponent } from './budget-planner/budget-planner.component';
+import { PaytgtComponent } from './budget-planner/paytgt/paytgt.component';
 
 
 
@@ -35,7 +36,8 @@ import { BudgetPlannerComponent } from './budget-planner/budget-planner.componen
     ButtonComponent,
     TextEditorComponent,
     TypeBubbleComponent,
-    BudgetPlannerComponent
+    BudgetPlannerComponent,
+    PaytgtComponent
   ],
   imports: [
     BrowserModule,

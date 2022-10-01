@@ -2,7 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, User, user, signOut } from "@angular/fire/auth";
 import { onAuthStateChanged, reauthenticateWithCredential, UserCredential } from 'firebase/auth';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthResponse, AuthResponseUser } from './authControl';
 import { FirebaseError } from '@angular/fire/app';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -13,12 +13,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class AuthService {
 
-  constructor(public afAuth: AngularFireAuth, private route: Router, private zone: NgZone) {
+  constructor(public afAuth: AngularFireAuth, private route: Router, private zone: NgZone, private activeRoute: ActivatedRoute) {
     this.detectUserStatusChange();
   }
 
   private authStatusSub = new BehaviorSubject(this.getUserProfile);
   currentAuthStatus: Observable<() => User | null> = this.authStatusSub.asObservable();
+  
+  currentPath: string = this.route.url;
 
   // version 1
   public SignUp(email: string, password: string) {
@@ -68,7 +70,7 @@ export class AuthService {
         console.log("Successfully logged in" + user.email);
 
         // this.StartApp();
-        this.navigatePage("project-management");
+        this.navigatePage("project-management", false, undefined);
       })
       .catch((error) => {
         this.ShowError(error);
@@ -94,25 +96,56 @@ export class AuthService {
     this.authStatusSub = new BehaviorSubject(this.getUserProfile);
 
     onAuthStateChanged(auth, (user) => {
-      if (user) {
+      if (!user) {
         // console.log("status changed: " + currentNav);
-        this.navigatePage("project-management", user == undefined);
+        // this.navigatePage("project-management", user == undefined);
+        this.navigatePage("signin", true);
       }
     });
 
+
   }
 
-  public navigatePage(page: string, leave?: boolean) {
+  public navigatePage(page: string, leave?: boolean, parentPath?: string) {
     if (page == undefined) return;
-
     const auth = getAuth();
     const user = auth.currentUser;
+    console.log("page param: " + page);
 
     if (user) {
       const uid = user.uid;
-      this.zone.run(() => {
-        this.route.navigate(['/' + page]);
-      })
+
+      // if(parentRoute == undefined) {
+      //   this.zone.run(() => {
+      //     this.route.navigate(['/' + page]);
+      //   })
+      // } else {
+      //   this.zone.run(() => {
+      //     // this.route.navigate(['/budget-planner/paytgt']);  // this will go to signin page
+      //     // this.route.navigate(['../paytgt'], {relativeTo: this.activeRoute});
+      //     this.route.navigate(['/budget-planner', 'paytgt'], {relativeTo: this.activeRoute});
+      //     // this.route.navigate(["../budgete-planner/paytgt"]);
+      //     // this.route.navigate(["../paytgt"]);
+      //     // this.route.navigate(['/budget-planner', 'paytgt']);
+      //   })
+      // }
+      // this.zone.run(() => {
+      //   this.route.navigate(['/' + page]);
+      // })
+
+      if (!parentPath) {
+        this.zone.run(() => {
+          this.route.navigate(['/' + page]);
+        })
+      } else {
+        this.zone.run(() => {
+          this.route.navigate([parentPath, page]);
+        })
+      }
+
+      this.currentPath = page;
+      console.log("path: " + this.currentPath);
+
     }
     else {
       if (leave) {
@@ -170,7 +203,6 @@ export class AuthService {
     window.alert(errorCode + ": " + errorMessage);
     console.log(errorCode + ": " + errorMessage);
   }
-
 
 }
 function promptForCredentials() {

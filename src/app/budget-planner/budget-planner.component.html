@@ -1,16 +1,28 @@
-<div>
+<div *ngIf="currentRoute == '/budget-planner'">
     <div>Choose Task</div>
 
-    <div style="display: flex; flex-direction: row;">
+    <div style="display: flex; flex-direction: row;" 
+    >
         <shared-button 
         *ngFor="let spec of plannerSpecList"
         [buttonSpec]="spec"
         leadingIcon="{{ spec.icon ? spec.icon : 'lens_blur' }}"
         [grid]="true"
         [showSelectedIcon]="true"
-        (ClickEvent)="changeRoute(spec)"
         [selected]="false"  
         [disabled]="false"
+        (click)="changeRouteBP(spec)"
         ></shared-button>
+        <!-- [routerLink]="['./' + spec.ref]" -->
     </div>
+
 </div>
+
+<ng-container [ngSwitch]="currentRoute" >
+    <div *ngSwitchCase="'/budget-planner'" >/budeget-planner</div>
+    <div *ngSwitchCase="'/paytgt'" >/paytgt</div>
+</ng-container>
+
+<router-outlet></router-outlet>
+<!-- <app-paytgt></app-paytgt> -->
+<!-- <div [routerLink]="['/budget-planner/paytgt']"></div> -->
