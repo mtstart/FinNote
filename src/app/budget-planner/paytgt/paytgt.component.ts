@@ -8,7 +8,7 @@ import { Dinner, Orders } from './Pay';
 @Component({
   selector: 'app-paytgt',
   templateUrl: './paytgt.component.html',
-  styleUrls: ['./paytgt.component.scss']
+  styleUrls: ['./paytgt.component.scss', '../../app.component.scss', '../../project-management/project-management.component.scss']
 })
 export class PaytgtComponent implements OnInit {
 
@@ -28,9 +28,9 @@ export class PaytgtComponent implements OnInit {
 
     this.dinnerList.subscribe(thingList => {
       thingList.forEach(dinner => {
-        this.loadingData = true;
         console.log("> dinner: " + dinner.name + ", " + dinner.id + ", " + dinner.dinnerID + ", " + dinner.icon);
       })
+      if (thingList.length > 0) this.loadingData = true;
     });
   }
 

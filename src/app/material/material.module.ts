@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [],
@@ -32,6 +33,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
     MatSidenavModule,
     MatRadioModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
 
   ]
 })
