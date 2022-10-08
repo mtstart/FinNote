@@ -23,17 +23,17 @@
             <mat-spinner></mat-spinner>
         </div>
 
-        <div class="task-list-container">
+        <div class="content">
 
 
             <div *ngFor="let dinner of dinnerList | async">
                 <!-- Dinner: {{dinner.name}}, {{dinner.icon}} -->
 
                 <shared-button
+                [buttonSpec]="dinner | dinnerToButtonSpec"
                 [selected]="false"  
                 [disabled]="false"
                 [grid]="true"
-                displayName= {{dinner.name}}
                 leadingIcon="{{ dinner.icon ? dinner.icon : 'lens_blur' }}"
                 [showSelectedIcon]="true"                
                 ></shared-button>

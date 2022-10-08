@@ -22,6 +22,7 @@ import { TextEditorComponent } from './text-editor/text-editor.component';
 import { TypeBubbleComponent } from './shared/type-bubble/type-bubble.component';
 import { BudgetPlannerComponent } from './budget-planner/budget-planner.component';
 import { PaytgtComponent } from './budget-planner/paytgt/paytgt.component';
+import { PipeModule } from './shared/pipe/pipe.module';
 
 
 
@@ -49,6 +50,8 @@ import { PaytgtComponent } from './budget-planner/paytgt/paytgt.component';
     AngularFirestoreModule,
     // provideFirebaseApp(() => initializeApp(environment.firebase)),
     // provideFirestore(() => getFirestore()),
+
+    PipeModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

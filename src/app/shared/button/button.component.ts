@@ -60,6 +60,10 @@ export class ButtonComponent implements OnInit {
     return this.grid && this.buttonSpec?.size == ButtonHeight.Large ? this.buttonHeight: undefined;
   }
   
+  get buttonFontSize(): string | undefined {
+    return this.grid && this.buttonSpec?.size != ButtonHeight.Small ? "large": undefined;
+  }
+  
   buttonClicked($event: MouseEvent): void {
     this.ClickEvent.emit($event);
   }
