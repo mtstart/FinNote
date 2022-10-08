@@ -1,1 +1,37 @@
-<p>paytgt works!</p>
+
+<button (click)="doTheTest()" >test function</button><br><br><br>
+<button (click)="syncDinner()" >Sync</button><br><br><br>
+<button (click)="AddNewDinner()" >Add new order</button>
+
+<pre>Occucation: (dropdown to choose dinner)
+
+Members: (circles here)
+
+-----------------------------------
+show dishes details here + price            member icon
+
+
+-----------------------------------
+                                            total price
+
+                (Button)  Generate Result
+-----------------------------------
+                                Paid
+member icon:            sum     (checkbox)
+member icon:            sum     (checkbox)
+member icon:            sum     (checkbox)
+----------------------------
+3 Members               total sum
+</pre>
+
+<div>
+    <div *ngFor="let dinner of dinnerList | async"> Dinner: {{dinner.name}}, {{dinner.icon}}
+
+        <div *ngFor="let order of dinner.orders">
+            <div>order.name</div>
+            <div *ngFor="let member of order.sharedMember">Member: {{member}} </div>
+        </div>
+
+    </div>
+
+</div>

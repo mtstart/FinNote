@@ -6,9 +6,10 @@ import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
-import { DatasetService, CollectionList } from 'service/dataset/dataset.service';
+import { DatasetService, ProjectStatusList } from 'service/dataset/dataset.service';
 import { AuthService } from 'service/auth/auth.service';
 import {v4 as uuid} from 'uuid';
+// import { Dinner } from '../budget-planner/paytgt/Pay';
 
 @Component({
   selector: 'app-task-management',
@@ -85,7 +86,7 @@ export class ProjectManagementComponent implements OnInit {
       });
   }
 
-  editTask(list: CollectionList, task: Task): void {
+  editTask(list: ProjectStatusList, task: Task): void {
     const dialogRef = this.dialog.open(TaskDialogComponent, {
       width: this.dialogWidth,
       data: {
@@ -114,12 +115,12 @@ export class ProjectManagementComponent implements OnInit {
     }
     const item: Task = event.previousContainer.data[event.previousIndex];
 
-    const idP = event.previousContainer.id as CollectionList;
+    const idP = event.previousContainer.id as ProjectStatusList;
 
     this.store.firestore.runTransaction(() => {
       const promise = Promise.all([
-        this.dataset.deleteTask(event.previousContainer.id as CollectionList, item),
-        this.dataset.insertTask(event.container.id as CollectionList, item)
+        this.dataset.deleteTask(event.previousContainer.id as ProjectStatusList, item),
+        this.dataset.insertTask(event.container.id as ProjectStatusList, item)
       ]);
       return promise;
     });

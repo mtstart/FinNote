@@ -76,13 +76,7 @@ export class AppComponent {
   changeRoute(spec: ButtonLabelSpec.AsObject) {
     console.log("changeRoute app")
     if (spec.ref != undefined) {
-
-      if (spec.ref == "paytgt") {
-        this.authService.navigatePage("./paytgt");
-      } else {
-        this.authService.navigatePage(spec.ref);
-      }
-
+      this.authService.navigatePage(spec.ref);
     } else {
       this.logout();
     }
