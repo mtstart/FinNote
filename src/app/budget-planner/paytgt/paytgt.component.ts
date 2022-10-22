@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { MatSelectChange } from '@angular/material/select';
+import { filter, first, Observable } from 'rxjs';
 import { AuthService } from 'service/auth/auth.service';
 import { DatasetService } from 'service/dataset/dataset.service';
 import { Dinner, Orders } from './Pay';
@@ -8,7 +9,7 @@ import { Dinner, Orders } from './Pay';
 @Component({
   selector: 'app-paytgt',
   templateUrl: './paytgt.component.html',
-  styleUrls: ['./paytgt.component.scss', '../../app.component.scss', '../../project-management/project-management.component.scss']
+  styleUrls: ['./paytgt.component.scss', '../../app.component.scss', '../../shared/shared-style.scss', '../../project-management/project-management.component.scss']
 })
 export class PaytgtComponent implements OnInit {
 
@@ -16,6 +17,8 @@ export class PaytgtComponent implements OnInit {
 
   loadingData: boolean = false;
   dinnerList: Observable<Dinner[]>| undefined;
+  dinner$: Observable<Dinner> |undefined;
+  dinner: Dinner | undefined;
 
   ngOnInit(): void {
     this.syncDinner();
@@ -38,12 +41,35 @@ export class PaytgtComponent implements OnInit {
     this.dataset.testQuerasdfy();
   }
 
-  AddNewDinner(): void {
+  SelectDinner(event: MatSelectChange) {
+    console.log('event: ' + event)
+
+    this.dinner$ = this.dataset.getOneDinner(String(event));
+
+    this.dinner$.forEach(din => {
+      console.log(din.name + ", " + din.id);
+      this.dinner = din;
+
+      din.orders.forEach(order => {
+        console.log("order: " + order.dinnerID + ", " + order.name + ", " + order.price + ", " + order.sharedMember);
+
+        order.sharedMember.forEach(member => {
+          console.log("member: " + member);
+        })
+
+      })
+    })
+
+  }
+
+  AddNewOrder(): void {
+    if (this.dinner == undefined) return;
+    
     const newOrder: Orders = {
       name: '',
       price: 0,
       // id: uuid(),
-      dinnerID: 'a2',
+      dinnerID: this.dinner.dinnerID,
       sharedMember: []
     }
 

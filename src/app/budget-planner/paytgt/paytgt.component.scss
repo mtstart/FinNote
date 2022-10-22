@@ -4,3 +4,32 @@
     flex: 1;
     width: 100%;
 }
+
+.page-title-text {
+    font-family: 'Montserrat', 'Roboto', monospace;
+    font-size: x-large;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.order-section {
+    min-height: 50px;
+}
+
+.order-group {
+    // display: flex;
+    // flex-direction: row;
+    display: grid;
+    grid-template-columns: 2fr 1fr 4fr;
+
+    padding: 8px 8px;
+    margin: 10px 0px;
+    border-radius: 10px;
+    background-color: bisque;
+
+    font-size: 18px;
+}
+
+// .member-icon {
+// }

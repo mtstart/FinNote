@@ -93,6 +93,16 @@ export class DatasetService {
     return this.dinner = this.store.collection('Dinner').valueChanges({ idField: 'id' }) as Observable<Dinner[]>;
   }
 
+  public getOneDinner(dinnerID: string): Observable<Dinner> {    
+    // return this.store.collection('Dinner', ref => ref.where("dinnerID", "==", order.dinnerID));
+
+    // const jhgkdinner = this.store.collection('Dinner').doc('stl5E7ptBFrf4pJAxVSG').valueChanges() as Observable<Dinner>;
+    const jhgkdinner = this.store.collection('Dinner').doc(dinnerID).valueChanges() as Observable<Dinner>;
+
+    return jhgkdinner;
+
+  }
+
   public testQuerasdfy() {
     // let asdf = this.store.collection('Dinner');
     // const not_found_item = this.store.collection('Dinner', ref => ref.where('name', '==', 'dinner_2'));
@@ -185,7 +195,7 @@ export class DatasetService {
       name: 'order_1',
       price: 10,
       dinnerID: 'a',
-      sharedMember: [newMember.id]
+      sharedMember: [newMember]
     }
 
     const newDinner: Dinner = {
@@ -204,7 +214,6 @@ export class DatasetService {
     this.store.collection('Dinner').doc('stl5E7ptBFrf4pJAxVSG').update(newDinner)
 
   }
-
 
 
 }

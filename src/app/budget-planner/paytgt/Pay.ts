@@ -32,18 +32,18 @@ export interface Dinner {
 
 
 export interface Eaters {
+    icon: string;
     id: string;
     name: string;
-    teamJoined: number;
     sum: number;
-    icon: string;
+    teamJoined?: number;
 }
 
 export interface Orders {
     name: string;
     price: number;
     dinnerID: string;
-    sharedMember: string[]; //member id
+    sharedMember: Eaters[]; //member id
 }
 // In database: Orders
 // name: string;

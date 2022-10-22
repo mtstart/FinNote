@@ -1,49 +1,97 @@
 <div class="content-wrapper">
     <div class="content-real">
 
-        <div class="ordinary-section">
-            <button mat-raised-button color="primary" (click)="syncDinner()">
-                Refresh <mat-icon>refresh</mat-icon>
-            </button>
-
-            <button (click)="doTheTest()" mat-button>
-                test function <mat-icon>flag</mat-icon>
-            </button>
-
-            <button (click)="AddNewDinner()" mat-button>
-                Add new order <mat-icon>add</mat-icon>
-            </button>
-        </div>
-
         <!-- <button (click)="doTheTest()">test function</button><br><br><br> -->
         <!-- <button (click)="syncDinner()">Sync</button><br><br><br> -->
         <!-- <button (click)="AddNewDinner()">Add new order</button> -->
 
-        <div *ngIf="!loadingData" class="Loading-Spinner">
-            <mat-spinner></mat-spinner>
-        </div>
 
         <div class="content">
 
+            <div class="page-title-text ordinary-section" style="align-items: center;">
+                Pick the Occasion
+                <div *ngIf="!loadingData" style="padding-left: 10px;">
+                    <mat-spinner [diameter]="30"></mat-spinner>
+                </div>
+            </div>
+            <!-- <div *ngIf="!loadingData" class="Loading-Spinner">
+                <mat-spinner></mat-spinner>
+            </div> -->
+            
+            <mat-form-field appearance="fill">
+                <mat-label>Occasion</mat-label>
+                <mat-select (valueChange)="SelectDinner($event)">
 
-            <div *ngFor="let dinner of dinnerList | async">
-                <!-- Dinner: {{dinner.name}}, {{dinner.icon}} -->
+                    <mat-option *ngIf="!loadingData" [disabled]="true">Loading..</mat-option>
 
-                <shared-button
-                [buttonSpec]="dinner | dinnerToButtonSpec"
-                [selected]="false"  
-                [disabled]="false"
-                [grid]="true"
-                leadingIcon="{{ dinner.icon ? dinner.icon : 'lens_blur' }}"
-                [showSelectedIcon]="true"                
-                ></shared-button>
+                    <mat-option *ngFor="let dinner of dinnerList | async as Dinner" [value]="dinner.id">
+                        {{ dinner.name }}
+                    </mat-option>
 
-                <div *ngFor="let order of dinner.orders">
-                    <div>order.name</div>
-                    <div *ngFor="let member of order.sharedMember">Member: {{member}} </div>
+                    <mat-option>
+                        <mat-icon>add</mat-icon> New Order
+                    </mat-option>
+
+                </mat-select>
+            </mat-form-field>
+
+            <div class="ordinary-section" style="padding-top: 18px;">
+                <button mat-raised-button color="primary" (click)="syncDinner()">
+                    Refresh <mat-icon>refresh</mat-icon>
+                </button>
+    
+                <button (click)="doTheTest()" mat-button>
+                    test function <mat-icon>flag</mat-icon>
+                </button>
+    
+                <button (click)="AddNewOrder()" mat-button>
+                    Add new order <mat-icon>add</mat-icon>
+                </button>
+            </div>
+
+            <div class="order-section">
+                <div *ngFor="let member of (dinner$|async)?.members">
+                    <div>{{ member.name }}</div>
+                    <div>
+                        <mat-icon>{{ member.icon }}</mat-icon>
+                    </div>
+                </div>                
+            </div>
+
+
+            <!-- <div>The dinner: {{(dinner|async)?.name}} </div>
+            orders: -->
+            <div class="order-section">
+                <div *ngFor="let order of (dinner$|async)?.orders" class="order-group">
+
+                    <div> {{ order.name }} </div>
+
+                    <div> $ {{ order.price }} </div>
+
+                    <div style="display: flex; flex-direction: row-reverse;">
+                        <div *ngFor="let member of order.sharedMember">
+                            <!-- {{ member.name }} -->
+                            <mat-icon> {{member.icon}} </mat-icon>
+                        </div>
+                    </div>
+
                 </div>
 
+
+
             </div>
+            <div class="order-group">
+                <div>one</div>
+                <div>two</div>
+                <!-- <div style="width: 100%; align-content: center;">two</div> -->
+                <div style="display: flex; flex-direction: row-reverse;">
+                    <mat-icon>location_city</mat-icon>
+                    <mat-icon>notifications</mat-icon>
+                    <mat-icon>control_point_duplicate</mat-icon>
+                    <mat-icon>location_searching</mat-icon>
+                </div>
+            </div>
+
         </div>
 
 

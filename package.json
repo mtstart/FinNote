@@ -24,6 +24,7 @@
     "@improbable-eng/grpc-web": "^0.15.0",
     "@material/progress-indicator": "^14.0.0",
     "@material/radio": "^14.0.0",
+    "@material/select": "^14.0.0",
     "@material/snackbar": "^14.0.0",
     "@types/google-protobuf": "^3.15.6",
     "angular-material-sidenav": "^0.1.1",
