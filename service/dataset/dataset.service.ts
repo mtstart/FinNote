@@ -6,6 +6,7 @@ import { TaskDialogComponent, TaskDialogResult } from 'src/app/task-dialog/task-
 import { MatDialogRef } from '@angular/material/dialog';
 import { Dinner, Eaters, Orders } from 'src/app/budget-planner/paytgt/Pay';
 import { query } from '@angular/fire/firestore';
+import { v4 as uuid } from "uuid";
 
 export type ProjectStatusList = "done" | "todo" | "inProgress";
 
@@ -165,22 +166,22 @@ export class DatasetService {
       console.log(meal)
     })
 
-    // oldDinner.doc('pVlstXtdWUVYQbi7Cra0').update(order);
+    // // oldDinner.doc('pVlstXtdWUVYQbi7Cra0').update(order);
 
-    const query = oldDinner.ref.where('dinnerID', '==', 'a');
-    query.get().then(querySnapshot => {
-      if (querySnapshot.empty) {
-        console.log('no data found');
-      } else if (querySnapshot.size > 1) {
-        console.log('no unique data');
-      } else {
-        querySnapshot.forEach(documentSnapshot => {
-          // this.selectedUser$ = this.afs.doc(documentSnapshot.ref);
-          // this.afs.doc(documentSnapshot.ref).valueChanges().subscribe(console.log);
-          console.log("ref: " + documentSnapshot.ref)
-        });
-      }
-    });
+    // const query = oldDinner.ref.where('dinnerID', '==', 'a');
+    // query.get().then(querySnapshot => {
+    //   if (querySnapshot.empty) {
+    //     console.log('no data found');
+    //   } else if (querySnapshot.size > 1) {
+    //     console.log('no unique data');
+    //   } else {
+    //     querySnapshot.forEach(documentSnapshot => {
+    //       // this.selectedUser$ = this.afs.doc(documentSnapshot.ref);
+    //       // this.afs.doc(documentSnapshot.ref).valueChanges().subscribe(console.log);
+    //       console.log("ref: " + documentSnapshot.ref)
+    //     });
+    //   }
+    // });
     
 
     const newMember: Eaters = {
@@ -192,26 +193,28 @@ export class DatasetService {
     }
 
     const newOrder: Orders = { 
-      name: 'order_1',
-      price: 10,
       dinnerID: 'a',
-      sharedMember: [newMember]
+      name: 'order_1',
+      price: 20,
+      sharedMember: []
     }
 
-    const newDinner: Dinner = {
-      id: 'a1',
-      dinnerID: 'a1',
-      name: 'dinner_1',
+    const updatedDinner: Dinner = {
+      id: uuid(),
+      dinnerID: 'a',
+      name: 'dish name',
       icon: 'local_airport',
       members: [],
       orders: [newOrder],
-      totalSum: 100
+      totalSum: 0
     }
+
+    let updatedOder = oldDinner.get();
 
     // oldDinner.add(newOrder);
     // this.store.collection('Dinner').doc(order.dinnerID).update(oldDinner);
     // this.store.collection(list).doc(task.id).update(task);
-    this.store.collection('Dinner').doc('stl5E7ptBFrf4pJAxVSG').update(newDinner)
+    this.store.collection('Dinner').doc('stl5E7ptBFrf4pJAxVSG').update(updatedDinner)
 
   }
 

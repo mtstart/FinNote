@@ -42,7 +42,7 @@ export class PaytgtComponent implements OnInit {
   }
 
   SelectDinner(event: MatSelectChange) {
-    console.log('event: ' + event)
+    // console.log('event: ' + event)
 
     this.dinner$ = this.dataset.getOneDinner(String(event));
 
@@ -51,10 +51,10 @@ export class PaytgtComponent implements OnInit {
       this.dinner = din;
 
       din.orders.forEach(order => {
-        console.log("order: " + order.dinnerID + ", " + order.name + ", " + order.price + ", " + order.sharedMember);
+        // console.log("order: " + order.dinnerID + ", " + order.name + ", " + order.price + ", " + order.sharedMember);
 
         order.sharedMember.forEach(member => {
-          console.log("member: " + member);
+          // console.log("member: " + member);
         })
 
       })
