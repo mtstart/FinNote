@@ -1,7 +1,15 @@
 .ordinary-section {
-    padding: 12px 0px;
+    // padding: 12px 0px;
+    padding-top: 12px;
+    padding-right: 0px;
+    padding-bottom: 12px;
+    padding-left: 0px;
 }
 
 .ordinary-row {
     padding: 8px 4px;
+}
+
+.left-small-space {
+    padding-left: 16px;
 }
