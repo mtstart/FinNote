@@ -1,31 +1,41 @@
-<mat-form-field>
-  <mat-label>Title</mat-label>
-  <input matInput cdkFocusInitial [(ngModel)]="data.task.title" />
-</mat-form-field>
+<div id="task-form">
+  <mat-form-field appearance="fill">
+    <mat-label>Title</mat-label>
+    <input matInput [(ngModel)]="data.task.title" />
+  </mat-form-field>
+  
+  <mat-form-field appearance="fill">
+    <mat-label>Description</mat-label>
+    <textarea matInput [(ngModel)]="data.task.description"></textarea>
+  </mat-form-field>
+  
+  <mat-form-field appearance="fill">
+    <mat-label>Type</mat-label>
+    <input matInput [(ngModel)]="data.task.type" />
+  </mat-form-field>
 
-<mat-form-field>
-  <mat-label>Description</mat-label>
-  <textarea matInput [(ngModel)]="data.task.description"></textarea>
-</mat-form-field>
+</div>
+    
+<div *ngIf="data.task.lastUpdate">
+    Last Update: {{ data.task.lastUpdate.seconds | date: 'yyyy/MM/dd h:mm a' }}
+</div>
 
-<div mat-dialog-actions>
+<div id="controls" mat-dialog-actions>
   
   <button
     *ngIf="data.enableDelete"
-    mat-fab
+    mat-button 
     color="primary"
-    aria-label="Delete"
     [mat-dialog-close]="{ task: data.task, delete: true }">
     <mat-icon>delete</mat-icon>
-  </button>
-
-  <button mat-button (click)="cancel()">
-    <mat-icon>close</mat-icon>
+    Delete
   </button>
   
   <button 
-    mat-button 
+    id="confirm"
+    mat-fab
+    color="primary"
     [mat-dialog-close]="{ task: data.task }">
-    Confirm
+    <mat-icon>done</mat-icon>
   </button>
 </div>

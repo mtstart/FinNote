@@ -33,10 +33,15 @@
 
     .task-type {
         width: fit-content;
+        max-width: 70px;
         // background-color: #9FE5CD;
         border-radius: 20px;
         padding: 4px 10px;
+
         line-height: normal;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     app-type-bubble {

@@ -29,10 +29,7 @@ export class TaskDialogComponent {
   cancel(): void {
     this.data.task.title = this.backupTask.title;
     this.data.task.description = this.backupTask.description;
-    this.data.task.createdDT = new Date();
-    this.data.task.lastUpdate = { seconds: Date.now()};
-    this.data.task.type = "asd";
-    // this.data.task.color = "#E4BA99";
+    this.data.task.type = this.backupTask.type;
     this.dialogRef.close(this.data);
   }
 }

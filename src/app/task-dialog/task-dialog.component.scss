@@ -1,13 +1,23 @@
-mat-form-field {
-    width: 100%;
-    margin: 0.5em 0em 1.2em 0em;
+#task-form {
+    display: flex;
+    flex-direction: column;
+    font-size: large;
 
-    mat-label {
-        font-size: x-large;
+    #close {
+        margin-left: auto;
     }
 
-    input, textarea {
-        font-size: large;
+    mat-form-field {
+        width: 100%;
+        // margin: 0.5em 0em 1.2em 0em;
+        margin: 0;
     }
+}
 
+#controls {
+    display: flex;
+
+    #confirm {
+        margin-left: auto;
+    }
 }

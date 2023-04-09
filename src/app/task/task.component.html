@@ -27,10 +27,6 @@
         <div>
             <p>{{ task.description }}</p>
         </div>
-    
-        <div *ngIf="task.lastUpdate">
-            Last Update: {{ task.lastUpdate.seconds | date: 'yyyy/MM/dd h:mm a' }}
-        </div>
     </div>
 
 </mat-card>

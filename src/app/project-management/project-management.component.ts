@@ -90,7 +90,10 @@ export class ProjectManagementComponent implements OnInit {
     const dialogRef = this.dialog.open(TaskDialogComponent, {
       width: this.dialogWidth,
       data: {
-        task,
+        task: {
+          ...task, 
+          lastUpdate: {seconds: Date.now()}
+        },
         enableDelete: true,
       },
     });
@@ -98,10 +101,11 @@ export class ProjectManagementComponent implements OnInit {
       if (!result) {
         return;
       }
+
       if (result.delete) {
-        this.dataset.deleteTask(list, task);
+        this.dataset.deleteTask(list, result.task);
       } else {
-        this.dataset.updateTask(list, task);
+        this.dataset.updateTask(list, result.task);
       }
     });
   }
@@ -113,7 +117,10 @@ export class ProjectManagementComponent implements OnInit {
     if (!event.previousContainer.data || !event.container.data) {
       return;
     }
-    const item: Task = event.previousContainer.data[event.previousIndex];
+    const item: Task = {
+      ...event.previousContainer.data[event.previousIndex], 
+      lastUpdate: {seconds: Date.now()}
+    };
 
     const idP = event.previousContainer.id as ProjectStatusList;
 
