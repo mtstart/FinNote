@@ -99,7 +99,7 @@ export class AuthService {
       if (!user) {
         // console.log("status changed: " + currentNav);
         // this.navigatePage("project-management", user == undefined);
-        this.navigatePage("signin", true);
+        this.navigatePage("signin", false);
       }
     });
 
