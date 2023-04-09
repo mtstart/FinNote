@@ -1,5 +1,5 @@
 <div id="task-form">
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" color="primary">
     <mat-label>Title</mat-label>
     <input matInput [(ngModel)]="data.task.title" />
   </mat-form-field>
@@ -13,6 +13,13 @@
     <mat-label>Type</mat-label>
     <input matInput [(ngModel)]="data.task.type" />
   </mat-form-field>
+
+  <mat-label>Urgency</mat-label>
+  <mat-radio-group aria-label="Urgency" [(ngModel)]="data.task.urgency" color="primary">
+    <mat-radio-button value="Low">Not Rush</mat-radio-button>
+    <mat-radio-button value="Moderate">Moderate</mat-radio-button>
+    <mat-radio-button value="High">Urgent!!</mat-radio-button>
+  </mat-radio-group>
 
 </div>
     
