@@ -7,6 +7,20 @@ export enum BubbleType {
   Urgency = 3,
 }
 
+export enum UrgencyColors {
+  Low = "blue",
+  Moderate = "orange",
+  High = "brown",
+}
+
+export enum StandardColors {
+  UrgencyLow = "yellow",
+  UrgencyModerate = "orange",
+  UrgencyHigh = "brown",
+  Diabled = "grey", 
+  Default = "white",
+}
+
 @Component({
   selector: 'app-type-bubble',
   templateUrl: './type-bubble.component.html',
@@ -16,36 +30,31 @@ export class TypeBubbleComponent implements OnInit {
 
   constructor() { }
 
-  standardColors: string[] = ['red', 'blue', 'yellow', 'orange', 'green'];
-  statusColors: string[] = ['primary', 'grey'];
-  urgencyColors: string[] = ['500', '700', '800'];
+  // standardColors: string[] = ['red', 'blue', 'yellow', 'orange', 'green'];
 
   @Input() bubbleType: BubbleType | null = null;
   @Input() bubbleValue: string| undefined = "";
   @Input() disabled?: boolean = false;
 
-
   ngOnInit(): void {
   }
 
-
-
   get backgroundColor(): string {
-    if (this.disabled) return 'grey';
+    if (this.disabled) return StandardColors.Diabled;
 
     if (this.bubbleType === BubbleType.Urgency) {
       switch (this.bubbleValue) {
         case Urgency.Low:
-          return 'yellow';
+          return StandardColors.UrgencyLow;
         case Urgency.Moderate:
-          return 'orange';
+          return StandardColors.UrgencyModerate;
         case Urgency.High: 
-          return 'brown';
+          return StandardColors.UrgencyHigh;
         default:
-          return 'grey';
+          return StandardColors.Default;
       }
     } else {
-      return 'grey';
+      return StandardColors.Default;
     }
 
   }

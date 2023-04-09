@@ -6,17 +6,21 @@
             [bubbleValue]="task.urgency"
         ></app-type-bubble>
     
-        <h2>{{ task.title }}</h2>
+        <div class="title">{{ task.title }}</div>
     </div>
 
-    <div>
-        <p>{{ task.description }}</p>
-    </div>
-
-    <div>Last Update: <p> {{ task.lastUpdate?.toString() }} </p></div>
-
-    <div>
-        {{ task.type }} <!-- can use mat-chip to do this -->
+    <div class="content">
+        <div>
+            <p>{{ task.description }}</p>
+        </div>
+    
+        <div *ngIf="task.lastUpdate">
+            Last Update: <p> {{ task.lastUpdate?.toString() }} </p>
+        </div>
+    
+        <div>
+            {{ task.type }} <!-- can use mat-chip to do this -->
+        </div>
     </div>
 
 </mat-card>

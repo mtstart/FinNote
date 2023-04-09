@@ -10,12 +10,17 @@
 .heading {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    margin-bottom: 6px;
+    
+    .title {
+        font-family: "Helvetica Neue", Roboto, sans-serif;
+        font-weight: 500;
+        font-size: 18px;
 
-    h2 {
-        // font-family: 500 20px / 32px Roboto, "Helvetica Neue", sans-serif;
-        margin-left: 10px;
         margin-bottom: 0px;
     }
+}
 
+.content {
+    margin-left: 2px;
 }
