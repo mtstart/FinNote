@@ -13,7 +13,8 @@ export class AppComponent {
   constructor(private route: Router, public authService: AuthService, private activeRoute: ActivatedRoute) { }
 
   title = 'FinNote';
-  mode = new FormControl('over');
+  mode = new FormControl('push');
+  opened: boolean = true;
 
   buttonSpecList: ButtonLabelSpec.AsObject[] = [
   // {

@@ -1,39 +1,43 @@
 <div id="app">
-  <div id="top-banner">
+  <div id="top-banner" (click)="sidenav.toggle()">
     <mat-toolbar color="primary">
     <mat-icon>flight_takeoff</mat-icon>
     <span>Kanban Fire</span>
     </mat-toolbar>
   </div>
+
   <div id="main">
 
-    <div id="nav">
-      <div class="ordinary-section">
-        <shared-button 
-          *ngFor="let spec of buttonSpecList"
-          [buttonSpec]="spec"
-          [selected]="false"  
-          [disabled]="false"
-          leadingIcon="{{ spec.icon ? spec.icon : 'lens_blur' }}"
-          [showSelectedIcon]="true"
-          (ClickEvent)="changeRoute(spec)"
-        ></shared-button>
-      </div>
-      
-      <div>
-        <button mat-button *ngIf="!loginStatus" (click)="logout()">
-          Log Out
-          <mat-icon>logout</mat-icon>
-        </button>
-      </div>
-      
-    </div>
+    <mat-sidenav-container>
 
-    <div id="main-content">
-      <div id="content">
-        <router-outlet></router-outlet>
-      </div>
-    </div>
+      <mat-sidenav id="nav" #sidenav mode="side" [(opened)]="opened">
+        <div class="ordinary-section">
+          <shared-button 
+            *ngFor="let spec of buttonSpecList"
+            [buttonSpec]="spec"
+            [selected]="false"  
+            [disabled]="false"
+            leadingIcon="{{ spec.icon ? spec.icon : 'lens_blur' }}"
+            [showSelectedIcon]="true"
+            (ClickEvent)="changeRoute(spec)"
+          ></shared-button>
+        </div>
+        
+        <div>
+          <button mat-button *ngIf="!loginStatus" (click)="logout()">
+            Log Out
+            <mat-icon>logout</mat-icon>
+          </button>
+        </div>
+      </mat-sidenav>
+      
+      <mat-sidenav-content id="main-content">
+        <div id="content">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-sidenav-content>
+
+    </mat-sidenav-container>
 
   </div>
 </div>
