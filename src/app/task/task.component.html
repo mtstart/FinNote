@@ -15,7 +15,7 @@
         </div>
     
         <div *ngIf="task.lastUpdate">
-            Last Update: <p> {{ task.lastUpdate?.toString() }} </p>
+            Last Update: {{ task.lastUpdate.toMillis() | date:'yyyy/MM/dd h:mm a' }}
         </div>
     
         <div>
