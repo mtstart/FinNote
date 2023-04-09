@@ -5,9 +5,14 @@ export interface Task {
     title: string;
     description: string;
     createdDT?: Date;
-    lastUpdate?: Timestamp;
+    lastUpdate?: localDateTime;
     type?: string;
     urgency?: Urgency;
+    color?: string;
+}
+
+export class localDateTime {
+    seconds: number | undefined = 0;
 }
 
 export enum Urgency {

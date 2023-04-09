@@ -27,7 +27,7 @@ export class ProjectManagementComponent implements OnInit {
   }
   
   isAuthenticated: any;
-  dialogWidth: string = "270px";
+  dialogWidth: string = "500px";
 
   todo: Observable<Task[]> | undefined;
   inProgress: Observable<Task[]> | undefined;

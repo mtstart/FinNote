@@ -1,25 +1,35 @@
 <mat-card class="item" *ngIf="task" (dblclick)="edit.emit(task)" >
     
     <div class="heading">
-        <app-type-bubble 
-            [bubbleType]="BubbleType"
-            [bubbleValue]="task.urgency"
-        ></app-type-bubble>
     
-        <div class="title">{{ task.title }}</div>
+        
+        <div class="supportings">
+            <div class="title">{{ task.title }}</div>
+
+            <div class="hori-space"></div>
+    
+            <div 
+                *ngIf="task.type" 
+                class="task-type"
+                [style.background]="task.color || '#9FE5CD'">
+                {{ task.type }} <!-- can use mat-chip to do this -->
+            </div>
+            
+            <app-type-bubble 
+                [bubbleType]="BubbleType"
+                [bubbleValue]="task.urgency"
+            ></app-type-bubble>
+        </div>
     </div>
 
     <div class="content">
+        
         <div>
             <p>{{ task.description }}</p>
         </div>
     
         <div *ngIf="task.lastUpdate">
-            Last Update: {{ task.lastUpdate.toMillis() | date:'yyyy/MM/dd h:mm a' }}
-        </div>
-    
-        <div>
-            {{ task.type }} <!-- can use mat-chip to do this -->
+            Last Update: {{ task.lastUpdate.seconds | date: 'yyyy/MM/dd h:mm a' }}
         </div>
     </div>
 

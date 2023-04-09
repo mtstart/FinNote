@@ -10,16 +10,37 @@
 }
 
 .heading {
-    display: flex;
-    flex-direction: row;
     margin-bottom: 6px;
-    
+
     .title {
         font-family: "Helvetica Neue", Roboto, sans-serif;
         font-weight: 500;
         font-size: 18px;
 
-        margin-bottom: 0px;
+        margin-bottom: 6px;
+    }
+
+    .supportings {
+        display: flex;
+        // flex-direction: row;
+        align-items: center;
+        width: 100%;
+    }
+
+    .hori-space {
+        margin-left: auto;
+    }
+
+    .task-type {
+        width: fit-content;
+        // background-color: #9FE5CD;
+        border-radius: 20px;
+        padding: 4px 10px;
+        line-height: normal;
+    }
+
+    app-type-bubble {
+        margin-left: 10px;
     }
 }
 
