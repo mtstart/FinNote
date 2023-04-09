@@ -9,7 +9,7 @@ export interface Task {
 }
 
 export enum Urgency {
-    Low,
-    Moderate,
-    High
+    Low = "Low",
+    Moderate = "Moderate",
+    High = "High",
 }

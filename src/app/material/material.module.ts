@@ -15,6 +15,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [],
@@ -36,6 +37,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatSelectModule,
+    MatChipsModule, 
 
   ]
 })
