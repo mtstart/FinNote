@@ -14,9 +14,14 @@ export enum UrgencyColors {
 }
 
 export enum StandardColors {
-  UrgencyLow = "yellow",
-  UrgencyModerate = "orange",
-  UrgencyHigh = "brown",
+  // UrgencyHigh = "#675D50",
+  // UrgencyModerate = "#A9907E",
+  // UrgencyLow = "#F3DEBA",
+  UrgencyHigh = "#F23A3C",
+  UrgencyModerate = "#DE8937",
+  UrgencyLow = "#FFD740",
+
+  CalmGreen = "#ABC4AA",
   Diabled = "grey", 
   Default = "white",
 }
