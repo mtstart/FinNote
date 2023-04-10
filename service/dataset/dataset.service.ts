@@ -5,7 +5,7 @@ import { map, Observable } from 'rxjs';
 import { TaskDialogComponent, TaskDialogResult } from 'src/app/task-dialog/task-dialog.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Dinner, Eaters, Orders } from 'src/app/budget-planner/paytgt/Pay';
-import { query } from '@angular/fire/firestore';
+import { endAt, getDocs, orderBy, query, startAt } from '@angular/fire/firestore';
 
 export type ProjectStatusList = "done" | "todo" | "inProgress";
 
@@ -39,6 +39,24 @@ export class DatasetService {
     })
 
     return this.todo = this.store.collection('todo').valueChanges({ idField: 'id' }) as Observable<Task[]>;
+  }
+
+  public async getTodoWithORder(): Promise<void> {
+    const theCollection = this.store.collection('todo').ref;
+
+    // const snapshot = await theCollection.orderBy('title').limit(20).get();
+    const snapshot = await theCollection.orderBy('lastUpdate').get();
+    
+    if (!snapshot) {
+      console.log('No matching documents.');
+    }  
+
+    snapshot.forEach((doc) => {
+      // console.log(doc.id, '=>', doc.data());
+      const thing = doc.data() as Task;
+      console.log(thing.title + ": " + thing.description);
+    });
+
   }
 
   public getInProgress(): Observable<Task[]> {
@@ -154,14 +172,14 @@ export class DatasetService {
     let oldDinner = this.store.collection('Dinner', ref => ref.where("dinnerID", "==", order.dinnerID));
 
     oldDinner.ref.get().then(querySnapshot => {
-      console.log("querySnapshot size: " + querySnapshot.size)
+      console.log("oldDinner: querySnapshot size: " + querySnapshot.size)
       querySnapshot.forEach(item => {
         console.log(item.ref);
       })
     })
 
     oldDinner.doc('pVlstXtdWUVYQbi7Cra0').get().forEach(meal => {
-        console.log("meal: ")
+        console.log("oldDinner2: meal: ")
       console.log(meal)
     })
 
