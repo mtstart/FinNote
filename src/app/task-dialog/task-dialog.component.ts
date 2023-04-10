@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ColorUtility } from '../shared/type-bubble/color';
 import { Task } from '../task/task';
 
 export interface TaskDialogData {
@@ -26,11 +27,14 @@ export class TaskDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: TaskDialogData
   ) { }
 
+  ColorWheel = ColorUtility.ColorWheel;
+
   cancel(): void {
     this.data.task.title = this.backupTask.title;
     this.data.task.description = this.backupTask.description;
     this.data.task.type = this.backupTask.type;
     this.data.task.urgency = this.backupTask.urgency;
+    this.data.task.color = this.backupTask.color;
     this.dialogRef.close(this.data);
   }
 }

@@ -16,6 +16,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [],
@@ -37,7 +38,8 @@ import { MatChipsModule } from '@angular/material/chips';
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatSelectModule,
-    MatChipsModule, 
+    MatChipsModule,
+    MatButtonToggleModule,
 
   ]
 })

@@ -11,12 +11,19 @@ export enum StandardColors {
 
     CalmGreen = "#ABC4AA",
     Diabled = "grey",
-    Default = "white",
+    Default = "#F1F1F1",
 }
 
 export class ColorUtility {
     constructor() {
         
+    }
+    
+    public static get ColorWheel() : any[] {
+        return Object.entries(StandardColors).map(([key, value]) => ({
+            name: key,
+            color: value,
+        }));
     }
     
     static getUrgentColor(level: string): string {

@@ -27,7 +27,13 @@ export class ProjectManagementComponent implements OnInit {
   }
   
   isAuthenticated: any;
-  dialogWidth: string = "500px";
+
+  dialogDimen = {
+    width: "80vw",
+    height: "80vh",
+    maxWidth: "80vw",
+    maxHeight: "80vh",
+  }
 
   todo: Observable<Task[]> | undefined;
   inProgress: Observable<Task[]> | undefined;
@@ -70,7 +76,10 @@ export class ProjectManagementComponent implements OnInit {
 
   newTask(): void {
     const dialogRef = this.dialog.open(TaskDialogComponent, {
-      width: this.dialogWidth,
+      width: this.dialogDimen.width,
+      height: this.dialogDimen.height,
+      maxWidth: this.dialogDimen.maxWidth,
+      maxHeight: this.dialogDimen.maxHeight,
       data: {
         task: {},
       },
@@ -79,16 +88,25 @@ export class ProjectManagementComponent implements OnInit {
         if (!result) {
           return;
         }
+        const task: Task = {
+          ...result.task,
+          lastUpdate: {seconds: Date.now()},
+          createdDT: new Date(),
+        }
+
         this.dataset.insertTask("todo", {
           id: uuid(),
-          ...result.task,
+          ...task,
         });
       });
   }
 
   editTask(list: ProjectStatusList, task: Task): void {
     const dialogRef = this.dialog.open(TaskDialogComponent, {
-      width: this.dialogWidth,
+      width: this.dialogDimen.width,
+      height: this.dialogDimen.height,
+      maxWidth: this.dialogDimen.maxWidth,
+      maxHeight: this.dialogDimen.maxHeight,
       data: {
         task: {
           ...task, 

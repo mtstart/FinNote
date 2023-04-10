@@ -28,6 +28,13 @@
         //     margin-left: 16px;
         // }
     }
+
+    mat-button-toggle-group {
+        overflow-y: auto;
+        max-width: 100%;
+        width: fit-content;
+        margin: 10px 0px;
+    }
 }
 
 #controls {

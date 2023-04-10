@@ -11,7 +11,8 @@
             <div 
                 *ngIf="task.type" 
                 class="task-type"
-                [style.background]="task.color || '#9FE5CD'">
+                [style.background]="task.color || '#FFFFFF'"
+                [style.color]="'#112A46'">
                 {{ task.type }} <!-- can use mat-chip to do this -->
             </div>
             
@@ -23,7 +24,6 @@
     </div>
 
     <div class="content">
-        
         <div>
             <p>{{ task.description }}</p>
         </div>

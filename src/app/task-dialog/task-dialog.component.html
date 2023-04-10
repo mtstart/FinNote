@@ -21,6 +21,13 @@
     <mat-radio-button value="High">Urgent!!</mat-radio-button>
   </mat-radio-group>
 
+  <mat-label>Template Color</mat-label>
+  <mat-button-toggle-group id="colorSpec" name="colorSpec" aria-label="ColorWheel" multiple>
+    <mat-button-toggle *ngFor="let background of ColorWheel">
+      <mat-icon [style.color]="background.color" [style.border]="'grey'" value="background.color">circle</mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+
 </div>
     
 <div *ngIf="data.task.lastUpdate">
