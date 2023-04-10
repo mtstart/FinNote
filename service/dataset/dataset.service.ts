@@ -34,9 +34,9 @@ export class DatasetService {
 
   public getTodo(): Observable<Task[]> {
 
-    this.store.collection('todo', ref => ref.where("title", "==", 'pay tgt')).get().subscribe(ss => {
-      console.log('todo all length: ' + ss.docs.length)
-    })
+    // this.store.collection('todo', ref => ref.where("title", "==", 'pay tgt')).get().subscribe(ss => {
+    //   console.log('todo all length: ' + ss.docs.length)
+    // })
 
     return this.todo = this.store.collection('todo').valueChanges({ idField: 'id' }) as Observable<Task[]>;
   }

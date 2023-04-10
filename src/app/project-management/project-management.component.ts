@@ -54,24 +54,6 @@ export class ProjectManagementComponent implements OnInit {
     this.todo = this.dataset.getTodo();
     this.inProgress = this.dataset.getInProgress();
     this.done = this.dataset.getDone();
-    
-    this.todo.subscribe(thingList => {
-      thingList.forEach(thing => {
-        console.log("> todo: " + thing.title + ", " + thing.description);
-      })
-    });
-    
-    this.inProgress.subscribe(thingList => {
-      thingList.forEach(thing => {
-        console.log("> inProgress: " + thing.title + ", " + thing.description);
-      })
-    });
-
-    this.done.subscribe(thingList => {
-      thingList.forEach(thing => {
-        console.log("> done: " + thing.title + ", " + thing.description);
-      })
-    });
   }
 
   newTask(): void {
