@@ -20,3 +20,8 @@ export enum Urgency {
     Moderate = "Moderate",
     High = "High",
 }
+
+export enum DialogType {
+    NEW = 1,
+    EDIT = 2,
+}

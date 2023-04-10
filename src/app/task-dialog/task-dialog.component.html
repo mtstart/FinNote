@@ -1,4 +1,7 @@
 <div id="task-form">
+
+  <h2 *ngIf="data.type == DialogType.NEW">New Task</h2>
+
   <mat-form-field appearance="fill" color="primary">
     <mat-label>Title</mat-label>
     <input matInput [(ngModel)]="data.task.title" />

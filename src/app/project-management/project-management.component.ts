@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Task } from '../task/task';
+import { DialogType, Task } from '../task/task';
 import { TaskDialogComponent, TaskDialogResult } from '../task-dialog/task-dialog.component';
 
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
@@ -43,7 +43,8 @@ export class ProjectManagementComponent implements OnInit {
   documentKeyDown(event: KeyboardEvent): void {
     if (event.key == 'r') {
       this.syncTask();
-    } else if (event.ctrlKey && event.key == 'a') {
+    }
+    if (event.key == 'n') {
       this.newTask();
     }
 
@@ -57,6 +58,10 @@ export class ProjectManagementComponent implements OnInit {
   }
 
   newTask(): void {
+    if (this.dialog != null) {
+      this.dialog.closeAll();
+    }
+
     const dialogRef = this.dialog.open(TaskDialogComponent, {
       width: this.dialogDimen.width,
       height: this.dialogDimen.height,
@@ -64,6 +69,7 @@ export class ProjectManagementComponent implements OnInit {
       maxHeight: this.dialogDimen.maxHeight,
       data: {
         task: {},
+        type: DialogType.NEW,
       },
     });
     dialogRef.afterClosed().subscribe((result: TaskDialogResult) => {
@@ -84,12 +90,17 @@ export class ProjectManagementComponent implements OnInit {
   }
 
   editTask(list: ProjectStatusList, task: Task): void {
+    if (this.dialog != null) {
+      this.dialog.closeAll();
+    }
+    
     const dialogRef = this.dialog.open(TaskDialogComponent, {
       width: this.dialogDimen.width,
       height: this.dialogDimen.height,
       maxWidth: this.dialogDimen.maxWidth,
       maxHeight: this.dialogDimen.maxHeight,
       data: {
+        type: DialogType.EDIT,
         task: {
           ...task, 
           lastUpdate: {seconds: Date.now()}
