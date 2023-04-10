@@ -115,9 +115,9 @@ export class DatasetService {
     // return this.store.collection('Dinner', ref => ref.where("dinnerID", "==", order.dinnerID));
 
     // const jhgkdinner = this.store.collection('Dinner').doc('stl5E7ptBFrf4pJAxVSG').valueChanges() as Observable<Dinner>;
-    const jhgkdinner = this.store.collection('Dinner').doc(dinnerID).valueChanges() as Observable<Dinner>;
+    const dinner = this.store.collection('Dinner').doc(dinnerID).valueChanges() as Observable<Dinner>;
 
-    return jhgkdinner;
+    return dinner;
 
   }
 
@@ -166,72 +166,22 @@ export class DatasetService {
   public insertDinner(dinner: Dinner): void {
     this.store.collection('Dinner').add(dinner);
   }
-  
-  public insertDinnerOrder(order: Orders): void {
-    console.log("order.dinnerID: " + order.dinnerID);
-    let oldDinner = this.store.collection('Dinner', ref => ref.where("dinnerID", "==", order.dinnerID));
 
-    oldDinner.ref.get().then(querySnapshot => {
-      console.log("oldDinner: querySnapshot size: " + querySnapshot.size)
-      querySnapshot.forEach(item => {
-        console.log(item.ref);
-      })
-    })
+  public async insertDinnerOrder(order: Orders): Promise<void> {
+    /**
+     * find the dinner
+     * add the order to the dinner
+     */
 
-    oldDinner.doc('pVlstXtdWUVYQbi7Cra0').get().forEach(meal => {
-        console.log("oldDinner2: meal: ")
-      console.log(meal)
-    })
+    const theCollection = this.store.collection('Dinner').ref;
+    const snapshot = await theCollection.where('dinnerID', '==', order.dinnerID).limit(1).get();
+    const dinner = snapshot.docs[0].data() as Dinner;
 
-    // oldDinner.doc('pVlstXtdWUVYQbi7Cra0').update(order);
+    order.dinnerID = snapshot.docs[0].id;
+    dinner.orders.push(order);
+    dinner.totalSum += order.price;
 
-    const query = oldDinner.ref.where('dinnerID', '==', 'a');
-    query.get().then(querySnapshot => {
-      if (querySnapshot.empty) {
-        console.log('no data found');
-      } else if (querySnapshot.size > 1) {
-        console.log('no unique data');
-      } else {
-        querySnapshot.forEach(documentSnapshot => {
-          // this.selectedUser$ = this.afs.doc(documentSnapshot.ref);
-          // this.afs.doc(documentSnapshot.ref).valueChanges().subscribe(console.log);
-          console.log("ref: " + documentSnapshot.ref)
-        });
-      }
-    });
-    
-
-    const newMember: Eaters = {
-      id: 'user1',
-      name: 'tom',
-      teamJoined: 0,
-      sum: 0,
-      icon: 'local_florist'
-    }
-
-    const newOrder: Orders = { 
-      name: 'order_1',
-      price: 10,
-      dinnerID: 'a',
-      sharedMember: [newMember]
-    }
-
-    const newDinner: Dinner = {
-      id: 'a1',
-      dinnerID: 'a1',
-      name: 'dinner_1',
-      icon: 'local_airport',
-      members: [],
-      orders: [newOrder],
-      totalSum: 100
-    }
-
-    // oldDinner.add(newOrder);
-    // this.store.collection('Dinner').doc(order.dinnerID).update(oldDinner);
-    // this.store.collection(list).doc(task.id).update(task);
-    this.store.collection('Dinner').doc('stl5E7ptBFrf4pJAxVSG').update(newDinner)
-
+    this.store.collection('Dinner').doc(order.dinnerID).update(dinner);
   }
-
 
 }

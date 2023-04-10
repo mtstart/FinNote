@@ -5,6 +5,7 @@ import { filter, first, Observable } from 'rxjs';
 import { AuthService } from 'service/auth/auth.service';
 import { DatasetService } from 'service/dataset/dataset.service';
 import { Dinner, Orders } from './Pay';
+import {v4 as uuid} from 'uuid';
 
 @Component({
   selector: 'app-paytgt',
@@ -50,39 +51,41 @@ export class PaytgtComponent implements OnInit {
       console.log(din.name + ", " + din.id);
       this.dinner = din;
 
-      din.orders.forEach(order => {
-        console.log("order: " + order.dinnerID + ", " + order.name + ", " + order.price + ", " + order.sharedMember);
+      // din.orders.forEach(order => {
+      //   console.log("order: " + order.dinnerID + ", " + order.name + ", " + order.price + ", " + order.sharedMember);
 
-        order.sharedMember.forEach(member => {
-          console.log("member: " + member);
-        })
+      //   order.sharedMember.forEach(member => {
+      //     console.log("member: " + member);
+      //   })
 
-      })
+      // })
     })
 
+  }
+
+  AddDinner(): void {
+    const dinner : Dinner = {
+      id: uuid(),
+      dinnerID: 'a3',
+      name: 'dinner 3',
+      icon: '',
+      members: [],
+      orders: [],
+      totalSum: 0
+    }
+
+    this.dataset.insertDinner(dinner);
   }
 
   AddNewOrder(): void {
     if (this.dinner == undefined) return;
     
     const newOrder: Orders = {
-      name: '',
-      price: 0,
-      // id: uuid(),
+      name: 'dinner 0410 (3)',
+      price: 123,
       dinnerID: this.dinner.dinnerID,
       sharedMember: []
     }
-
-    // const newDinner2 = new Dinn
-    // const dinner_2 = new DinnerDataset()
-    //   .setId('b')
-    //   .setName('dinner2')
-    //   .setActivity()
-    //   .setIcon('local_parking')
-    //   .setMembers()
-    //   .setOrders()
-    //   .setTotalSum(0)
-    //   ;
 
     this.dataset.insertDinnerOrder(newOrder);
   }

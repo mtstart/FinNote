@@ -28,8 +28,8 @@
                         {{ dinner.name }}
                     </mat-option>
 
-                    <mat-option>
-                        <mat-icon>add</mat-icon> New Order
+                    <mat-option (click)="AddDinner()">
+                        <mat-icon>add</mat-icon> New Dinner
                     </mat-option>
 
                 </mat-select>
@@ -68,7 +68,7 @@
 
                     <div> $ {{ order.price }} </div>
 
-                    <div style="display: flex; flex-direction: row-reverse;">
+                    <div style="display: flex; flex-direction: column-reverse;">
                         <div *ngFor="let member of order.sharedMember">
                             <!-- {{ member.name }} -->
                             <mat-icon> {{member.icon}} </mat-icon>
@@ -77,9 +77,9 @@
 
                 </div>
 
-
-
             </div>
+
+            scribble starts here
             <div class="order-group">
                 <div>one</div>
                 <div>two</div>
