@@ -6,6 +6,7 @@ import { AuthService } from 'service/auth/auth.service';
 import { DatasetService } from 'service/dataset/dataset.service';
 import { Dinner, Orders } from './Pay';
 import {v4 as uuid} from 'uuid';
+import { ColorUtility } from 'src/app/shared/type-bubble/color';
 
 @Component({
   selector: 'app-paytgt',
@@ -39,28 +40,17 @@ export class PaytgtComponent implements OnInit {
   }
 
   doTheTest() {
-    this.dataset.testQuerasdfy();
   }
 
   SelectDinner(event: MatSelectChange) {
-    console.log('event: ' + event)
-
+    console.log('event: ' + event);
     this.dinner$ = this.dataset.getOneDinner(String(event));
-
+    // this.dinner$?.subscribe(event => {this.dinner = event});
     this.dinner$.forEach(din => {
       console.log(din.name + ", " + din.id);
       this.dinner = din;
-
-      // din.orders.forEach(order => {
-      //   console.log("order: " + order.dinnerID + ", " + order.name + ", " + order.price + ", " + order.sharedMember);
-
-      //   order.sharedMember.forEach(member => {
-      //     console.log("member: " + member);
-      //   })
-
-      // })
-    })
-
+    });
+    
   }
 
   AddDinner(): void {
@@ -88,6 +78,14 @@ export class PaytgtComponent implements OnInit {
     }
 
     this.dataset.insertDinnerOrder(newOrder);
+  }
+
+  testUpdateDinner(): void {
+    this.dataset.testUpdateDinner(this.dinner);
+  }
+
+  get getColor(): string {
+    return ColorUtility.RandomColor;
   }
 
 }

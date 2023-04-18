@@ -121,48 +121,6 @@ export class DatasetService {
 
   }
 
-  public testQuerasdfy() {
-    // let asdf = this.store.collection('Dinner');
-    // const not_found_item = this.store.collection('Dinner', ref => ref.where('name', '==', 'dinner_2'));
-    
-
-    // const query1 = this.store.collection('Dinner').ref.where('name', '==', 'dinner_1');
-    // // console.log(query1)
-    // query1.get().then(ss => {
-    //   if (ss.empty) console.log('nth found');
-    //   else if (ss.size > 1) console.log('no unique data')
-    //   else {
-    //     console.log('here')
-    //     ss.forEach(dss => {
-    //       console.log(dss);
-    //     })
-    //   }
-    // })
-
-    // this.store.collection('Dinner', ref => ref.where("name", "==", 'dinner_1')).get().subscribe(ss => {
-    //   console.log('length: ' + ss.docs.length)
-    // })
-    
-    this.store.collection('Dinner').get().subscribe(ss => {
-      console.log('all length: ' + ss.docs.length)
-    })
-
-    this.store.collection('Dinner', ref => ref.where("dinnerID", "==", 'a1')).get().forEach(ss => {
-      console.log('dinner a1 length: ' + ss.docs.length)
-    })
-    this.store.collection('Dinner', ref => ref.where("dinnerID", "!=", 'a1')).get().forEach(ss => {
-      console.log('dinner not a1 length: ' + ss.docs.length)
-    })
-    this.store.collection('Dinner', ref => ref.where("dinnerID", "==", 'a2')).get().forEach(ss => {
-      console.log('dinner a2 length: ' + ss.docs.length)
-    })
-    this.store.collection('Dinner', ref => ref.where("icon", "==", '')).get().forEach(ss => {
-      console.log('dinner a2 length: ' + ss.docs.length)
-    })
-
-    console.log('end of button')
-  }
-
   public insertDinner(dinner: Dinner): void {
     this.store.collection('Dinner').add(dinner);
   }
@@ -182,6 +140,25 @@ export class DatasetService {
     dinner.totalSum += order.price;
 
     this.store.collection('Dinner').doc(order.dinnerID).update(dinner);
+  }
+
+  public async testUpdateDinner(dinner: Dinner | undefined): Promise<void> {
+    if (dinner == undefined) return;
+
+    const newMember: Eaters = {
+      id: 'user1',
+      name: 'tom',
+      teamJoined: 0,
+      sum: 0,
+      icon: 'local_florist'
+    }
+    
+    const theCollection = this.store.collection('Dinner').ref;
+    const snapshot = await theCollection.where('dinnerID', '==', dinner.dinnerID).limit(1).get();
+    // const getDinner = snapshot.docs[0].data() as Dinner;
+    dinner.members.push(newMember);
+
+    this.store.collection('Dinner').doc(snapshot.docs[0].id).update(dinner);
   }
 
 }

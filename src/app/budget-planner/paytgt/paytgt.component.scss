@@ -13,22 +13,54 @@
     flex-direction: row;
 }
 
-.order-section {
-    min-height: 50px;
-}
+.order {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-.order-group {
-    // display: flex;
-    // flex-direction: row;
-    display: grid;
-    grid-template-columns: 2fr 1fr 4fr;
+    .order-section {
+        min-height: 50px;
+        width: 100%;
+    }
 
-    padding: 8px 8px;
-    margin: 10px 0px;
-    border-radius: 10px;
-    background-color: bisque;
+    .order-group {
+        display: grid;
+        grid-template-columns: 4fr 2fr 2fr;
 
-    font-size: 18px;
+        padding: 8px 8px;
+        margin: 4px 12px;
+        background-color: #f2f2f2;
+        font-size: larger;
+
+        .icon {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+
+            .member {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-left: 10px;
+
+                mat-icon {
+                    max-height: 15px;
+                    width: auto;
+                    margin-bottom: 4px;
+                }
+            }
+        }
+    }
+
+    .sum {
+        padding: 8px 8px;
+        margin: 4px 12px;
+        border-top: solid 1px black;
+
+        display: grid;
+        grid-template-columns: 4fr 2fr 2fr;
+        font-size: larger;
+    }
 }
 
 // .member-icon {

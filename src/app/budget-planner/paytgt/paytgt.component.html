@@ -40,63 +40,67 @@
                     Refresh <mat-icon>refresh</mat-icon>
                 </button>
     
-                <button (click)="doTheTest()" mat-button>
+                <!-- <button (click)="testUpdateDinner()" mat-button color="primary">
                     test function <mat-icon>flag</mat-icon>
-                </button>
+                </button> -->
     
-                <button (click)="AddNewOrder()" mat-button>
+                <button (click)="AddNewOrder()" mat-button color="primary">
                     Add new order <mat-icon>add</mat-icon>
                 </button>
             </div>
 
-            <div class="order-section">
-                <div *ngFor="let member of (dinner$|async)?.members">
-                    <div>{{ member.name }}</div>
-                    <div>
-                        <mat-icon>{{ member.icon }}</mat-icon>
-                    </div>
-                </div>                
-            </div>
-
-
-            <!-- <div>The dinner: {{(dinner|async)?.name}} </div>
-            orders: -->
-            <div class="order-section">
-                <div *ngFor="let order of (dinner$|async)?.orders" class="order-group">
-
-                    <div> {{ order.name }} </div>
-
-                    <div> $ {{ order.price }} </div>
-
-                    <div style="display: flex; flex-direction: column-reverse;">
-                        <div *ngFor="let member of order.sharedMember">
-                            <!-- {{ member.name }} -->
-                            <mat-icon> {{member.icon}} </mat-icon>
+            <div class="order">
+                <div class="order-section">
+                    <div *ngFor="let member of (dinner$|async)?.members">
+                        <div>{{ member.name }}</div>
+                        <div>
+                            <mat-icon color="primary">{{ member.icon }}</mat-icon>
                         </div>
-                    </div>
-
+                    </div>                
                 </div>
 
+
+                <!-- <div>The dinner: {{(dinner|async)?.name}} </div>
+                orders: -->
+                <div class="order-section" *ngIf="dinner$|async as dinner">
+                    <div *ngFor="let order of dinner.orders" class="order-group">
+                        <mat-label> {{ order.name }} </mat-label>
+                        <mat-label> $ {{ order.price }} </mat-label>
+
+                        <div class="icon">
+                            <div class="member" *ngFor="let member of order.sharedMember">
+                                <mat-icon color="primary"> {{member.icon}} </mat-icon>
+                                <mat-label>{{ member.name }}</mat-label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-section" *ngIf="dinner$|async as dinner">
+                    <div class="sum">
+                        <div></div>
+                        <div>$ {{dinner.totalSum}}</div>
+                        <div></div>
+                    </div>
+                </div>
             </div>
 
-            scribble starts here
+            <!-- scribble starts here
             <div class="order-group">
                 <div>one</div>
                 <div>two</div>
-                <!-- <div style="width: 100%; align-content: center;">two</div> -->
                 <div style="display: flex; flex-direction: row-reverse;">
                     <mat-icon color="primary">location_city</mat-icon>
                     <mat-icon>notifications</mat-icon>
                     <mat-icon>control_point_duplicate</mat-icon>
                     <mat-icon>location_searching</mat-icon>
                 </div>
-            </div>
+            </div> -->
 
         </div>
 
 
 
-        <pre>Occasion: (dropdown to choose dinner)
+        <pre style="visibility: hidden;">Occasion: (dropdown to choose dinner)
     
     Members: (circles here)
     

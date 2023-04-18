@@ -14,16 +14,26 @@ export enum StandardColors {
     Default = "#F1F1F1",
 }
 
+export interface ColorSpec {
+    name: string;
+    color: string;
+}
+
 export class ColorUtility {
     constructor() {
         
     }
     
-    public static get ColorWheel() : any[] {
+    public static get ColorWheel() : ColorSpec[] {
         return Object.entries(StandardColors).map(([key, value]) => ({
             name: key,
             color: value,
         }));
+    }
+
+    public static get RandomColor(): string {
+        const index = Math.floor(Math.random() * ColorUtility.ColorWheel.length);
+        return ColorUtility.ColorWheel[index].color;
     }
     
     static getUrgentColor(level: string): string {
