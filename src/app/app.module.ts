@@ -23,6 +23,7 @@ import { TypeBubbleComponent } from './shared/type-bubble/type-bubble.component'
 import { BudgetPlannerComponent } from './budget-planner/budget-planner.component';
 import { PaytgtComponent } from './budget-planner/paytgt/paytgt.component';
 import { PipeModule } from './shared/pipe/pipe.module';
+import { DinnerDialogComponent } from './budget-planner/paytgt/dinner-dialog/dinner-dialog.component';
 
 
 
@@ -38,7 +39,8 @@ import { PipeModule } from './shared/pipe/pipe.module';
     TextEditorComponent,
     TypeBubbleComponent,
     BudgetPlannerComponent,
-    PaytgtComponent
+    PaytgtComponent,
+    DinnerDialogComponent
   ],
   imports: [
     BrowserModule,

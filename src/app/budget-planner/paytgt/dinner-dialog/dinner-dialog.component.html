@@ -1,0 +1,26 @@
+<div id="task-form">
+    <mat-form-field appearance="fill">
+        <mat-label>Dinner Name</mat-label>
+        <input matInput [(ngModel)]="data.dinner.name" />
+    </mat-form-field>
+    
+    <mat-label>Members</mat-label>
+    <mat-button-toggle-group [(ngModel)]="data.dinner.members" id="colorSpec" name="colorSpec" aria-label="ColorWheel" multiple>
+      <mat-button-toggle *ngFor="let user of userList | async as User" [value]="user">
+        <mat-icon color="primary" [style.border]="'grey'"> {{user.icon || "attribution"}} </mat-icon>
+        <mat-label> {{user.Username}} </mat-label>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <!-- <mat-label>Icon</mat-label>
+    <mat-button-toggle-group [(ngModel)]="data.dinner.icon" id="colorSpec" name="colorSpec" aria-label="ColorWheel" multiple>
+      <mat-button-toggle *ngFor="let icon of IconWheel" [value]="icon.icon[0]">
+        <mat-icon color="primary" [style.border]="'grey'"> {{icon.icon}} </mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group> -->
+
+    <button mat-raised-button color="primary" [mat-dialog-close]="{ dinner: data.dinner }">
+        Save
+    </button>
+
+</div>

@@ -6,6 +6,7 @@ import { TaskDialogComponent, TaskDialogResult } from 'src/app/task-dialog/task-
 import { MatDialogRef } from '@angular/material/dialog';
 import { Dinner, Eaters, Orders } from 'src/app/budget-planner/paytgt/Pay';
 import { endAt, getDocs, orderBy, query, startAt } from '@angular/fire/firestore';
+import { User } from 'src/app/shared/User';
 
 export type ProjectStatusList = "done" | "todo" | "inProgress";
 
@@ -104,6 +105,12 @@ export class DatasetService {
   public updateTask(list: ProjectStatusList, task: Task): void {
     this.store.collection(list).doc(task.id).update(task);
   }
+
+  //-------------------------------- User --------------------------------//
+  public getUserList(): Observable<User[]> {
+    return this.store.collection('User').valueChanges({ idField: 'id' }) as Observable<User[]>;
+  }
+
 
   //-------------------------------- Pay Tgt --------------------------------//
   

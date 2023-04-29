@@ -7,6 +7,9 @@ import { DatasetService } from 'service/dataset/dataset.service';
 import { Dinner, Orders } from './Pay';
 import {v4 as uuid} from 'uuid';
 import { ColorUtility } from 'src/app/shared/type-bubble/color';
+import { MatDialog } from '@angular/material/dialog';
+import { dialogDimen, DinnerDialogComponent, DinnerDialogResult } from './dinner-dialog/dinner-dialog.component';
+import { DialogType } from 'src/app/task/task';
 
 @Component({
   selector: 'app-paytgt',
@@ -15,7 +18,7 @@ import { ColorUtility } from 'src/app/shared/type-bubble/color';
 })
 export class PaytgtComponent implements OnInit {
 
-  constructor(private store: AngularFirestore, private dataset: DatasetService, public authService: AuthService) { }
+  constructor(private dialog: MatDialog, store: AngularFirestore, private dataset: DatasetService, public authService: AuthService) { }
 
   loadingData: boolean = false;
   dinnerList: Observable<Dinner[]>| undefined;
@@ -32,9 +35,9 @@ export class PaytgtComponent implements OnInit {
     this.dinnerList = this.dataset.getDinner();
 
     this.dinnerList.subscribe(thingList => {
-      thingList.forEach(dinner => {
-        console.log("> dinner: " + dinner.name + ", " + dinner.id + ", " + dinner.dinnerID + ", " + dinner.icon);
-      })
+      // thingList.forEach(dinner => {
+      //   console.log("> dinner: " + dinner.name + ", " + dinner.id + ", " + dinner.dinnerID + ", " + dinner.icon);
+      // })
       if (thingList.length > 0) this.loadingData = true;
     });
   }
@@ -51,6 +54,40 @@ export class PaytgtComponent implements OnInit {
       this.dinner = din;
     });
     
+  }
+
+  newDinner(): void {
+    if (this.dialog != null) {
+      this.dialog.closeAll();
+    }
+
+    const dialogRef = this.dialog.open(DinnerDialogComponent, {
+      width: dialogDimen.width,
+      height: dialogDimen.height,
+      maxWidth: dialogDimen.maxWidth,
+      maxHeight: dialogDimen.maxHeight,
+      data: {
+        type: DialogType.NEW,
+        dinner: {},
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result: DinnerDialogResult) => {
+      if (!result) {
+        return;
+      }
+
+      const dinner: Dinner = {
+        ...result.dinner,
+        id: uuid(),
+        dinnerID: result.dinner.name.replace(" ", "_"),
+        totalSum: 0
+      };
+
+      this.dataset.insertDinner(dinner);
+
+    });
+
   }
 
   AddDinner(): void {
