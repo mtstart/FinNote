@@ -125,7 +125,6 @@ export class DatasetService {
     const dinner = this.store.collection('Dinner').doc(dinnerID).valueChanges() as Observable<Dinner>;
 
     return dinner;
-
   }
 
   public insertDinner(dinner: Dinner): void {
@@ -148,24 +147,34 @@ export class DatasetService {
 
     this.store.collection('Dinner').doc(order.dinnerID).update(dinner);
   }
-
-  public async testUpdateDinner(dinner: Dinner | undefined): Promise<void> {
+  
+  public async updateDinner(dinner: Dinner | undefined): Promise<void> {
     if (dinner == undefined) return;
-
-    const newMember: Eaters = {
-      id: 'user1',
-      name: 'tom',
-      teamJoined: 0,
-      sum: 0,
-      icon: 'local_florist'
-    }
     
     const theCollection = this.store.collection('Dinner').ref;
     const snapshot = await theCollection.where('dinnerID', '==', dinner.dinnerID).limit(1).get();
-    // const getDinner = snapshot.docs[0].data() as Dinner;
-    dinner.members.push(newMember);
 
     this.store.collection('Dinner').doc(snapshot.docs[0].id).update(dinner);
   }
+
+  // public async testUpdateDinner(dinner: Dinner | undefined): Promise<void> {
+  //   if (dinner == undefined) return;
+
+  //   const newMember: Eaters = {
+  //     id: 'user1',
+  //     sum: 0,
+  //     Privilege: 'USER',
+  //     Status: 1,
+  //     Username: 'mic',
+  //     icon: 'local_florist'
+  //   }
+    
+  //   const theCollection = this.store.collection('Dinner').ref;
+  //   const snapshot = await theCollection.where('dinnerID', '==', dinner.dinnerID).limit(1).get();
+  //   // const getDinner = snapshot.docs[0].data() as Dinner;
+  //   dinner.members.push(newMember);
+
+  //   this.store.collection('Dinner').doc(snapshot.docs[0].id).update(dinner);
+  // }
 
 }

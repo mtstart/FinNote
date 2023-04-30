@@ -13,6 +13,10 @@
         margin: 0;
     }
 
+    mat-error {
+        color: red;
+    }
+
     mat-radio-group {
         display: flex;
         flex-direction: column;

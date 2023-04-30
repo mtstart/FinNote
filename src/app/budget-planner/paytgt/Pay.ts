@@ -32,11 +32,13 @@ export interface Dinner {
 
 
 export interface Eaters {
+    Privilege: string;
+    Status: number;
+    Username: string;
     icon: string;
     id: string;
-    name: string;
     sum: number;
-    teamJoined?: number;
+    joinedDinner?: boolean;
 }
 
 export interface Orders {

@@ -35,28 +35,31 @@
                 </mat-select>
             </mat-form-field>
 
-            <div class="ordinary-section" style="padding-top: 18px;">
-                <button mat-raised-button color="primary" (click)="syncDinner()">
+            <div class="ordinary-section">
+                <button mat-raised-button (click)="syncDinner()" color="primary">
                     Refresh <mat-icon>refresh</mat-icon>
+                </button>
+                <button mat-icon-button *ngIf="dinner" (click)="ViewDinner()" color="primary">
+                    <mat-icon>info_outline</mat-icon>
                 </button>
     
                 <!-- <button (click)="testUpdateDinner()" mat-button color="primary">
                     test function <mat-icon>flag</mat-icon>
                 </button> -->
     
-                <button (click)="AddNewOrder()" mat-button color="primary">
+                <button mat-button (click)="AddNewOrder()" color="primary">
                     Add new order <mat-icon>add</mat-icon>
                 </button>
             </div>
 
             <div class="order">
-                <div class="order-section">
-                    <div *ngFor="let member of (dinner$|async)?.members">
-                        <div>{{ member.name }}</div>
+                <div class="order-section member-list">
+                    <div *ngFor="let member of (dinner$|async)?.members" class="member">
+                        <div>{{ member.Username }}</div>
                         <div>
                             <mat-icon color="primary">{{ member.icon }}</mat-icon>
                         </div>
-                    </div>                
+                    </div>
                 </div>
 
 
@@ -70,7 +73,7 @@
                         <div class="icon">
                             <div class="member" *ngFor="let member of order.sharedMember">
                                 <mat-icon color="primary"> {{member.icon}} </mat-icon>
-                                <mat-label>{{ member.name }}</mat-label>
+                                <mat-label>{{ member.Username }}</mat-label>
                             </div>
                         </div>
                     </div>

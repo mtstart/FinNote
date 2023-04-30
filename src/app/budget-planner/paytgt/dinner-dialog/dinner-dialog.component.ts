@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { DatasetService } from 'service/dataset/dataset.service';
@@ -18,7 +19,7 @@ export interface DinnerDialogResult {
 
 export enum dialogDimen {
   width =  "80vw",
-  height = "80vh",
+  height = "fit-content",
   maxWidth = "80vw",
   maxHeight = "80vh",
 }
@@ -43,6 +44,13 @@ export class DinnerDialogComponent implements OnInit {
     private dataset: DatasetService
   ) { }
 
+  // dinnerForm = new FormGroup({
+  //   name: new FormControl('', Validators.required),
+  //   members: new FormControl('', Validators.required),
+  // });
+  name = new FormControl('', [Validators.required]);
+
+  // all users/ only users in the dinner
   userList: Observable<User[]> | undefined;
   IconWheel = [
     {name: "flower", icon: "local_florist"},
@@ -52,13 +60,25 @@ export class DinnerDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.userList = this.dataset.getUserList();
+    this.initDinner();
   }
 
-  cancel(): void {
+  initDinner(): void {
+    this.name.setValue(this.data.dinner.name);
+  }
+
+  cancel(): void { 
     // this.data.dinner = this.backupDinner;
-    this.data.dinner.name = this.backupDinner.name;
+    this.data.dinner.name = this.name.value;
     this.data.dinner.icon = this.backupDinner.icon;
 
+    this.dialogRef.close(this.data);
+  }
+
+  onSubmit(): void {
+    if (this.name.errors) {
+      return;
+    } 
     this.dialogRef.close(this.data);
   }
 

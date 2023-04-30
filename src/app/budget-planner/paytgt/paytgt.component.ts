@@ -56,6 +56,36 @@ export class PaytgtComponent implements OnInit {
     
   }
 
+  ViewDinner(): void {
+    if (this.dialog != null) {
+      this.dialog.closeAll();
+    }
+
+    const dialogRef = this.dialog.open(DinnerDialogComponent, {
+      width: dialogDimen.width,
+      height: dialogDimen.height,
+      maxWidth: dialogDimen.maxWidth,
+      maxHeight: dialogDimen.maxHeight,
+      data: {
+        type: DialogType.EDIT,
+        dinner: this.dinner,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result: DinnerDialogResult) => {
+      if (!result) {
+        return;
+      }
+
+      const dinner: Dinner = {
+        ...result.dinner
+      };
+      
+      this.dataset.updateDinner(dinner);
+
+    });
+  }
+
   newDinner(): void {
     if (this.dialog != null) {
       this.dialog.closeAll();
@@ -83,26 +113,26 @@ export class PaytgtComponent implements OnInit {
         dinnerID: result.dinner.name.replace(" ", "_"),
         totalSum: 0
       };
-
+      
       this.dataset.insertDinner(dinner);
 
     });
 
   }
 
-  AddDinner(): void {
-    const dinner : Dinner = {
-      id: uuid(),
-      dinnerID: 'a3',
-      name: 'dinner 3',
-      icon: '',
-      members: [],
-      orders: [],
-      totalSum: 0
-    }
+  // AddDinner(): void {
+  //   const dinner : Dinner = {
+  //     id: uuid(),
+  //     dinnerID: 'a3',
+  //     name: 'dinner 3',
+  //     icon: '',
+  //     members: [],
+  //     orders: [],
+  //     totalSum: 0
+  //   }
 
-    this.dataset.insertDinner(dinner);
-  }
+  //   this.dataset.insertDinner(dinner);
+  // }
 
   AddNewOrder(): void {
     if (this.dinner == undefined) return;
@@ -111,14 +141,14 @@ export class PaytgtComponent implements OnInit {
       name: 'dinner 0410 (3)',
       price: 123,
       dinnerID: this.dinner.dinnerID,
-      sharedMember: []
+      sharedMember: this.dinner.members,
     }
 
     this.dataset.insertDinnerOrder(newOrder);
   }
 
   testUpdateDinner(): void {
-    this.dataset.testUpdateDinner(this.dinner);
+    // this.dataset.testUpdateDinner(this.dinner);
   }
 
   get getColor(): string {
