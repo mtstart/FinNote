@@ -10,11 +10,22 @@
   <mat-label>Please select eaters</mat-label>
   <mat-button-toggle-group [(ngModel)]="data.dinner.members" id="colorSpec" name="colorSpec" aria-label="ColorWheel"
     multiple required="true">
-    <mat-button-toggle *ngFor="let user of userList | async as User" [value]="user">
+    <mat-button-toggle 
+      *ngFor="let user of userList | async as User" 
+      [value]="user" 
+      [checked]="user.joinedDinner"
+    >
       <mat-icon color="primary" [style.border]="'grey'"> {{user.icon || "attribution"}} </mat-icon>
       <mat-label> {{user.Username}} </mat-label>
     </mat-button-toggle>
   </mat-button-toggle-group>
+  <!-- <mat-button-toggle-group [(ngModel)]="eaterList" id="colorSpec" name="colorSpec" aria-label="ColorWheel"
+    multiple required="true">
+    <mat-button-toggle *ngFor="let eater of eaterList" [value]="eater">
+      <mat-icon color="primary" [style.border]="'grey'"> {{eater.icon || "attribution"}} </mat-icon>
+      <mat-label> {{eater.Username}} </mat-label>
+    </mat-button-toggle>
+  </mat-button-toggle-group> -->
 
   <!-- <mat-label>Icon</mat-label>
     <mat-button-toggle-group [(ngModel)]="data.dinner.icon" id="colorSpec" name="colorSpec" aria-label="ColorWheel" multiple>

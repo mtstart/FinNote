@@ -5,4 +5,5 @@ export interface User {
     Status: number;
     icon: string;
     sum: number;
+    joinedDinner?: boolean;
 }
