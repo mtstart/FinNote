@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { DatasetService, ProjectStatusList } from 'service/dataset/dataset.service';
 import { AuthService } from 'service/auth/auth.service';
 import {v4 as uuid} from 'uuid';
+import { stopEvent, targetingInputElement, withModifyingKey } from '../shared/keyboard-util';
 // import { Dinner } from '../budget-planner/paytgt/Pay';
 
 @Component({
@@ -41,13 +42,17 @@ export class ProjectManagementComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   documentKeyDown(event: KeyboardEvent): void {
+    if (withModifyingKey(event) || targetingInputElement(event)) {
+      return;
+    }
+
     if (event.key == 'r') {
       this.syncTask();
     }
     if (event.key == 'n') {
       this.newTask();
     }
-
+    stopEvent(event);
   }
 
   syncTask() {
