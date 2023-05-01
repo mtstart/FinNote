@@ -43,18 +43,18 @@ export class AppComponent {
     description: "Go to PM",
     shortcutKey: "P",
     // color: "red",
-    icon: "table_view", 
+    icon: "today", 
     // itemCount: 0,
   },
   {
-    key: "t",
-    displayName: "Text Editor",
+    key: "d",
+    displayName: "DO WATCH",
     ref: "text-editor",
     order: 1,
-    description: "Go to TE",
-    shortcutKey: "T",
+    description: "Go to To Do List/ To Watch List",
+    shortcutKey: "D",
     // color: "green",
-    icon: "article", 
+    icon: "checklist", 
     // itemCount: 0,
   },
   {
@@ -65,7 +65,7 @@ export class AppComponent {
     description: "Go to C",
     shortcutKey: "C",
     color: "yellow",
-    icon: "calendar_month", 
+    icon: "account_balance_wallet", 
   },
   ];
 
