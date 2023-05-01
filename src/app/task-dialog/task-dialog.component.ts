@@ -31,6 +31,8 @@ export class TaskDialogComponent {
   ColorWheel = ColorUtility.ColorWheel;
   DialogType = DialogType;
 
+  taskColor: string = this.data.task.color || "";
+
   cancel(): void {
     this.data.task.title = this.backupTask.title;
     this.data.task.description = this.backupTask.description;
@@ -39,4 +41,10 @@ export class TaskDialogComponent {
     this.data.task.color = this.backupTask.color;
     this.dialogRef.close(this.data);
   }
+
+  onSubmit(): void {
+    this.data.task.color = this.taskColor;
+    this.dialogRef.close(this.data);
+  }
+
 }

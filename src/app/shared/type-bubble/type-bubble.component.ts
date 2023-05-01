@@ -32,7 +32,7 @@ export class TypeBubbleComponent implements OnInit {
     if (this.bubbleType === BubbleType.Urgency) {
       return ColorUtility.getUrgentColor(this.bubbleValue || "");
     } else {
-      return StandardColors.Default;
+      return this.bubbleValue || StandardColors.Default;
     }
 
   }

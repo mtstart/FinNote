@@ -5,13 +5,21 @@ export enum StandardColors {
     // UrgencyHigh = "#675D50",
     // UrgencyModerate = "#A9907E",
     // UrgencyLow = "#F3DEBA",
-    UrgencyHigh = "#F23A3C",
-    UrgencyModerate = "#DE8937",
-    UrgencyLow = "#FFD740",
+    // UrgencyHigh = "#F23A3C",
+    // UrgencyModerate = "#DE8937",
+    // UrgencyLow = "#FFD740",
+    UrgencyHigh = "#dd2955",
+    UrgencyModerate = "#ec5c2b",
+    UrgencyLow = "#ecae00",
 
     CalmGreen = "#ABC4AA",
-    Diabled = "grey",
+    Diabled = "#CDCDCD",
     Default = "#F1F1F1",
+
+    // Other Colors
+    DarkBlue = "#2024A1",
+    CalligraphyBlue = "#3743cd",
+
 }
 
 export interface ColorSpec {
