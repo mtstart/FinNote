@@ -7,6 +7,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Dinner, Eaters, Orders } from 'src/app/budget-planner/paytgt/Pay';
 import { endAt, getDocs, orderBy, query, startAt } from '@angular/fire/firestore';
 import { User } from 'src/app/shared/User';
+import { ReadingItem } from 'src/app/text-editor/ReadingItem';
 
 export type ProjectStatusList = "done" | "todo" | "inProgress";
 
@@ -21,6 +22,8 @@ export class DatasetService {
   inProgress: Observable<Task[]> | undefined;
   done: Observable<Task[]> | undefined;
   dinner: Observable<Dinner[]> | undefined;
+
+  //-------------------------------- Project Management --------------------------------//
 
   syncTask() {
     this.todo = this.store.collection('todo').valueChanges({ idField: 'id' }) as Observable<Task[]>;
@@ -176,5 +179,11 @@ export class DatasetService {
 
   //   this.store.collection('Dinner').doc(snapshot.docs[0].id).update(dinner);
   // }
+
+  //-------------------------------- DO WATCH --------------------------------//
+  public getReadingList(): Observable<ReadingItem[]> {
+    return this.store.collection('ReadingList').valueChanges({ idField: 'id' }) as Observable<ReadingItem[]>;
+  }
+
 
 }

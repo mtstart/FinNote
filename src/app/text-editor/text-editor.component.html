@@ -1,5 +1,18 @@
-<p>text-editor works!</p>
-
-<button (click)="openToast()">
+<!-- <button (click)="openToast()">
     open toast
-</button>
+</button> -->
+<div class="ordinary-section">
+    <h2>To Do List</h2>
+    <div class="ordinary-row" *ngFor="let content of readingList | async as ReadingList">
+        <div>{{content.title}}</div>
+        <div>{{content.url}}</div>
+        
+        <button mat-icon-button (click)="copyText(content.url)" color="primary">
+            <mat-icon>content_copy</mat-icon>
+        </button>
+        <button mat-icon-button (click)="openInNewTab(content.url)" color="primary">
+            <mat-icon>open_in_new</mat-icon>
+        </button>
+        
+    </div>
+</div>
