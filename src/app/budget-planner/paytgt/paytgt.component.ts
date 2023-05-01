@@ -120,20 +120,6 @@ export class PaytgtComponent implements OnInit {
 
   }
 
-  // AddDinner(): void {
-  //   const dinner : Dinner = {
-  //     id: uuid(),
-  //     dinnerID: 'a3',
-  //     name: 'dinner 3',
-  //     icon: '',
-  //     members: [],
-  //     orders: [],
-  //     totalSum: 0
-  //   }
-
-  //   this.dataset.insertDinner(dinner);
-  // }
-
   AddNewOrder(): void {
     if (this.dinner == undefined) return;
     

@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { filter, map, Observable, reduce, toArray } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { DatasetService } from 'service/dataset/dataset.service';
 import { User } from 'src/app/shared/User';
 import { DialogType } from 'src/app/task/task';
-import { Dinner, Eaters } from '../Pay';
+import { Dinner } from '../Pay';
 
 export interface DinnerDialogData {
   type: DialogType;
@@ -44,15 +44,9 @@ export class DinnerDialogComponent implements OnInit {
     private dataset: DatasetService
   ) { }
 
-  // dinnerForm = new FormGroup({
-  //   name: new FormControl('', Validators.required),
-  //   members: new FormControl('', Validators.required),
-  // });
   name = new FormControl('', [Validators.required]);
 
-  // all users/ only users in the dinner
   userList: Observable<User[]> | undefined;
-  eaterList: Eaters[] | undefined = [];
 
   IconWheel = [
     {name: "flower", icon: "local_florist"},
@@ -72,28 +66,6 @@ export class DinnerDialogComponent implements OnInit {
   }
 
   getDinnerMember(): void {
-
-    // this.userList?.pipe(
-    //   map((items: User[]) => items.map((user: User) => {
-    //     return {
-    //       Privilege: user.Privilege,
-    //       Status: user.Status,
-    //       Username: user.Username,
-    //       icon: user.icon,
-    //       id: user.id,
-    //       sum: user.sum,
-    //     } as User;
-    //   })),
-    //   filter(item => item != undefined),
-    // ).subscribe(users => {
-    //   this.eaterList = users.map((user: Eaters) => {
-    //     return {
-    //       ...user,
-    //       joinedDinner: this.data.dinner.members?.find(member => member.id === user.id) ? true : false,
-    //     } as User;
-    //   });
-    // });
-
     this.userList = this.userList?.pipe(
       map((items: User[]) => items.map((user: User) => {
         return {
@@ -122,8 +94,6 @@ export class DinnerDialogComponent implements OnInit {
     } 
 
     this.data.dinner.name = this.name.value;
-    // this.data.dinner.members = this.eaterList;
-
     this.dialogRef.close(this.data);
   }
 
