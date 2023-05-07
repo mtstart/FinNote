@@ -1,10 +1,9 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from 'service/auth/auth.service';
 import { ButtonLabelSpec } from './shared/dataset/button_label_spec';
-import { Observable, observable } from 'rxjs';
-import { User } from '@angular/fire/auth';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
