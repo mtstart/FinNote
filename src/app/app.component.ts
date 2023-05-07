@@ -1,16 +1,21 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'service/auth/auth.service';
 import { ButtonLabelSpec } from './shared/dataset/button_label_spec';
+import { Observable, observable } from 'rxjs';
+import { User } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss', './shared/shared-style.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor(private route: Router, public authService: AuthService) { }
+  ngOnInit(): void {
+    this.opened = this.loginStatus;
+  }
 
   title = 'FinNote';
   mode = new FormControl('push');
@@ -88,7 +93,18 @@ export class AppComponent {
   }
   
   get loginStatus(): boolean {
-    return this.authService.getUserProfile() !== null;
+    const userProfile = new Observable<boolean>(observer => {
+      const thing: boolean = this.authService.getUserProfile() !== null ? true: false;
+      observer.next(thing);
+      observer.complete;
+    })
+
+    userProfile.subscribe(data => {
+      this.opened = data;
+    })
+
+    const status = this.authService.getUserProfile() !== null;
+    return status;
   }
 
 }
