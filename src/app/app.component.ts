@@ -10,7 +10,7 @@ import { ButtonLabelSpec } from './shared/dataset/button_label_spec';
   styleUrls: ['./app.component.scss', './shared/shared-style.scss']
 })
 export class AppComponent {
-  constructor(private route: Router, public authService: AuthService, private activeRoute: ActivatedRoute) { }
+  constructor(private route: Router, public authService: AuthService) { }
 
   title = 'FinNote';
   mode = new FormControl('push');
@@ -88,7 +88,7 @@ export class AppComponent {
   }
   
   get loginStatus(): boolean {
-    return this.authService.getUserProfile() == null;
+    return this.authService.getUserProfile() !== null;
   }
 
 }
