@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 export class AppComponent implements OnInit {
   constructor(private route: Router, public authService: AuthService) { }
   ngOnInit(): void {
-    this.opened = this.loginStatus;
+    this.opened = this.authService.getUserProfile() !== null? true: false;
   }
 
   title = 'FinNote';
