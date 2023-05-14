@@ -13,12 +13,14 @@ import { Observable } from 'rxjs';
 export class AppComponent implements OnInit {
   constructor(private route: Router, public authService: AuthService) { }
   ngOnInit(): void {
-    this.opened = this.authService.getUserProfile() !== null? true: false;
+    this.authService?.currentAuthStatus?.subscribe(authService => {
+      this.opened = authService !== null? true : false;
+    });
   }
 
   title = 'FinNote';
   mode = new FormControl('push');
-  opened: boolean = true;
+  opened: boolean = false;
 
   buttonSpecList: ButtonLabelSpec.AsObject[] = [
   // {
