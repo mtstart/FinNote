@@ -8,7 +8,7 @@ export class NotificationBarService {
 
   constructor(private zone: NgZone, private notiBar: MatSnackBar) { }
 
-  public openBar(message: string, action: string, duration = 5000, timeout: number = 0) {
+  public openBar(message: string, action: string, duration = 3000, timeout: number = 0) {
     this.zone.run(() => {
       setTimeout(() => {
         this.notiBar.open(message, action, {duration});  

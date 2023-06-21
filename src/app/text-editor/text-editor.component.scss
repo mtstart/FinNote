@@ -1,0 +1,40 @@
+* {
+    box-sizing: border-box;
+}
+
+
+
+.url-session {
+    display: grid;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 1rem;
+
+    @media (min-width: 300px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    @media (min-width: 700px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media (min-width: 1000px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .reading-item {
+        // display: grid;
+        // grid-template-columns: 10% auto 10%;
+
+        // padding: 8px 8px;
+        // margin: 4px 12px;
+
+        height: 4rem;
+
+        #title {
+            font-weight: 500;
+        }
+
+        .click {
+            cursor: pointer;
+        }
+    }
+}

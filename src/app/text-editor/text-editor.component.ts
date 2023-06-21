@@ -22,7 +22,7 @@ export class TextEditorComponent implements OnInit {
   }
 
   openToast(message: string) {
-    this.notiBar.openBar(message, "press");
+    this.notiBar.openBar(message, "close");
   }
 
   // @HostListener('click', ['$event'])
