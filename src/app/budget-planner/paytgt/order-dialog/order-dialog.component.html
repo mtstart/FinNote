@@ -21,7 +21,7 @@
         [value]="user" 
         [checked]="user.joinedDinner"
       >
-        <mat-icon color="primary" [style.border]="'grey'"> {{user.icon || "attribution"}} </mat-icon>
+        <mat-icon [style.color]="user.color" color="primary" [style.border]="'grey'"> {{user.icon || "attribution"}} </mat-icon>
         <mat-label> {{user.Username}} </mat-label>
       </mat-button-toggle>
     </mat-button-toggle-group>

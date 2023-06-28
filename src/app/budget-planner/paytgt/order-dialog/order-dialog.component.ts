@@ -56,6 +56,7 @@ export class OrderDialogComponent implements OnInit {
           icon: user.icon,
           id: user.id,
           sum: user.sum,
+          color: user.color,
           joinedDinner: this.data.dinner.members?.find(member => member.id === user.id) ? true : false,
         } as User;
       }).filter(user => user.joinedDinner === true)),
