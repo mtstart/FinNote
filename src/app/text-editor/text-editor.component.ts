@@ -69,4 +69,16 @@ export class TextEditorComponent implements OnInit {
     window.open(value, "_blank")
   }
 
+  filesSelected(event: Event): void {
+    const files = (event.target as HTMLInputElement)?.files;
+    if (!files) {
+      return;
+    }
+    
+    const url = this.dataset.uploadImage_v2(files[0]);
+    if (url !== undefined) {
+      this.openToast("file uploaded")
+    }
+  }
+
 }

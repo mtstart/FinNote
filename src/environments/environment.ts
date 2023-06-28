@@ -2,6 +2,7 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
 
 export const environment = {
   // firebase: {
@@ -28,6 +29,7 @@ export const environment = {
 // Initialize Firebase
 const app = initializeApp(environment.firebase);
 initializeApp(environment.firebase);
+const storage = getStorage(app, "gs://finnote2-70a8c.appspot.com/");
 
 /*
  * For easier debugging in development mode, you can import the following file

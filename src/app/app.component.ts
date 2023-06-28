@@ -16,11 +16,15 @@ export class AppComponent implements OnInit {
     this.authService?.currentAuthStatus?.subscribe(authService => {
       this.opened = authService !== null? true : false;
     });
+
+    this.checkBrowser();
+
   }
 
   title = 'FinNote';
   mode = new FormControl('push');
   opened: boolean = false;
+  browserName: string = "";
 
   buttonSpecList: ButtonLabelSpec.AsObject[] = [
   // {
@@ -54,7 +58,7 @@ export class AppComponent implements OnInit {
   },
   {
     key: "d",
-    displayName: "DO WATCH",
+    displayName: "DO & WATCH",
     ref: "text-editor",
     order: 1,
     description: "Go to To Do List/ To Watch List",
@@ -74,6 +78,29 @@ export class AppComponent implements OnInit {
     icon: "account_balance_wallet", 
   },
   ];
+
+  checkBrowser(): void {
+    const userAgent: string = window.navigator.userAgent;
+    console.log(userAgent);
+
+    if (userAgent.match(/iPhone/i)) {
+      this.browserName = "iPhone, will close";
+      this.opened = false;
+    } else if (userAgent.match(/firefox|fxios/i)) {
+      this.browserName = "firefox";
+    } else if (userAgent.match(/chrome|chromium|crios/i)) {
+      this.browserName = "chrome";
+    } else if (userAgent.match(/safari/i)) {
+      this.browserName = "safari";
+    } else if (userAgent.match(/opr\//i)) {
+      this.browserName = "opera";
+    } else if (userAgent.match(/edg/i)) {
+      this.browserName = "edge";
+    } else {
+      this.browserName = "No browser detection";
+    }
+    // this.browserName += "\n" + window.navigator.userAgent;
+  }
 
   // @HostListener('keydown.p', ['$event'])
   // @HostListener('keydown.t', ['$event'])

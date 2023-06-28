@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Task } from 'src/app/task/task';
-import { AngularFirestore, AngularFirestoreCollection, Query } from '@angular/fire/compat/firestore';
-import { map, Observable } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
 import { TaskDialogComponent, TaskDialogResult } from 'src/app/task-dialog/task-dialog.component';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Dinner, Eaters, Orders } from 'src/app/budget-planner/paytgt/Pay';
-import { endAt, getDocs, orderBy, query, startAt } from '@angular/fire/firestore';
+import { Dinner, Orders } from 'src/app/budget-planner/paytgt/Pay';
 import { User } from 'src/app/shared/User';
 import { ReadingItem } from 'src/app/text-editor/ReadingItem';
+import { getDownloadURL, getStorage, ref, uploadBytes } from "@angular/fire/storage";
 
 export type ProjectStatusList = "done" | "todo" | "inProgress";
 
@@ -114,6 +114,36 @@ export class DatasetService {
     return this.store.collection('User').valueChanges({ idField: 'id' }) as Observable<User[]>;
   }
 
+  //-------------------------------- To Do/ Watch List --------------------------------//
+  public getReadingList(): Observable<ReadingItem[]> {
+    return this.store.collection('ReadingList').valueChanges({ idField: 'id' }) as Observable<ReadingItem[]>;
+  }
+
+  public uploadImage_v2(file: File): string | undefined {
+    const storage = getStorage();
+    // const storageRef = ref(storage, file.name);
+    const storageRef = ref(storage, 'folder/test123.jpg');
+    // console.log('file.name: ' + file.name);
+
+    uploadBytes(storageRef, file).then((snapshot) => {
+      let url: string = "";
+
+      getDownloadURL(snapshot.ref).then((downloadURL) => {
+        console.log('File available at', downloadURL);
+        url = downloadURL;
+        return downloadURL;
+      });
+      
+    }, 
+    (error: Error) => {
+      // Handle unsuccessful uploads
+      console.log('some error here');
+      console.log(error.message);
+      return undefined;
+    }
+    );
+    return undefined;
+  }
 
   //-------------------------------- Pay Tgt --------------------------------//
   
@@ -179,11 +209,6 @@ export class DatasetService {
 
   //   this.store.collection('Dinner').doc(snapshot.docs[0].id).update(dinner);
   // }
-
-  //-------------------------------- DO WATCH --------------------------------//
-  public getReadingList(): Observable<ReadingItem[]> {
-    return this.store.collection('ReadingList').valueChanges({ idField: 'id' }) as Observable<ReadingItem[]>;
-  }
 
 
 }
