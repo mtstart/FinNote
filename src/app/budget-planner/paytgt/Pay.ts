@@ -38,6 +38,7 @@ export interface Eaters {
     icon: string;
     id: string;
     sum: number;
+    color?: string;
     joinedDinner?: boolean;
 }
 

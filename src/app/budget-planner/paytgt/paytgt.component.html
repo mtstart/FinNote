@@ -48,7 +48,7 @@
                     <div *ngFor="let member of (dinner$|async)?.members" class="member">
                         <div>{{ member.Username }}</div>
                         <div>
-                            <mat-icon color="primary">{{ member.icon }}</mat-icon>
+                            <mat-icon [style.color]="member.color" color="primary">{{ member.icon }}</mat-icon>
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
 
                         <div class="icon">
                             <div class="member" *ngFor="let member of order.sharedMember">
-                                <mat-icon color="primary"> {{member.icon}} </mat-icon>
+                                <mat-icon [style.color]="member.color" color="primary"> {{member.icon}} </mat-icon>
                                 <mat-label>{{ member.Username }}</mat-label>
                             </div>
                         </div>
