@@ -10,6 +10,8 @@ import { ColorUtility } from 'src/app/shared/type-bubble/color';
 import { MatDialog } from '@angular/material/dialog';
 import { dialogDimen, DinnerDialogComponent, DinnerDialogResult } from './dinner-dialog/dinner-dialog.component';
 import { DialogType } from 'src/app/task/task';
+import { NotificationBarService } from 'src/app/shared/notification-bar/notification-bar.service';
+import { OrderDialogComponent, OrderDialogResult } from './order-dialog/order-dialog.component';
 
 @Component({
   selector: 'app-paytgt',
@@ -18,7 +20,7 @@ import { DialogType } from 'src/app/task/task';
 })
 export class PaytgtComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, store: AngularFirestore, private dataset: DatasetService, public authService: AuthService) { }
+  constructor(private dialog: MatDialog, store: AngularFirestore, private dataset: DatasetService, public authService: AuthService, public notiBar: NotificationBarService) { }
 
   loadingData: boolean = false;
   dinnerList: Observable<Dinner[]>| undefined;
@@ -86,7 +88,7 @@ export class PaytgtComponent implements OnInit {
     });
   }
 
-  newDinner(): void {
+  NewDinner(): void {
     if (this.dialog != null) {
       this.dialog.closeAll();
     }
@@ -115,7 +117,7 @@ export class PaytgtComponent implements OnInit {
       };
       
       this.dataset.insertDinner(dinner);
-
+      this.notiBar.openBar(dinner.name + " is created.");
     });
 
   }
@@ -127,11 +129,48 @@ export class PaytgtComponent implements OnInit {
       name: 'dinner 0410 (3)',
       price: 123,
       dinnerID: this.dinner.dinnerID,
-      sharedMember: this.dinner.members,
+      sharedMember: this.dinner.members,  
+      // if only one user in dinner, assign all order with that user
+      // if more than one user, no spec, than set as all member
     }
 
     this.dataset.insertDinnerOrder(newOrder);
   }
+
+  AddNewOrder_v2(): void {
+    if (this.dialog != null) {
+      this.dialog.closeAll();
+    }
+
+    const dialogRef = this.dialog.open(OrderDialogComponent, {
+      width: dialogDimen.width,
+      height: dialogDimen.height,
+      maxWidth: dialogDimen.maxWidth,
+      maxHeight: dialogDimen.maxHeight,
+      data: {
+        type: DialogType.NEW,
+        order: {},
+        dinner: this.dinner,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result: OrderDialogResult) => {
+      if (!result) return;;
+      if (this.dinner == undefined) return;
+
+      const order: Orders = {
+        ...result.order,
+        dinnerID: this.dinner.dinnerID,
+      }
+      // if only one user in dinner, assign all order with that user
+      // if more than one user, no spec, than set as all member
+
+      this.dataset.insertDinnerOrder(order);
+      this.notiBar.openBar(result.order.name + " is created.");
+    });
+  }
+
+  
 
   testUpdateDinner(): void {
     // this.dataset.testUpdateDinner(this.dinner);

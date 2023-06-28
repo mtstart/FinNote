@@ -174,6 +174,7 @@ export class DatasetService {
     const snapshot = await theCollection.where('dinnerID', '==', order.dinnerID).limit(1).get();
     const dinner = snapshot.docs[0].data() as Dinner;
 
+    // update dinner total price
     order.dinnerID = snapshot.docs[0].id;
     dinner.orders.push(order);
     dinner.totalSum += order.price;

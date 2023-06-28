@@ -16,7 +16,7 @@
 .order {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
 
     .order-section {
         min-height: 50px;

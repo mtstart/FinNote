@@ -1,0 +1,47 @@
+<form id="task-form">
+    <h2 *ngIf="data.type == 1">New Item</h2>
+  
+    <mat-form-field appearance="fill" color="primary">
+      <mat-label>Name</mat-label>
+      <input matInput [formControl]="name" [readonly]="data.type==2" />
+      <mat-error *ngIf="name.invalid">You must enter a value</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill" color="primary">
+      <mat-label>Price</mat-label>
+      <input matInput [formControl]="price" [readonly]="data.type==2" />
+      <mat-error *ngIf="price.invalid">You must enter a value</mat-error>
+    </mat-form-field>
+  
+    <mat-label>Please select eaters</mat-label>
+    <mat-button-toggle-group [(ngModel)]="data.order.sharedMember" id="colorSpec" name="colorSpec" aria-label="ColorWheel"
+      multiple required="true">
+      <mat-button-toggle 
+        *ngFor="let user of userList | async as User" 
+        [value]="user" 
+        [checked]="user.joinedDinner"
+      >
+        <mat-icon color="primary" [style.border]="'grey'"> {{user.icon || "attribution"}} </mat-icon>
+        <mat-label> {{user.Username}} </mat-label>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+    <!-- <mat-button-toggle-group [(ngModel)]="eaterList" id="colorSpec" name="colorSpec" aria-label="ColorWheel"
+      multiple required="true">
+      <mat-button-toggle *ngFor="let eater of eaterList" [value]="eater">
+        <mat-icon color="primary" [style.border]="'grey'"> {{eater.icon || "attribution"}} </mat-icon>
+        <mat-label> {{eater.Username}} </mat-label>
+      </mat-button-toggle>
+    </mat-button-toggle-group> -->
+  
+    <!-- <mat-label>Icon</mat-label>
+      <mat-button-toggle-group [(ngModel)]="data.dinner.icon" id="colorSpec" name="colorSpec" aria-label="ColorWheel" multiple>
+        <mat-button-toggle *ngFor="let icon of IconWheel" [value]="icon.icon[0]">
+          <mat-icon color="primary" [style.border]="'grey'"> {{icon.icon}} </mat-icon>
+        </mat-button-toggle>
+      </mat-button-toggle-group> -->
+  
+    <button mat-raised-button type="submit" color="primary" (click)="onSubmit()">
+      Save
+    </button>
+  
+  </form>

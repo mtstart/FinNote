@@ -6,4 +6,5 @@ export interface User {
     icon: string;
     sum: number;
     joinedDinner?: boolean;
+    color?: string;
 }

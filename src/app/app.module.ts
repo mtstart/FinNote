@@ -24,6 +24,7 @@ import { BudgetPlannerComponent } from './budget-planner/budget-planner.componen
 import { PaytgtComponent } from './budget-planner/paytgt/paytgt.component';
 import { PipeModule } from './shared/pipe/pipe.module';
 import { DinnerDialogComponent } from './budget-planner/paytgt/dinner-dialog/dinner-dialog.component';
+import { OrderDialogComponent } from './budget-planner/paytgt/order-dialog/order-dialog.component';
 
 
 
@@ -40,7 +41,8 @@ import { DinnerDialogComponent } from './budget-planner/paytgt/dinner-dialog/din
     TypeBubbleComponent,
     BudgetPlannerComponent,
     PaytgtComponent,
-    DinnerDialogComponent
+    DinnerDialogComponent,
+    OrderDialogComponent
   ],
   imports: [
     BrowserModule,

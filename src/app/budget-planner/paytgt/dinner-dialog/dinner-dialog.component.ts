@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { map, Observable } from 'rxjs';
+import { map, Observable, reduce } from 'rxjs';
 import { DatasetService } from 'service/dataset/dataset.service';
 import { User } from 'src/app/shared/User';
 import { DialogType } from 'src/app/task/task';
@@ -33,7 +33,7 @@ export enum dialogDimen {
 @Component({
   selector: 'app-dinner-dialog',
   templateUrl: './dinner-dialog.component.html',
-  styleUrls: ['./dinner-dialog.component.scss']
+  styleUrls: ['./dinner-dialog.component.scss', '../../paytgt/paytgt-shared.scss']
 })
 export class DinnerDialogComponent implements OnInit {
   private backupDinner: Partial<Dinner> = { ...this.data.dinner };
@@ -92,6 +92,9 @@ export class DinnerDialogComponent implements OnInit {
     if (this.name.errors) {
       return;
     } 
+    if (this.data.type == DialogType.NEW) {
+      this.data.dinner.orders = [];
+    }
 
     this.data.dinner.name = this.name.value;
     this.dialogRef.close(this.data);
