@@ -10,21 +10,30 @@
     <mat-form-field appearance="fill" color="primary">
       <mat-label>Price</mat-label>
       <input matInput [formControl]="price" [readonly]="data.type==2" />
-      <mat-error *ngIf="price.invalid">You must enter a value</mat-error>
+      <mat-error *ngIf="price.invalid">You must enter a numer</mat-error>
     </mat-form-field>
   
-    <mat-label>Please select eaters</mat-label>
-    <mat-button-toggle-group [(ngModel)]="data.order.sharedMember" id="colorSpec" name="colorSpec" aria-label="ColorWheel"
-      multiple required="true">
-      <mat-button-toggle 
-        *ngFor="let user of userList | async as User" 
-        [value]="user" 
-        [checked]="user.joinedDinner"
+      <mat-label>Please select eaters</mat-label>
+      <mat-error *ngIf="member.invalid">You must pick a user</mat-error>
+      <mat-button-toggle-group 
+        id="colorSpec" 
+        name="colorSpec" 
+        aria-label="ColorWheel"
+        multiple 
+        required
+        [formControl]="member"
       >
-        <mat-icon [style.color]="user.color" color="primary" [style.border]="'grey'"> {{user.icon || "attribution"}} </mat-icon>
-        <mat-label> {{user.Username}} </mat-label>
-      </mat-button-toggle>
-    </mat-button-toggle-group>
+        <mat-button-toggle 
+          *ngFor="let user of userList | async as User" 
+          [value]="user" 
+        >
+          <mat-icon [style.color]="user.color" color="primary" [style.border]="'grey'"> {{user.icon || "attribution"}} </mat-icon>
+          <mat-label> {{user.Username}} </mat-label>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    
+    
+    
     <!-- <mat-button-toggle-group [(ngModel)]="eaterList" id="colorSpec" name="colorSpec" aria-label="ColorWheel"
       multiple required="true">
       <mat-button-toggle *ngFor="let eater of eaterList" [value]="eater">

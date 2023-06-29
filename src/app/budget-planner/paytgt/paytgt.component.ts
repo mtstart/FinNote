@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatSelectChange } from '@angular/material/select';
-import { filter, first, Observable } from 'rxjs';
+import { filter, first, map, Observable } from 'rxjs';
 import { AuthService } from 'service/auth/auth.service';
 import { DatasetService } from 'service/dataset/dataset.service';
 import { Dinner, Orders } from './Pay';
@@ -49,13 +49,16 @@ export class PaytgtComponent implements OnInit {
 
   SelectDinner(event: MatSelectChange) {
     console.log('event: ' + event);
-    this.dinner$ = this.dataset.getOneDinner(String(event));
-    // this.dinner$?.subscribe(event => {this.dinner = event});
-    this.dinner$.forEach(din => {
-      console.log(din.name + ", " + din.id);
+    this.SetCurrentDinner(String(event));
+  }
+
+  SetCurrentDinner(dinnerID: string): void {
+    this.dinner$ = this.dataset.getOneDinner(dinnerID);
+    this.dinner$.forEach((din: Dinner) => {
+      // console.log(din.name + ", " + din.id);
       this.dinner = din;
     });
-    
+    console.log("current dinner: " + this.dinner?.name);
   }
 
   ViewDinner(): void {
@@ -118,6 +121,9 @@ export class PaytgtComponent implements OnInit {
       
       this.dataset.insertDinner(dinner);
       this.notiBar.openBar(dinner.name + " is created.");
+      // this.dinner$ = this.dataset.getOneDinner(dinner.dinnerID);
+      // this.dinner$.pipe(map((din: Dinner | undefined) => this.dinner = din));
+      this.SetCurrentDinner(dinner.dinnerID);
     });
 
   }
@@ -158,6 +164,8 @@ export class PaytgtComponent implements OnInit {
       if (!result) return;;
       if (this.dinner == undefined) return;
 
+      // result.order.sharedMember.forEach(member => {})
+      
       const order: Orders = {
         ...result.order,
         dinnerID: this.dinner.dinnerID,

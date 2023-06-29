@@ -5,7 +5,7 @@ import { DialogType } from 'src/app/task/task';
 import { Dinner, Orders } from '../Pay';
 import { Observable, filter, map, reduce } from 'rxjs';
 import { User } from 'src/app/shared/User';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 export interface OrderDialogData {
   type: DialogType;
@@ -35,7 +35,8 @@ export class OrderDialogComponent implements OnInit {
 
   userList: Observable<User[]> | undefined;
   name = new FormControl('', [Validators.required]);
-  price = new FormControl('', [Validators.required, Validators.min(0)]);
+  price = new FormControl('', [Validators.required, Validators.min(0), Validators.pattern("^[0-9]*$")]);
+  member = new FormControl('', [Validators.required]);
 
   ngOnInit(): void {
     this.userList = this.dataset.getUserList();
@@ -64,12 +65,13 @@ export class OrderDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.name.errors) {
+    if (this.name.errors || this.price.errors || this.member.errors) {
       return;
-    } 
+    };
 
     this.data.order.name = this.name.value;
     this.data.order.price = Number(this.price.value);
+    this.data.order.sharedMember = this.member.value;
     this.dialogRef.close(this.data);
   }
 
