@@ -37,38 +37,34 @@ export class DatasetService {
   */
 
   public getTodo(): Observable<Task[]> {
-
-    // this.store.collection('todo', ref => ref.where("title", "==", 'pay tgt')).get().subscribe(ss => {
-    //   console.log('todo all length: ' + ss.docs.length)
-    // })
-
-    return this.todo = this.store.collection('todo').valueChanges({ idField: 'id' }) as Observable<Task[]>;
+    const collection = this.store.collection('todo', ref => ref.orderBy('lastUpdate', 'desc'));
+    return this.todo = collection.valueChanges({ idField: 'id' }) as Observable<Task[]>;
   }
 
-  public async getTodoWithORder(): Promise<void> {
-    const theCollection = this.store.collection('todo').ref;
-
-    // const snapshot = await theCollection.orderBy('title').limit(20).get();
-    const snapshot = await theCollection.orderBy('lastUpdate').get();
+  public async getTodoWithORder(): Promise<Observable<Task[]>> {
+    console.log("getTodoWithORder")
+    const col = this.store.collection('todo', ref => ref.orderBy('createdDT', 'desc'));    
     
-    if (!snapshot) {
-      console.log('No matching documents.');
-    }  
+    const thing = col.valueChanges({ idField: 'id' }) as Observable<Task[]>;
+    thing.forEach(item => {
+      item.forEach(it => {
+        const time: number = it.lastUpdate?.seconds || 0;
+        const date = new Date(time);
 
-    snapshot.forEach((doc) => {
-      // console.log(doc.id, '=>', doc.data());
-      const thing = doc.data() as Task;
-      console.log(thing.title + ": " + thing.description);
-    });
-
+        console.log(date.toLocaleString() + ": " + it.title);
+      })
+    })
+    return thing;
   }
 
   public getInProgress(): Observable<Task[]> {
-    return this.inProgress = this.store.collection('inProgress').valueChanges({ idField: 'id' }) as Observable<Task[]>;
+    const collection = this.store.collection('inProgress', ref => ref.orderBy('lastUpdate', 'desc'));
+    return this.inProgress = collection.valueChanges({ idField: 'id' }) as Observable<Task[]>;
   }
 
   public getDone(): Observable<Task[]> {
-    const asdf = this.store.collection('done').valueChanges({ idField: 'id' }) as Observable<Task[]>;
+    const collection = this.store.collection('done', ref => ref.limit(5).orderBy('lastUpdate', 'desc'));
+    const asdf = collection.valueChanges({ idField: 'id' }) as Observable<Task[]>;
     
     // // only get 2 everytime, reduce loading time due to large amount of data
     // const qwer = this.store.collection('done', thing => thing.limit(2));

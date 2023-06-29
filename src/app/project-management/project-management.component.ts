@@ -108,7 +108,7 @@ export class ProjectManagementComponent implements OnInit {
         type: DialogType.EDIT,
         task: {
           ...task, 
-          lastUpdate: {seconds: Date.now()}
+          // lastUpdate: {seconds: Date.now()}
         },
         enableDelete: true,
       },

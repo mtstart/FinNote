@@ -13,9 +13,16 @@
   </mat-form-field>
   
   <mat-form-field appearance="fill">
-    <mat-label>Type</mat-label>
+    <mat-label>Label</mat-label>
     <input matInput [(ngModel)]="data.task.type" />
   </mat-form-field>
+
+  <mat-label>Label Color</mat-label>
+  <mat-button-toggle-group id="colorSpec" name="colorSpec" [(ngModel)]="taskColor" aria-label="ColorWheel">
+    <mat-button-toggle *ngFor="let background of ColorWheel" [checked]="background.color == data.task.color" [value]="background.color">
+      <mat-icon [style.color]="background.color" [style.border]="'grey'">circle</mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
 
   <mat-label>Urgency</mat-label>
   <mat-radio-group aria-label="Urgency" [(ngModel)]="data.task.urgency" color="primary">
@@ -23,13 +30,6 @@
     <mat-radio-button value="Moderate">Moderate</mat-radio-button>
     <mat-radio-button value="High">Urgent!!</mat-radio-button>
   </mat-radio-group>
-
-  <mat-label>Template Color</mat-label>
-  <mat-button-toggle-group id="colorSpec" name="colorSpec" [(ngModel)]="taskColor" aria-label="ColorWheel">
-    <mat-button-toggle *ngFor="let background of ColorWheel" [checked]="background.color == data.task.color" [value]="background.color">
-      <mat-icon [style.color]="background.color" [style.border]="'grey'">circle</mat-icon>
-    </mat-button-toggle>
-  </mat-button-toggle-group>
 
 </div>
     
