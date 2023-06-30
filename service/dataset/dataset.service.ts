@@ -144,7 +144,8 @@ export class DatasetService {
   //-------------------------------- Pay Tgt --------------------------------//
   
   public getDinner(): Observable<Dinner[]> {
-    return this.dinner = this.store.collection('Dinner').valueChanges({ idField: 'id' }) as Observable<Dinner[]>;
+    const collection = this.store.collection('Dinner', ref => ref.orderBy('lastUpdate', 'desc'));
+    return this.dinner = collection.valueChanges({ idField: 'id' }) as Observable<Dinner[]>;
   }
 
   public getOneDinner(dinnerID: string): Observable<Dinner> {    
