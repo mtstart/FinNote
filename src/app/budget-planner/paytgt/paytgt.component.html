@@ -2,14 +2,17 @@
     <div class="content-real">
         <div class="content">
 
-            <div class="page-title-text ordinary-section" style="align-items: center;">
+            <div class="page-title-text ordinary-section" style="align-items: center;justify-content: space-between;">
                 Pick the Occasion
                 <div *ngIf="!loadingData" style="padding-left: 10px;">
                     <mat-spinner [diameter]="30"></mat-spinner>
                 </div>
+                <button mat-icon-button (click)="syncDinner()" color="primary">
+                    <mat-icon>refresh</mat-icon>
+                </button>
             </div>
             
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="fill" id="dinner-option">
                 <mat-label>Choose One ~</mat-label>
                 <mat-select (valueChange)="SelectDinner($event)">
 
@@ -27,23 +30,15 @@
             </mat-form-field>
 
             <div class="ordinary-section">
-                <button mat-raised-button (click)="syncDinner()" color="primary">
-                    Refresh <mat-icon>refresh</mat-icon>
-                </button>
-                <button mat-icon-button *ngIf="dinner" (click)="ViewDinner()" color="primary">
-                    <mat-icon>info_outline</mat-icon>
-                </button>
-    
-                <!-- <button (click)="testUpdateDinner()" mat-button color="primary">
-                    test function <mat-icon>flag</mat-icon>
-                </button> -->
-    
-                <button mat-button *ngIf="dinner" (click)="AddNewOrder_v2()" color="primary">
+                <button mat-raised-button *ngIf="dinner" (click)="AddNewOrder_v2()" color="primary">
                     Add new order <mat-icon>add</mat-icon>
+                </button>
+                <button mat-button *ngIf="dinner" (click)="ViewDinner()" color="primary">
+                    Edit Dinner <mat-icon>edit</mat-icon>
                 </button>
             </div>
 
-            <div class="order">
+            <div class="ordinary-section order">
                 <div class="order-section member-list">
                     <div *ngFor="let member of (dinner$|async)?.members" class="member">
                         <div>{{ member.Username }}</div>

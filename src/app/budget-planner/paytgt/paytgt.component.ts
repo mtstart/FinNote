@@ -29,7 +29,6 @@ export class PaytgtComponent implements OnInit {
 
   ngOnInit(): void {
     this.syncDinner();
-    this.dinnerList = this.dataset.getDinner();
   }
 
   syncDinner() {

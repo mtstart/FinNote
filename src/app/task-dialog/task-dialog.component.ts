@@ -44,7 +44,7 @@ export class TaskDialogComponent {
 
   onSubmit(): void {
     this.data.task.color = this.taskColor;
-    this.data.task.lastUpdate = {seconds: Date.now()}
+    this.data.task.lastUpdate = {seconds: Date.now()};
     this.dialogRef.close(this.data);
   }
 

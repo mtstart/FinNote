@@ -45,6 +45,7 @@ export class DinnerDialogComponent implements OnInit {
   ) { }
 
   name = new FormControl('', [Validators.required]);
+  member = new FormControl('', [Validators.required]);
 
   userList: Observable<User[]> | undefined;
 
@@ -59,8 +60,8 @@ export class DinnerDialogComponent implements OnInit {
     this.initDinner();
   }
 
-  async initDinner(): Promise<void> {
-    await this.getDinnerMember();
+  initDinner(): void {
+    this.getDinnerMember();
 
     this.name.setValue(this.data.dinner.name);
   }
@@ -97,6 +98,7 @@ export class DinnerDialogComponent implements OnInit {
       this.data.dinner.orders = [];
     }
 
+    this.data.dinner.lastUpdate = {seconds: Date.now()}
     this.data.dinner.name = this.name.value;
     this.dialogRef.close(this.data);
   }

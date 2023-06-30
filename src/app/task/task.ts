@@ -12,7 +12,7 @@ export interface Task {
 }
 
 export class localDateTime {
-    seconds: number | undefined = 0;
+    seconds: number = 0;
 }
 
 export enum Urgency {

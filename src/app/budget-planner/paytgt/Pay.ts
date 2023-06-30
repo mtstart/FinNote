@@ -1,4 +1,4 @@
-import {v4 as uuid} from 'uuid';
+import { localDateTime } from 'src/app/task/task';
 // import * as jspb from 'google-protobuf'
 
 
@@ -12,6 +12,7 @@ export interface Dinner {
     members: Eaters[];
     orders: Orders[];
     totalSum: number;
+    lastUpdate?: localDateTime;
 }
 
 

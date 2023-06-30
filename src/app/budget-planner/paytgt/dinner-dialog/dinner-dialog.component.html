@@ -3,13 +3,14 @@
 
   <mat-form-field appearance="fill" color="primary">
     <mat-label>Dinner Name</mat-label>
-    <input matInput [formControl]="name" [readonly]="data.type==2" />
+    <input matInput [formControl]="name" />
     <mat-error *ngIf="name.invalid">You must enter a value</mat-error>
   </mat-form-field>
 
   <mat-label>Please select eaters</mat-label>
+  <!-- <mat-error *ngIf="member.invalid">You must pick a user</mat-error> -->
   <mat-button-toggle-group [(ngModel)]="data.dinner.members" id="colorSpec" name="colorSpec" aria-label="ColorWheel"
-    multiple required="true">
+    multiple required="true" [formControl]="member">
     <mat-button-toggle 
       *ngFor="let user of userList | async as User" 
       [value]="user" 
@@ -34,6 +35,7 @@
       </mat-button-toggle>
     </mat-button-toggle-group> -->
 
+  <div class="hint">Last Update: {{ data.dinner.lastUpdate?.seconds | date: 'yyyy/MM/dd h:mm a' }}</div>
   <button mat-raised-button type="submit" color="primary" (click)="onSubmit()">
     Save
   </button>
