@@ -31,7 +31,7 @@
 
             <div class="ordinary-section">
                 <button mat-raised-button *ngIf="dinner" (click)="AddNewOrder_v2()" color="primary">
-                    Add new order <mat-icon>add</mat-icon>
+                    Add New Order <mat-icon>add</mat-icon>
                 </button>
                 <button mat-button *ngIf="dinner" (click)="ViewDinner()" color="primary">
                     Edit Dinner <mat-icon>edit</mat-icon>
@@ -49,6 +49,11 @@
                 </div>
 
                 <div class="order-section" *ngIf="dinner$|async as dinner">
+                    <div class="order-group header">
+                        <div>Item Name</div>
+                        <div>Price</div>
+                        <div style="justify-content: flex-end;">Users</div>
+                    </div>
                     <div *ngFor="let order of dinner.orders" class="order-group">
                         <mat-label> {{ order.name }} </mat-label>
                         <mat-label> $ {{ order.price }} </mat-label>
@@ -56,7 +61,7 @@
                         <div class="icon">
                             <div class="member" *ngFor="let member of order.sharedMember">
                                 <mat-icon [style.color]="member.color" color="primary"> {{member.icon}} </mat-icon>
-                                <mat-label>{{ member.Username }}</mat-label>
+                                <!-- <mat-label>{{ member.Username }}</mat-label> -->
                             </div>
                         </div>
                     </div>

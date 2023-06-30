@@ -35,8 +35,13 @@
 
     mat-button-toggle-group {
         overflow-y: auto;
-        max-width: 100%;
+        // max-width: 100%;
         width: fit-content;
         margin: 10px 0px;
+    }
+
+    .member-form-list {
+        overflow: auto;
+        display: flexbox;
     }
 }

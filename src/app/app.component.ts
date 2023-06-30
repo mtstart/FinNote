@@ -81,11 +81,12 @@ export class AppComponent implements OnInit {
 
   checkBrowser(): void {
     const userAgent: string = window.navigator.userAgent;
-    console.log(userAgent);
+    // console.log(userAgent);
 
     if (userAgent.match(/iPhone/i)) {
       this.browserName = "iPhone, will close";
       this.opened = false;
+      return;
     } else if (userAgent.match(/firefox|fxios/i)) {
       this.browserName = "firefox";
     } else if (userAgent.match(/chrome|chromium|crios/i)) {
@@ -98,8 +99,12 @@ export class AppComponent implements OnInit {
       this.browserName = "edge";
     } else {
       this.browserName = "No browser detection";
+      this.opened = false;
+      return;
     }
     // this.browserName += "\n" + window.navigator.userAgent;
+    this.opened = true;
+    return;
   }
 
   // @HostListener('keydown.p', ['$event'])
@@ -130,6 +135,8 @@ export class AppComponent implements OnInit {
     userProfile.subscribe(data => {
       this.opened = data;
     })
+
+    this.checkBrowser();
 
     const status = this.authService.getUserProfile() !== null;
     return status;

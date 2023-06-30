@@ -9,12 +9,13 @@
   
     <mat-form-field appearance="fill" color="primary">
       <mat-label>Price</mat-label>
-      <input matInput [formControl]="price" [readonly]="data.type==2" />
+      <input matInput [formControl]="price" [readonly]="data.type==2" pattern="\d*" />
       <mat-error *ngIf="price.invalid">You must enter a numer</mat-error>
     </mat-form-field>
   
-      <mat-label>Please select eaters</mat-label>
-      <mat-error *ngIf="member.invalid">You must pick a user</mat-error>
+    <mat-label>Please select eaters</mat-label>
+    <mat-error *ngIf="member.invalid" style="font-size: smaller;">You must pick a user</mat-error>
+    <div class="member-form-list">
       <mat-button-toggle-group 
         id="colorSpec" 
         name="colorSpec" 
@@ -31,7 +32,7 @@
           <mat-label> {{user.Username}} </mat-label>
         </mat-button-toggle>
       </mat-button-toggle-group>
-    
+    </div>
     
     
     <!-- <mat-button-toggle-group [(ngModel)]="eaterList" id="colorSpec" name="colorSpec" aria-label="ColorWheel"
