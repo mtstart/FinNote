@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatSelectChange } from '@angular/material/select';
-import { filter, first, map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AuthService } from 'service/auth/auth.service';
-import { DatasetService } from 'service/dataset/dataset.service';
 import { Dinner, Orders } from './Pay';
-import {v4 as uuid} from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { ColorUtility } from 'src/app/shared/type-bubble/color';
 import { MatDialog } from '@angular/material/dialog';
 import { dialogDimen, DinnerDialogComponent, DinnerDialogResult } from './dinner-dialog/dinner-dialog.component';
 import { DialogType } from 'src/app/task/task';
 import { NotificationBarService } from 'src/app/shared/notification-bar/notification-bar.service';
 import { OrderDialogComponent, OrderDialogResult } from './order-dialog/order-dialog.component';
+import { PaytgtService } from './paytgt.service';
 
 @Component({
   selector: 'app-paytgt',
@@ -20,7 +20,7 @@ import { OrderDialogComponent, OrderDialogResult } from './order-dialog/order-di
 })
 export class PaytgtComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, store: AngularFirestore, private dataset: DatasetService, public authService: AuthService, public notiBar: NotificationBarService) { }
+  constructor(private dialog: MatDialog, store: AngularFirestore, private service: PaytgtService, public authService: AuthService, public notiBar: NotificationBarService) { }
 
   loadingData: boolean = false;
   dinnerList: Observable<Dinner[]>| undefined;
@@ -33,7 +33,7 @@ export class PaytgtComponent implements OnInit {
 
   syncDinner() {
     this.loadingData = false;
-    this.dinnerList = this.dataset.getDinner();
+    this.dinnerList = this.service.getDinner();
 
     this.dinnerList.subscribe(thingList => {
       // thingList.forEach(dinner => {
@@ -43,16 +43,13 @@ export class PaytgtComponent implements OnInit {
     });
   }
 
-  doTheTest() {
-  }
-
   SelectDinner(event: MatSelectChange) {
     console.log('event: ' + event);
     this.SetCurrentDinner(String(event));
   }
 
   SetCurrentDinner(dinnerID: string): void {
-    this.dinner$ = this.dataset.getOneDinner(dinnerID);
+    this.dinner$ = this.service.getOneDinner(dinnerID);
     this.dinner$.forEach((din: Dinner) => {
       // console.log(din.name + ", " + din.id);
       this.dinner = din;
@@ -73,6 +70,7 @@ export class PaytgtComponent implements OnInit {
       data: {
         type: DialogType.EDIT,
         dinner: this.dinner,
+        enableDelete: true,
       }
     });
 
@@ -84,8 +82,12 @@ export class PaytgtComponent implements OnInit {
       const dinner: Dinner = {
         ...result.dinner
       };
-      
-      this.dataset.updateDinner(dinner);
+
+      if (result.delete && confirm("Are you sure to delete this dinner?")) {
+        this.service.deleteDinner(dinner.id);
+      } else {
+        this.service.updateDinner(dinner);
+      }
 
     });
   }
@@ -118,13 +120,17 @@ export class PaytgtComponent implements OnInit {
         totalSum: 0
       };
       
-      this.dataset.insertDinner(dinner);
+      this.service.insertDinner(dinner);
       this.notiBar.openBar(dinner.name + " is created.");
       // this.dinner$ = this.dataset.getOneDinner(dinner.dinnerID);
       // this.dinner$.pipe(map((din: Dinner | undefined) => this.dinner = din));
       this.SetCurrentDinner(dinner.dinnerID);
     });
 
+  }
+
+  DeleteDinner(id: string): void {
+    this.service.deleteDinner(id);
   }
 
   AddNewOrder(): void {
@@ -139,7 +145,7 @@ export class PaytgtComponent implements OnInit {
       // if more than one user, no spec, than set as all member
     }
 
-    this.dataset.insertDinnerOrder(newOrder);
+    this.service.insertDinnerOrder(newOrder);
   }
 
   AddNewOrder_v2(): void {
@@ -172,7 +178,7 @@ export class PaytgtComponent implements OnInit {
       // if only one user in dinner, assign all order with that user
       // if more than one user, no spec, than set as all member
 
-      this.dataset.insertDinnerOrder(order);
+      this.service.insertDinnerOrder(order);
       this.notiBar.openBar(result.order.name + " is created.");
     });
   }

@@ -141,52 +141,6 @@ export class DatasetService {
     return undefined;
   }
 
-  //-------------------------------- Pay Tgt --------------------------------//
-  
-  public getDinner(): Observable<Dinner[]> {
-    const collection = this.store.collection('Dinner', ref => ref.orderBy('lastUpdate', 'desc'));
-    return this.dinner = collection.valueChanges({ idField: 'id' }) as Observable<Dinner[]>;
-  }
-
-  public getOneDinner(dinnerID: string): Observable<Dinner> {    
-    // return this.store.collection('Dinner', ref => ref.where("dinnerID", "==", order.dinnerID));
-
-    // const jhgkdinner = this.store.collection('Dinner').doc('stl5E7ptBFrf4pJAxVSG').valueChanges() as Observable<Dinner>;
-    const dinner = this.store.collection('Dinner').doc(dinnerID).valueChanges() as Observable<Dinner>;
-
-    return dinner;
-  }
-
-  public insertDinner(dinner: Dinner): void {
-    this.store.collection('Dinner').add(dinner);
-  }
-
-  public async insertDinnerOrder(order: Orders): Promise<void> {
-    /**
-     * find the dinner
-     * add the order to the dinner
-     */
-
-    const theCollection = this.store.collection('Dinner').ref;
-    const snapshot = await theCollection.where('dinnerID', '==', order.dinnerID).limit(1).get();
-    const dinner = snapshot.docs[0].data() as Dinner;
-
-    // update dinner total price
-    order.dinnerID = snapshot.docs[0].id;
-    dinner.orders.push(order);
-    dinner.totalSum += order.price;
-
-    this.store.collection('Dinner').doc(order.dinnerID).update(dinner);
-  }
-  
-  public async updateDinner(dinner: Dinner | undefined): Promise<void> {
-    if (dinner == undefined) return;
-    
-    const theCollection = this.store.collection('Dinner').ref;
-    const snapshot = await theCollection.where('dinnerID', '==', dinner.dinnerID).limit(1).get();
-
-    this.store.collection('Dinner').doc(snapshot.docs[0].id).update(dinner);
-  }
 
   // public async testUpdateDinner(dinner: Dinner | undefined): Promise<void> {
   //   if (dinner == undefined) return;

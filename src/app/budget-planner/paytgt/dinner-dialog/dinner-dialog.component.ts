@@ -15,6 +15,7 @@ export interface DinnerDialogData {
 
 export interface DinnerDialogResult {
   dinner: Dinner;
+  delete?: boolean;
 }
 
 export enum dialogDimen {
