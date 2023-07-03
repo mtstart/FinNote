@@ -20,18 +20,21 @@
       <mat-label> {{user.Username}} </mat-label>
     </mat-button-toggle>
   </mat-button-toggle-group>
-  
-  <button 
-    *ngIf="data.enableDelete" mat-button 
-    color="primary" 
-    [mat-dialog-close]="{ dinner: data.dinner, delete: true }"
-  >
-    <mat-icon>delete</mat-icon>
-  </button>
 
   <div *ngIf="data.enableDelete" class="hint">Last Update: {{ data.dinner.lastUpdate?.seconds | date: 'yyyy/MM/dd h:mm a' }}</div>
-  <button mat-raised-button type="submit" color="primary" (click)="onSubmit()">
-    Save
-  </button>
+  
+  <div class="ordinary-top-bottom">
+    <button 
+      *ngIf="data.enableDelete" mat-button 
+      color="primary" 
+      [mat-dialog-close]="{ dinner: data.dinner, delete: true }"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+  
+    <button mat-raised-button type="submit" color="primary" (click)="onSubmit()">
+      Save
+    </button>
+  </div>
 
 </form>

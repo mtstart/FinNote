@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatSelectChange } from '@angular/material/select';
 import { Observable } from 'rxjs';
@@ -12,6 +12,7 @@ import { DialogType } from 'src/app/task/task';
 import { NotificationBarService } from 'src/app/shared/notification-bar/notification-bar.service';
 import { OrderDialogComponent, OrderDialogResult } from './order-dialog/order-dialog.component';
 import { PaytgtService } from './paytgt.service';
+import { withModifyingKey, targetingInputElement, stopEvent } from 'src/app/shared/keyboard-util';
 
 @Component({
   selector: 'app-paytgt',
@@ -131,6 +132,21 @@ export class PaytgtComponent implements OnInit {
 
   DeleteDinner(id: string): void {
     this.service.deleteDinner(id);
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  documentKeyDown(event: KeyboardEvent): void {
+    if (withModifyingKey(event) || targetingInputElement(event)) {
+      return;
+    }
+
+    if (event.key == 'r') {
+      this.syncDinner();
+    }
+    if (event.key == 'n') {
+      this.AddNewOrder_v2();
+    }
+    stopEvent(event);
   }
 
   AddNewOrder(): void {

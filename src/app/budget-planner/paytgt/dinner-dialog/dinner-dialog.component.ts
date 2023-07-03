@@ -34,7 +34,7 @@ export enum dialogDimen {
 @Component({
   selector: 'app-dinner-dialog',
   templateUrl: './dinner-dialog.component.html',
-  styleUrls: ['./dinner-dialog.component.scss', '../../paytgt/paytgt-shared.scss']
+  styleUrls: ['./dinner-dialog.component.scss', '../../paytgt/paytgt-shared.scss', '../../../shared/shared-style.scss']
 })
 export class DinnerDialogComponent implements OnInit {
   private backupDinner: Partial<Dinner> = { ...this.data.dinner };

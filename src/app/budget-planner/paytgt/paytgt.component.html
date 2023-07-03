@@ -50,7 +50,7 @@
 
                 <div class="order-section" *ngIf="dinner$|async as dinner">
                     <div class="order-group header">
-                        <div>Item Name</div>
+                        <div>Items</div>
                         <div>Price</div>
                         <div style="justify-content: flex-end;">Users</div>
                     </div>
@@ -65,10 +65,17 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="order-section">
+                        <button mat-button *ngIf="dinner" (click)="AddNewOrder_v2()" color="primary" class="order-section">
+                            Click to add order
+                        </button>
+                    </div>
+
                 </div>
                 <div class="order-section" *ngIf="dinner$|async as dinner">
                     <div class="sum">
-                        <div></div>
+                        <div>Total</div>
                         <div>$ {{dinner.totalSum}}</div>
                         <div></div>
                     </div>
