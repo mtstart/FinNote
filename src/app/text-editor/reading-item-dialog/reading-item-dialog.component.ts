@@ -29,7 +29,7 @@ export enum dialogDimen {
   templateUrl: './reading-item-dialog.component.html',
   styleUrls: ['./reading-item-dialog.component.scss', '../../app.component.scss', '../../shared/shared-style.scss']
 })
-export class ReadingItemDialogComponent implements OnInit, OnDestroy {
+export class ReadingItemDialogComponent implements OnInit {
   private backupReadingItem: Partial<ReadingItem> = { ...this.data.readingItem };
 
   constructor(
@@ -37,12 +37,6 @@ export class ReadingItemDialogComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: ReadingItemDialogData,
     private dataset: DatasetService
   ) { }
-
-  ngOnDestroy(): void {
-    console.log(this.data.readingItem);
-    console.log(this.data.type);
-    this.dialogRef.close(this.data);
-  }
 
   title = new FormControl('', [Validators.required]);
   content = new FormControl('');
@@ -85,7 +79,7 @@ export class ReadingItemDialogComponent implements OnInit, OnDestroy {
   }
 
   cancel(): void { 
-    this.data.readingItem.title = this.backupReadingItem.title;
+    this.data.readingItem = this.backupReadingItem;
     this.dialogRef.close(this.data);
   }
 

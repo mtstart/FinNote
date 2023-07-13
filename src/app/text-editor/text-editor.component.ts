@@ -22,8 +22,16 @@ export class TextEditorComponent implements OnInit {
 
   ngOnInit(): void {
     // this.notiBar.openBar(this.prologue, "press");
+    this.syncReadingList();
+  }
+
+  syncReadingList(): void {
     this.readingList = this.dataset.getReadingList();
   }
+
+  // get ReadingList(): Observable<ReadingItem[]> {
+  //   return this.dataset.getReadingList();
+  // }
 
   openToast(message: string) {
     this.notiBar.openBar(message, "close");
@@ -119,18 +127,13 @@ export class TextEditorComponent implements OnInit {
       if (!result) {
         return;
       }
-      console.log("result");
-      console.log(result.readingItem);
-
       const readingItem: ReadingItem = {
         ...result.readingItem
       };
       
-      if (result.delete) {
-        if (confirm("Are you sure to delete this dinner?")) {
-          this.dataset.deleteReadingText(readingItem);
-          this.notiBar.openBar("Item deleted");
-        }
+      if (result.delete && confirm("Are you sure to delete this dinner?")) {
+        this.dataset.deleteReadingText(readingItem);
+        this.notiBar.openBar("Item deleted");
       } else {
         this.dataset.updateReadingText(readingItem);
         this.notiBar.openBar("Item udpated");

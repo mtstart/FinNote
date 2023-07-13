@@ -129,24 +129,13 @@ export class DatasetService {
   public async deleteReadingText(readingItem: ReadingItem): Promise<void> {
     if (readingItem == undefined) return;
     
-    const theCollection = this.store.collection('ReadingList').ref;
-    const snapshot = await theCollection.where('id', '==', readingItem.id).get().finally( ()=> {
-      console.log("can delete");
-      // console.log("ha: " + readingItem.id + ", " + snapshot.docs[0].id);
-    }).catch((error: Error) => {
-      console.log("cannot delete")
-    });
-
-    // this.store.collection('ReadingList').doc(snapshot.docs[0].id).delete();
+    this.store.collection('ReadingList').doc(readingItem.id).delete();
   }
 
   public async updateReadingText(readingItem: ReadingItem): Promise<void> {
     if (readingItem == undefined) return;
     
-    const theCollection = this.store.collection('ReadingList').ref;
-    const snapshot = await theCollection.where('id', '==', readingItem.id).limit(1).get();
-
-    // this.store.collection('ReadingList').doc(snapshot.docs[0].id).update(readingItem);
+    this.store.collection('ReadingList').doc(readingItem.id).update(readingItem);
   }
 
   public uploadImage_v2(file: File): string | undefined {

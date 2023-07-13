@@ -18,7 +18,7 @@
     </mat-form-field>
   
     <div>
-      <button mat-button class="upload" [disabled]="data.readingItem?.img || loading" color="primary" (click)="inputfile.click()">
+      <button mat-button class="upload" [disabled]="data.readingItem.img || loading" color="primary" (click)="inputfile.click()">
         <mat-icon>upload</mat-icon> Upload Memo Image
       </button>
       <mat-spinner *ngIf="loading" [diameter]="20"></mat-spinner>
@@ -34,7 +34,7 @@
       <button 
         *ngIf="data.enableDelete" mat-button 
         color="primary" 
-        [mat-dialog-close]="{ dinner: data.readingItem, delete: true }"
+        [mat-dialog-close]="{ readingItem: data.readingItem, delete: true }"
       >
         <mat-icon>delete</mat-icon> Delete
       </button>

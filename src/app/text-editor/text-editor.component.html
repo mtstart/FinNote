@@ -1,5 +1,8 @@
 <div class="ordinary-section left-small-space right-small-space">
     <h2>To Do List</h2>
+    <button mat-raised-button color="primary" (click)="syncReadingList()">
+      Refresh <mat-icon>refresh</mat-icon>
+    </button>
     <div class="ordinary-row url-session">
         <div class="reading-item click ordinary-section new-text" (click)="createText_v2()">
             <div>
