@@ -3,6 +3,10 @@ import { Observable } from 'rxjs';
 import { DatasetService } from 'service/dataset/dataset.service';
 import { NotificationBarService } from '../shared/notification-bar/notification-bar.service';
 import { ReadingItem } from './ReadingItem';
+import { MatDialog } from '@angular/material/dialog';
+import { ReadingItemDialogComponent, ReadingItemDialogResult, dialogDimen } from './reading-item-dialog/reading-item-dialog.component';
+import { v4 as uuid } from 'uuid';
+import { DialogType } from '../task/task';
 
 @Component({
   selector: 'app-text-editor',
@@ -11,7 +15,7 @@ import { ReadingItem } from './ReadingItem';
 })
 export class TextEditorComponent implements OnInit {
 
-  constructor(public notiBar: NotificationBarService, private dataset: DatasetService) { }
+  constructor(public notiBar: NotificationBarService, private dataset: DatasetService, private dialog: MatDialog) { }
 
   readingList: Observable<ReadingItem[]> | undefined;
   prologue: string = "Two households, both alike in dignity(In fair Verona, where we lay our scene),From ancient grudge break to new mutiny,Where civil blood makes civil hands unclean.From forth the fatal loins of these two foesA pair of star-crossed lovers take their life;Whose misadventured piteous overthrowsDoth with their death bury their parents’ strife.The fearful passage of their death-marked loveAnd the continuance of their parents’ rage,Which, but their children’s end, naught could remove,Is now the two hours’ traffic of our stage;The which, if you with patient ears attend,What here shall miss, our toil shall strive to mend.";
@@ -77,8 +81,98 @@ export class TextEditorComponent implements OnInit {
     
     const url = this.dataset.uploadImage_v2(files[0]);
     if (url !== undefined) {
-      this.openToast("file uploaded")
+      this.openToast("file uploaded: " + url);
     }
+  }
+
+  createText(): void {
+    const readingItem: ReadingItem = {
+      id: '123',
+      title: 'Predictability',
+      content: 'Predictability in the cloud lets you move forward with confidence. Predictability can be focused on performance predictability or cost predictability. Both performance and cost predictability are heavily influenced by the Microsoft Azure Well-Architected Framework. Deploy a solution that’s built around this framework and you have a solution whose cost and performance are predictable.',
+      url: '',
+      img: '', 
+      lastUpdate: {seconds: Date.now()},
+    };
+
+    this.dataset.addReadingList(readingItem);
+  }
+  
+  editText(readingText: ReadingItem): void {
+    if (this.dialog != null) {
+      this.dialog.closeAll();
+    }
+
+    const dialogRef = this.dialog.open(ReadingItemDialogComponent, {
+      width: dialogDimen.width,
+      height: dialogDimen.height,
+      maxWidth: dialogDimen.maxWidth,
+      maxHeight: dialogDimen.maxHeight,
+      data: {
+        type: DialogType.EDIT,
+        readingItem: readingText,
+        enableDelete: true,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result: ReadingItemDialogResult) => {
+      if (!result) {
+        return;
+      }
+      console.log("result");
+      console.log(result.readingItem);
+
+      const readingItem: ReadingItem = {
+        ...result.readingItem
+      };
+      
+      if (result.delete) {
+        if (confirm("Are you sure to delete this dinner?")) {
+          this.dataset.deleteReadingText(readingItem);
+          this.notiBar.openBar("Item deleted");
+        }
+      } else {
+        this.dataset.updateReadingText(readingItem);
+        this.notiBar.openBar("Item udpated");
+      };
+
+    });
+    
+  }
+
+  createText_v2(): void {
+    if (this.dialog != null) {
+      this.dialog.closeAll();
+    }
+
+    const dialogRef = this.dialog.open(ReadingItemDialogComponent, {
+      width: dialogDimen.width,
+      height: dialogDimen.height,
+      maxWidth: dialogDimen.maxWidth,
+      maxHeight: dialogDimen.maxHeight,
+      data: {
+        type: DialogType.NEW,
+        readingItem: {},
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result: ReadingItemDialogResult) => {
+      if (!result) {
+        return;
+      }
+
+      const readingItem: ReadingItem = {
+        ...result.readingItem,
+        id: uuid(),
+      };
+      console.log(readingItem);
+      if (this.dataset.addReadingList(readingItem)) {
+        this.notiBar.openBar("Item created.");
+      } else {
+        this.notiBar.openBar("Failed to create item");
+      }
+    });
+    
   }
 
 }

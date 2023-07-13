@@ -1,0 +1,49 @@
+<form id="task-form">
+    <h2 *ngIf="data.type == 1">Create Memo</h2>
+  
+    <mat-form-field appearance="fill" color="primary">
+      <mat-label>Title</mat-label>
+      <input matInput [formControl]="title" />
+      <mat-error *ngIf="title.invalid">You must enter a value</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill" color="primary">
+      <mat-label>Content</mat-label>
+      <textarea matInput [formControl]="content"></textarea>
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill" color="primary">
+      <mat-label>URL</mat-label>
+      <input matInput [formControl]="url" />
+    </mat-form-field>
+  
+    <div>
+      <button mat-button class="upload" [disabled]="data.readingItem?.img || loading" color="primary" (click)="inputfile.click()">
+        <mat-icon>upload</mat-icon> Upload Memo Image
+      </button>
+      <mat-spinner *ngIf="loading" [diameter]="20"></mat-spinner>
+      
+      <input type="file" #inputfile id="upload" accept="image/*" (change)="filesSelected($event)" />
+
+      <button mat-button class="upload" *ngIf="data.readingItem?.img" color="primary" (click)="openInNewTab(data.readingItem.img)">
+        <mat-icon>open_in_new</mat-icon> Preview Image
+      </button>
+    </div>
+    
+    <div class="ordinary-top-bottom">
+      <button 
+        *ngIf="data.enableDelete" mat-button 
+        color="primary" 
+        [mat-dialog-close]="{ dinner: data.readingItem, delete: true }"
+      >
+        <mat-icon>delete</mat-icon> Delete
+      </button>
+    
+      <button mat-raised-button type="submit" class="save" color="primary" (click)="onSubmit()">
+        Save
+      </button>
+
+      <div *ngIf="data.enableDelete" class="hint">Last Update: {{ data.readingItem.lastUpdate?.seconds | date: 'yyyy/MM/dd h:mm a' }}</div>
+    </div>
+  
+  </form>

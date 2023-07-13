@@ -1,29 +1,42 @@
-<div class="ordinary-section left-small-space">
+<div class="ordinary-section left-small-space right-small-space">
     <h2>To Do List</h2>
     <div class="ordinary-row url-session">
+        <div class="reading-item click ordinary-section new-text" (click)="createText_v2()">
+            <div>
+                <mat-icon>add</mat-icon>
+            </div>
+            <div>
+                <div>Add new text</div>
+            </div>
+        </div>
+
         <div class="reading-item" *ngFor="let content of readingList | async as ReadingList">
 
-            <div class="img-container">
+            <div *ngIf="content.img" class="img-container">
                 <!-- <img src="../../assets/media/bkg3.jpg"> -->
                 <img [src]="content.img">
                 <!-- <img src="https://firebasestorage.googleapis.com/v0/b/finnote2-70a8c.appspot.com/o/heichou.jpg?alt=media&token=1d9649e8-d155-4b5e-b684-dfdb1451b2df"> -->
             </div>
 
-            <div id="content" class="left-small-space">
-                <div id="title">{{content.title}}</div>
+            <div id="context">
+                <div class="title">{{content.title}}</div>
+                <div class="content">{{content.content}}</div>
                 
                 <div class="click" (click)="copyText(content.url)">{{content.url}}</div>
+            </div>
 
-                <div>
-                    <button mat-icon-button (click)="copyText(content.url)" color="primary">
-                        <mat-icon>content_copy</mat-icon>
-                    </button>
-                    <button mat-icon-button (click)="openInNewTab(content.url)" color="primary">
-                        <mat-icon>open_in_new</mat-icon>
-                    </button>
-                    <!-- <input type="file" id="upload" accept="image/*" (change)="filesSelected($event)" multiple /> -->
-                    
-                </div>
+            <div class="controls">
+                <button mat-icon-button (click)="editText(content)" color="primary">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button (click)="copyText(content.url)" color="primary">
+                    <mat-icon>content_copy</mat-icon>
+                </button>
+                <button mat-icon-button (click)="openInNewTab(content.url)" [disabled]="!content.url" color="primary">
+                    <mat-icon>open_in_new</mat-icon>
+                </button>
+                <!-- <input type="file" id="upload" accept="image/*" (change)="filesSelected($event)" multiple /> -->
+                
             </div>
 
         </div>

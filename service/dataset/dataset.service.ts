@@ -7,7 +7,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Dinner, Orders } from 'src/app/budget-planner/paytgt/Pay';
 import { User } from 'src/app/shared/User';
 import { ReadingItem } from 'src/app/text-editor/ReadingItem';
-import { getDownloadURL, getStorage, ref, uploadBytes } from "@angular/fire/storage";
+import { UploadResult, getDownloadURL, getStorage, ref, uploadBytes } from "@angular/fire/storage";
 
 export type ProjectStatusList = "done" | "todo" | "inProgress";
 
@@ -112,7 +112,41 @@ export class DatasetService {
 
   //-------------------------------- To Do/ Watch List --------------------------------//
   public getReadingList(): Observable<ReadingItem[]> {
-    return this.store.collection('ReadingList').valueChanges({ idField: 'id' }) as Observable<ReadingItem[]>;
+    const collection = this.store.collection('ReadingList', ref => ref.orderBy('lastUpdate', 'desc'));
+    return collection.valueChanges({ idField: 'id' }) as Observable<ReadingItem[]>;
+  }
+
+  public addReadingList(readingItem: ReadingItem): boolean {
+    try {
+      this.store.collection('ReadingList').add(readingItem);
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  public async deleteReadingText(readingItem: ReadingItem): Promise<void> {
+    if (readingItem == undefined) return;
+    
+    const theCollection = this.store.collection('ReadingList').ref;
+    const snapshot = await theCollection.where('id', '==', readingItem.id).get().finally( ()=> {
+      console.log("can delete");
+      // console.log("ha: " + readingItem.id + ", " + snapshot.docs[0].id);
+    }).catch((error: Error) => {
+      console.log("cannot delete")
+    });
+
+    // this.store.collection('ReadingList').doc(snapshot.docs[0].id).delete();
+  }
+
+  public async updateReadingText(readingItem: ReadingItem): Promise<void> {
+    if (readingItem == undefined) return;
+    
+    const theCollection = this.store.collection('ReadingList').ref;
+    const snapshot = await theCollection.where('id', '==', readingItem.id).limit(1).get();
+
+    // this.store.collection('ReadingList').doc(snapshot.docs[0].id).update(readingItem);
   }
 
   public uploadImage_v2(file: File): string | undefined {
@@ -141,6 +175,47 @@ export class DatasetService {
     return undefined;
   }
 
+  public uploadImage_v3(file: File): Promise<string> {
+    const storage = getStorage();
+    const storageRef = ref(storage, 'folder/test123.jpg');
+
+    const uploadUrl: Promise<string> = uploadBytes(storageRef, file).then(async (snapshot) => {
+      return await getDownloadURL(snapshot.ref).then((downloadURL) => {
+        console.log('File available at', downloadURL);
+        return downloadURL || "";
+      });
+    },
+      (error: Error) => {
+        console.log('some error here');
+        console.log(error.message);
+        return "";
+      }
+    );
+    console.log("uploadUrl: " + uploadUrl)
+    return uploadUrl || "";
+  }
+  // public uploadImage_v4(file: File): string {
+  //   const storage = getStorage();
+  //   const storageRef = ref(storage, 'folder/test123.jpg');
+
+  //   uploadBytes(storageRef, file).then((snapshot) => {
+  //     this.getImageDownloadUrl(snapshot);
+  //   }, 
+  //   (error: Error) => {
+  //     console.log('some error here');
+  //     console.log(error.message);
+  //     return null;
+  //   }
+  //   );
+  // }
+
+  // public getImageDownloadUrl(snapshot: UploadResult): string {
+  //   return getDownloadURL(snapshot.ref).then((downloadURL: string) => {
+  //     console.log('File available at', downloadURL);
+  //     return downloadURL;
+  //   });
+
+  // }
 
   // public async testUpdateDinner(dinner: Dinner | undefined): Promise<void> {
   //   if (dinner == undefined) return;

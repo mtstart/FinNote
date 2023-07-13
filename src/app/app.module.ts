@@ -25,6 +25,7 @@ import { PaytgtComponent } from './budget-planner/paytgt/paytgt.component';
 import { PipeModule } from './shared/pipe/pipe.module';
 import { DinnerDialogComponent } from './budget-planner/paytgt/dinner-dialog/dinner-dialog.component';
 import { OrderDialogComponent } from './budget-planner/paytgt/order-dialog/order-dialog.component';
+import { ReadingItemDialogComponent } from './text-editor/reading-item-dialog/reading-item-dialog.component';
 
 
 
@@ -42,7 +43,8 @@ import { OrderDialogComponent } from './budget-planner/paytgt/order-dialog/order
     BudgetPlannerComponent,
     PaytgtComponent,
     DinnerDialogComponent,
-    OrderDialogComponent
+    OrderDialogComponent,
+    ReadingItemDialogComponent
   ],
   imports: [
     BrowserModule,

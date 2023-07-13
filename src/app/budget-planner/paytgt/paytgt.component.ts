@@ -88,7 +88,7 @@ export class PaytgtComponent implements OnInit {
         this.service.deleteDinner(dinner.id);
       } else {
         this.service.updateDinner(dinner);
-      }
+      };
 
     });
   }
