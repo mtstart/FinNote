@@ -38,9 +38,12 @@
                 </button>
             </div>
 
-            <div class="ordinary-section order">
+            <div *ngIf="dinner$|async as dinner" class="ordinary-section order">
+                <div class="page-title-text ordinary-section">
+                    Your Members
+                </div>
                 <div class="order-section member-list">
-                    <div *ngFor="let member of (dinner$|async)?.members" class="member">
+                    <div *ngFor="let member of (dinner$|async)?.members" class="member" (click)="getUserSum(member)">
                         <div>{{ member.Username }}</div>
                         <div>
                             <mat-icon [style.color]="member.color" color="primary">{{ member.icon }}</mat-icon>
@@ -48,7 +51,10 @@
                     </div>
                 </div>
 
-                <div class="order-section" *ngIf="dinner$|async as dinner">
+                <div class="order-section">
+                    <div class="page-title-text ordinary-section">
+                        Your Orders
+                    </div>
                     <div class="order-group header">
                         <div>Items</div>
                         <div>Price</div>
@@ -73,7 +79,7 @@
                     </div>
 
                 </div>
-                <div class="order-section" *ngIf="dinner$|async as dinner">
+                <div class="order-section">
                     <div class="sum">
                         <div>Total</div>
                         <div>$ {{dinner.totalSum}}</div>

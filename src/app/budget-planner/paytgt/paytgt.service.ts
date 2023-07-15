@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Dinner, Orders } from 'src/app/budget-planner/paytgt/Pay';
+import { Dinner, Eaters, Orders } from 'src/app/budget-planner/paytgt/Pay';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -39,6 +39,10 @@ export class PaytgtService {
     dinner.orders.push(order);
     dinner.totalSum += order.price;
 
+    // update dinner member debit
+    // updateDinnerMemberSum(dinner)
+
+
     this.store.collection('Dinner').doc(order.dinnerID).update(dinner);
   }
   
@@ -58,7 +62,7 @@ export class PaytgtService {
     if (snapshot.docs[0] !== undefined) {
       this.store.collection('Dinner').doc(snapshot.docs[0].id).delete();
     } else {
-      alert("please try again")
+      alert("please try again");
     }
   }
 
@@ -66,8 +70,41 @@ export class PaytgtService {
     
   }
 
-  public genDinnerSum(): void {
-    
+  private updateDinnerMemberSum(dinner: Dinner): void {
+    // will update this one press "SAVE" in dinner
+    // won't update to User's own summary untill the dinner is "SAVED"
+
+    // calculate each member's sum
+    // genDinnerSum(dinner, eater);
+
+    // update the sum in User's
+
+
+  }
+
+  public async genDinnerSum(dinner: Dinner, eater: Eaters): Promise<number> {
+    // calculate the eater's total debt
+    // just calculation only, won't be responsible for updating
+
+    const theCollection = this.store.collection('Dinner').ref;
+    const dinnerSnap = await theCollection.where('dinnerID', '==', dinner.dinnerID).limit(1).get();
+    const dinner$ = dinnerSnap.docs[0].data() as Dinner;
+
+    // dinner$.members.filter(eater => eater.id === member.id).reduce((a, b) => a + b, 0);
+    // dinner$.orders.filter(o => dinner.orders.some(({id,name}) => o.id === id && o.name === name));
+
+    // dinner$.orders
+    //   .filter(order => {
+    //     order.sharedMember.find(member => member.Username === "kchi")
+    //   })
+    //   .forEach(order => {
+    //     console.log("filtered")
+    //     console.log(order);
+    //   });
+
+    return dinner$.orders
+      .filter(order => order.sharedMember.find(member => member.id === eater.id))
+      .reduce((a, b) => a + b.price, 0);
   }
 
 }

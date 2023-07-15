@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatSelectChange } from '@angular/material/select';
 import { Observable } from 'rxjs';
 import { AuthService } from 'service/auth/auth.service';
-import { Dinner, Orders } from './Pay';
+import { Dinner, Eaters, Orders } from './Pay';
 import { v4 as uuid } from 'uuid';
 import { ColorUtility } from 'src/app/shared/type-bubble/color';
 import { MatDialog } from '@angular/material/dialog';
@@ -199,7 +199,11 @@ export class PaytgtComponent implements OnInit {
     });
   }
 
-  
+  async getUserSum(member: Eaters): Promise<void> {
+    if (this.dinner === undefined) return;
+    const sum = await this.service.genDinnerSum(this.dinner, member);
+    this.notiBar.openBar(member.Username + "'s Total: $" + sum);
+  }
 
   testUpdateDinner(): void {
     // this.dataset.testUpdateDinner(this.dinner);

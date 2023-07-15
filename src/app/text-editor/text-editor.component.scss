@@ -34,6 +34,8 @@
         display: flex;
         flex-direction: column;
 
+        transition: background-color 0.3s linear;
+
         &:hover {
             background-color: #e1dfdf;
         }
