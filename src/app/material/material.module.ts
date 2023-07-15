@@ -17,6 +17,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatMenuModule } from "@angular/material/menu";
 
 @NgModule({
   declarations: [],
@@ -40,6 +41,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatSelectModule,
     MatChipsModule,
     MatButtonToggleModule,
+    MatMenuModule,
 
   ]
 })
