@@ -29,9 +29,9 @@ import { OrderDialogComponent } from './budget-planner/paytgt/order-dialog/order
 import { ReadingItemDialogComponent } from './text-editor/reading-item-dialog/reading-item-dialog.component';
 
 // Initialize Firebase
-const app = initializeApp(environment.firebase);
-// initializeApp(environment.firebase);
-const storage = getStorage(app, "gs://finnote2-70a8c.appspot.com/");
+// const app = initializeApp(environment.firebase);
+initializeApp(environment.firebase);
+// const storage = getStorage(app, "gs://finnote2-70a8c.appspot.com/");
 
 
 @NgModule({
@@ -57,7 +57,8 @@ const storage = getStorage(app, "gs://finnote2-70a8c.appspot.com/");
     DragDropModule,
     MaterialModule,
     
-    AngularFireModule.initializeApp(environment.firebase),
+    // AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule, 
     AngularFirestoreModule,
     // provideFirebaseApp(() => initializeApp(environment.firebase)),
     // provideFirestore(() => getFirestore()),
