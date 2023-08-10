@@ -59,6 +59,7 @@
                         <div>Items</div>
                         <div>Price</div>
                         <div style="justify-content: flex-end;">Users</div>
+                        <div></div>
                     </div>
                     <div *ngFor="let order of dinner.orders" class="order-group">
                         <mat-label> {{ order.name }} </mat-label>
@@ -70,6 +71,9 @@
                                 <!-- <mat-label>{{ member.Username }}</mat-label> -->
                             </div>
                         </div>
+                        <button mat-icon-button color="primary" (click)="deleteOrder(order)">
+                            <mat-icon>clear</mat-icon>
+                        </button>
                     </div>
 
                     <div class="order-section">
@@ -86,6 +90,26 @@
                         <div></div>
                     </div>
                 </div>
+            </div>
+
+            <div *ngIf="dinner" class="ordinary-section order">
+                <div class="page-title-text ordinary-section">
+                    Summary
+                </div>
+                <button mat-raised-button (click)="updateLocalUserSum()" color="primary">
+                    Update <mat-icon>tips_and_updates</mat-icon>
+                </button>
+                <div *ngIf="!loadingData" style="padding-left: 10px;">
+                    <mat-spinner [diameter]="30"></mat-spinner>
+                </div>
+
+                <div class="member-summary">
+                    <div *ngFor="let member of dinner.members">
+                        <div> {{member.Username}} </div>
+                        <div> {{member.sum}} </div>
+                    </div>
+                </div>
+
             </div>
 
             <!-- scribble starts here

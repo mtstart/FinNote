@@ -153,6 +153,7 @@ export class PaytgtComponent implements OnInit {
     if (this.dinner == undefined) return;
     
     const newOrder: Orders = {
+      id: uuid(), 
       name: 'dinner 0410 (3)',
       price: 123,
       dinnerID: this.dinner.dinnerID,
@@ -185,11 +186,9 @@ export class PaytgtComponent implements OnInit {
       if (!result) return;;
       if (this.dinner == undefined) return;
 
-      // result.order.sharedMember.forEach(member => {})
-      
       const order: Orders = {
         ...result.order,
-        dinnerID: this.dinner.dinnerID,
+        dinnerID: this.dinner.id,
       }
       // if only one user in dinner, assign all order with that user
       // if more than one user, no spec, than set as all member
@@ -199,10 +198,45 @@ export class PaytgtComponent implements OnInit {
     });
   }
 
-  async getUserSum(member: Eaters): Promise<void> {
-    if (this.dinner === undefined) return;
+  deleteOrder(order: Orders): void {
+    if (this.dinner == undefined) return;
+    
+    if (!confirm("Sure to delete?")) return;
+
+    this.service.deleteOrder(order);
+  }
+
+  async getUserSum(member: Eaters): Promise<number> {
+    if (this.dinner === undefined) return 0;
     const sum = await this.service.genDinnerSum(this.dinner, member);
     this.notiBar.openBar(member.Username + "'s Total: $" + sum);
+
+    return sum;
+  }
+
+  updateLocalUserSum(): void {
+    try {
+      this.loadingData = true;
+      this.dinner?.members.map(async member => {
+        const newS = Number((await this.getUserSum(member)).toString());
+        // const newM = {...member, sum: Number((await this.getUserSum(member)).toString())};
+        // console.log(newM.sum)
+        console.log(newS)
+  
+        member.sum = newS;
+  
+        return member;
+      })
+      console.log(this.dinner?.members);
+      this.service.updateDinner(this.dinner);
+
+    } catch (error) {
+      this.notiBar.openBar("Please try again");
+    } finally {
+      this.loadingData = false;
+    }
+    
+
   }
 
   testUpdateDinner(): void {

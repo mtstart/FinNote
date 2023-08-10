@@ -44,6 +44,7 @@ export interface Eaters {
 }
 
 export interface Orders {
+    id: string;
     name: string;
     price: number;
     dinnerID: string;

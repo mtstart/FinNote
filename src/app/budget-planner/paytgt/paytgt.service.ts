@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Dinner, Eaters, Orders } from 'src/app/budget-planner/paytgt/Pay';
+import { v4 as uuid } from 'uuid';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -31,26 +32,26 @@ export class PaytgtService {
      */
 
     const theCollection = this.store.collection('Dinner').ref;
-    const snapshot = await theCollection.where('dinnerID', '==', order.dinnerID).limit(1).get();
+    const snapshot = await theCollection.where('id', '==', order.dinnerID).limit(1).get();
     const dinner = snapshot.docs[0].data() as Dinner;
 
     // update dinner total price
-    order.dinnerID = snapshot.docs[0].id;
+    order.dinnerID = dinner.id;
+    order.id = uuid();
     dinner.orders.push(order);
     dinner.totalSum += order.price;
-
+    
     // update dinner member debit
     // updateDinnerMemberSum(dinner)
 
-
-    this.store.collection('Dinner').doc(order.dinnerID).update(dinner);
+    await this.updateDinner(dinner);
   }
   
   public async updateDinner(dinner: Dinner | undefined): Promise<void> {
     if (dinner == undefined) return;
     
     const theCollection = this.store.collection('Dinner').ref;
-    const snapshot = await theCollection.where('dinnerID', '==', dinner.dinnerID).limit(1).get();
+    const snapshot = await theCollection.where('id', '==', dinner.id).limit(1).get();
 
     this.store.collection('Dinner').doc(snapshot.docs[0].id).update(dinner);
   }
@@ -66,8 +67,18 @@ export class PaytgtService {
     }
   }
 
-  public deleteOrder(): void {
-    
+  public async deleteOrder(target: Orders): Promise<void> {
+
+    const theCollection = this.store.collection('Dinner').ref;
+    const snapshot = await theCollection.where('id', '==', target.dinnerID).limit(1).get();
+    const dinner = snapshot.docs[0].data() as Dinner;
+
+    const newDinner: Dinner = {
+      ...dinner, 
+      orders: dinner.orders.filter(order => order.id !== target.id)
+    }
+
+    this.updateDinner(newDinner);
   }
 
   private updateDinnerMemberSum(dinner: Dinner): void {
@@ -87,7 +98,7 @@ export class PaytgtService {
     // just calculation only, won't be responsible for updating
 
     const theCollection = this.store.collection('Dinner').ref;
-    const dinnerSnap = await theCollection.where('dinnerID', '==', dinner.dinnerID).limit(1).get();
+    const dinnerSnap = await theCollection.where('id', '==', dinner.id).limit(1).get();
     const dinner$ = dinnerSnap.docs[0].data() as Dinner;
 
     // dinner$.members.filter(eater => eater.id === member.id).reduce((a, b) => a + b, 0);
