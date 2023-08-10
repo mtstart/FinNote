@@ -7,7 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { DragDropModule } from "@angular/cdk/drag-drop";
 
 import { environment } from '../environments/environment';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -57,7 +57,7 @@ initializeApp(environment.firebase);
     DragDropModule,
     MaterialModule,
     
-    // AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFireModule, 
     AngularFirestoreModule,
     // provideFirebaseApp(() => initializeApp(environment.firebase)),
