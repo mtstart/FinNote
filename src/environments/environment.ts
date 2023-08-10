@@ -26,10 +26,10 @@ export const environment = {
   production: false
 };
 
-// Initialize Firebase
-const app = initializeApp(environment.firebase);
-initializeApp(environment.firebase);
-const storage = getStorage(app, "gs://finnote2-70a8c.appspot.com/");
+// // Initialize Firebase
+// const app = initializeApp(environment.firebase);
+// initializeApp(environment.firebase);
+// const storage = getStorage(app, "gs://finnote2-70a8c.appspot.com/");
 
 /*
  * For easier debugging in development mode, you can import the following file

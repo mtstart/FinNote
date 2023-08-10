@@ -8,6 +8,7 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
 
 import { environment } from '../environments/environment';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getStorage } from "firebase/storage";
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
@@ -27,6 +28,10 @@ import { DinnerDialogComponent } from './budget-planner/paytgt/dinner-dialog/din
 import { OrderDialogComponent } from './budget-planner/paytgt/order-dialog/order-dialog.component';
 import { ReadingItemDialogComponent } from './text-editor/reading-item-dialog/reading-item-dialog.component';
 
+// Initialize Firebase
+const app = initializeApp(environment.firebase);
+// initializeApp(environment.firebase);
+const storage = getStorage(app, "gs://finnote2-70a8c.appspot.com/");
 
 
 @NgModule({
