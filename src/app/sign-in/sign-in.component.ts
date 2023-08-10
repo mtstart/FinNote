@@ -75,4 +75,8 @@ export class SignInComponent implements OnInit {
     this.authService.loginWithEmailPassword(email, password);    
   }
 
+  public loginWithGoogle(): void {
+    this.authService.loginWithGoogle();
+  }
+
 }

@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, User, user, signOut } from "@angular/fire/auth";
-import { onAuthStateChanged, reauthenticateWithCredential, UserCredential } from 'firebase/auth';
+import { onAuthStateChanged, reauthenticateWithCredential, UserCredential, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthResponse, AuthResponseUser } from './authControl';
 import { FirebaseError } from '@angular/fire/app';
@@ -69,12 +69,43 @@ export class AuthService {
         const user = userCredential.user;
         console.log("Successfully logged in" + user.email);
 
-        // this.StartApp();
-        this.navigatePage("project-management", false, undefined);
+        this.StartApp();
+        // this.navigatePage("project-management", false, undefined);
       })
       .catch((error) => {
         this.ShowError(error);
       });
+  }
+
+  public loginWithGoogle(): void {
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result); // This gives you a Google Access Token. You can use it to access the Google API.
+        if (!credential) return;
+
+        const token = credential.accessToken; // The signed-in user info.
+        const user = result.user; // IdP data available using getAdditionalUserInfo(result)
+
+        console.log("token");
+        console.log(token);
+        console.log("user");
+        console.log(user);
+
+        this.StartApp();
+        
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        const credential = GoogleAuthProvider.credentialFromError(error); // The AuthCredential type that was used.
+
+
+      }).finally(()=> {
+        this.logout();
+      });
+    
   }
 
   public logout(): void {
@@ -82,9 +113,10 @@ export class AuthService {
     // console.log("current User: " + auth.currentUser?.email)
     if (!confirm("Sure to log out? ")) return;
 
-    signOut(auth).then(() => {
-      this.navigatePage('signIn', true);
-    })
+    signOut(auth)
+      .then(() => {
+        this.navigatePage('signIn', true);
+      })
       .catch((error) => {
         this.ShowError(error);
       });
@@ -107,7 +139,7 @@ export class AuthService {
   }
 
   public navigatePage(page: string, leave?: boolean, parentPath?: string) {
-    if (page == undefined) return;
+    if (page == undefined || page == "signin") return;
     const auth = getAuth();
     const user = auth.currentUser;
     console.log("page param: " + page);
@@ -185,6 +217,9 @@ export class AuthService {
     const auth = getAuth();
     const user: User | null = auth.currentUser;
 
+    console.log("auth.currentUser")
+    console.log(auth.currentUser);
+
     if (user !== null) return user;
 
     return null;
@@ -192,9 +227,10 @@ export class AuthService {
 
   // Main Activities
   private StartApp(): void {
-    this.zone.run(() => {
-      this.route.navigate(['/signIn']);
-    });
+    // this.zone.run(() => {
+    //   this.route.navigate(['/signIn']);
+    // });
+    this.navigatePage("project-management", false, undefined);
   }
 
   private ShowError(error: FirebaseError): void {
