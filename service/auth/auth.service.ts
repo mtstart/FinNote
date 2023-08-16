@@ -101,6 +101,8 @@ export class AuthService {
         const email = error.customData.email;
         const credential = GoogleAuthProvider.credentialFromError(error); // The AuthCredential type that was used.
 
+        console.log("error");
+        console.log(errorMessage)
 
       }).finally(()=> {
         this.logout();
@@ -128,14 +130,12 @@ export class AuthService {
     this.authStatusSub = new BehaviorSubject(this.getUserProfile);
 
     onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        // console.log("status changed: " + currentNav);
-        // this.navigatePage("project-management", user == undefined);
+      if (user) {
+        this.authStatusSub = new BehaviorSubject(this.getUserProfile);
+      } else {
         this.navigatePage("signin", false);
       }
     });
-
-
   }
 
   public navigatePage(page: string, leave?: boolean, parentPath?: string) {
