@@ -16,18 +16,22 @@ const routes: Routes = [
   {
     path: 'signIn',
     pathMatch: 'full',
+    redirectTo: 'signIn', 
     component: SignInComponent,
   },
   {
     path: 'project-management',
+    redirectTo: 'signIn', 
     component: ProjectManagementComponent,
   },
   {
     path: 'text-editor',
+    redirectTo: 'signIn', 
     component: TextEditorComponent,
   },
   {
     path: 'budget-planner',
+    redirectTo: 'signIn', 
     component: BudgetPlannerComponent,
     children: [
       {path: 'paytgt', component: PaytgtComponent, pathMatch: 'full'},
