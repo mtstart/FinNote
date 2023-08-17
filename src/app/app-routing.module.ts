@@ -11,33 +11,30 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: '/'
+    redirectTo: 'signIn'
   },
   {
     path: 'signIn',
-    pathMatch: '/',
+    pathMatch: 'full',
     component: SignInComponent,
   },
   {
     path: 'project-management',
-    redirectTo: '/', 
     component: ProjectManagementComponent,
   },
   {
     path: 'text-editor',
-    redirectTo: '/', 
     component: TextEditorComponent,
   },
   {
     path: 'budget-planner',
-    redirectTo: '/', 
     component: BudgetPlannerComponent,
     children: [
       {path: 'paytgt', component: PaytgtComponent, pathMatch: 'full'},
       // {path: 'Planner', component: DatasetCreateComponent, pathMatch: 'full'},
     ],
   },
-  { path: "*", redirectTo: "" }
+  { path: "*", redirectTo: "signIn" }
 ];
 
 @NgModule({
