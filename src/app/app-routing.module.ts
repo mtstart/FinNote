@@ -11,26 +11,26 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: ''
+    redirectTo: '/'
   },
   {
     path: 'signIn',
-    pathMatch: '',
+    pathMatch: '/',
     component: SignInComponent,
   },
   {
     path: 'project-management',
-    redirectTo: '', 
+    redirectTo: '/', 
     component: ProjectManagementComponent,
   },
   {
     path: 'text-editor',
-    redirectTo: '', 
+    redirectTo: '/', 
     component: TextEditorComponent,
   },
   {
     path: 'budget-planner',
-    redirectTo: '', 
+    redirectTo: '/', 
     component: BudgetPlannerComponent,
     children: [
       {path: 'paytgt', component: PaytgtComponent, pathMatch: 'full'},
