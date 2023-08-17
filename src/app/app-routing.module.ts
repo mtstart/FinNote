@@ -37,7 +37,7 @@ const routes: Routes = [
       // {path: 'Planner', component: DatasetCreateComponent, pathMatch: 'full'},
     ],
   },
-  { path: "*", redirectTo: "signIn" }
+  { path: "*", redirectTo: "" }
 ];
 
 @NgModule({
