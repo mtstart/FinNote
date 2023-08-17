@@ -16,7 +16,6 @@ const routes: Routes = [
   {
     path: 'signIn',
     pathMatch: 'full',
-    redirectTo: 'signIn', 
     component: SignInComponent,
   },
   {
