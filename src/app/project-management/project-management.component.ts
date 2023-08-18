@@ -3,7 +3,7 @@ import { DialogType, Task } from '../task/task';
 import { TaskDialogComponent, TaskDialogResult } from '../task-dialog/task-dialog.component';
 
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { DatasetService, ProjectStatusList } from 'service/dataset/dataset.service';

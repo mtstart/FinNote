@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { AuthService } from 'service/auth/auth.service';
 import { TaskDialogComponent, TaskDialogResult } from '../task-dialog/task-dialog.component';
 import { FormGroup, UntypedFormControl, Validators, UntypedFormBuilder } from '@angular/forms';

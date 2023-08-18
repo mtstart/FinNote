@@ -4,7 +4,7 @@ import { ReadingItem } from '../ReadingItem';
 import { DialogType } from 'src/app/task/task';
 import { DatasetService } from 'service/dataset/dataset.service';
 import { TextEditorComponent } from '../text-editor.component';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
 
 export interface ReadingItemDialogData {
   type: DialogType;

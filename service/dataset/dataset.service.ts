@@ -3,7 +3,7 @@ import { Task } from 'src/app/task/task';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { TaskDialogComponent, TaskDialogResult } from 'src/app/task-dialog/task-dialog.component';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { Dinner, Orders } from 'src/app/budget-planner/paytgt/Pay';
 import { User } from 'src/app/shared/User';
 import { ReadingItem } from 'src/app/text-editor/ReadingItem';
@@ -11,9 +11,6 @@ import { UploadResult, getDownloadURL, getStorage, ref, uploadBytes } from "@ang
 
 export type ProjectStatusList = "done" | "todo" | "inProgress";
 
-@Injectable({
-  providedIn: 'root'
-})
 export class DatasetService {
 
   constructor(private store: AngularFirestore) { }

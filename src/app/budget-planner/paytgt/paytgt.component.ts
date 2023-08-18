@@ -1,12 +1,12 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { MatSelectChange } from '@angular/material/select';
+import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
 import { Observable } from 'rxjs';
 import { AuthService } from 'service/auth/auth.service';
 import { Dinner, Eaters, Orders } from './Pay';
 import { v4 as uuid } from 'uuid';
 import { ColorUtility } from 'src/app/shared/type-bubble/color';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { dialogDimen, DinnerDialogComponent, DinnerDialogResult } from './dinner-dialog/dinner-dialog.component';
 import { DialogType } from 'src/app/task/task';
 import { NotificationBarService } from 'src/app/shared/notification-bar/notification-bar.service';
