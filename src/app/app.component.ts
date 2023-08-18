@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'service/auth/auth.service';
 import { ButtonLabelSpec } from './shared/dataset/button_label_spec';
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
   }
 
   title = 'FinNote';
-  mode = new FormControl('push');
+  mode = new UntypedFormControl('push');
   opened: boolean = false;
   browserName: string = "";
 

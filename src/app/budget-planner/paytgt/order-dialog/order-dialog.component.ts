@@ -5,7 +5,7 @@ import { DialogType } from 'src/app/task/task';
 import { Dinner, Orders } from '../Pay';
 import { Observable, filter, map, reduce } from 'rxjs';
 import { User } from 'src/app/shared/User';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, FormGroup, Validators } from '@angular/forms';
 
 export interface OrderDialogData {
   type: DialogType;
@@ -34,9 +34,9 @@ export class OrderDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<OrderDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: OrderDialogData, private dataset: DatasetService) { }
 
   userList: Observable<User[]> | undefined;
-  name = new FormControl('', [Validators.required]);
-  price = new FormControl('', [Validators.required, Validators.min(0), Validators.pattern("^[0-9]*$")]);
-  member = new FormControl('', [Validators.required]);
+  name = new UntypedFormControl('', [Validators.required]);
+  price = new UntypedFormControl('', [Validators.required, Validators.min(0), Validators.pattern("^[0-9]*$")]);
+  member = new UntypedFormControl('', [Validators.required]);
 
   ngOnInit(): void {
     this.userList = this.dataset.getUserList();

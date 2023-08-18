@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { map, Observable, reduce } from 'rxjs';
 import { DatasetService } from 'service/dataset/dataset.service';
@@ -45,8 +45,8 @@ export class DinnerDialogComponent implements OnInit {
     private dataset: DatasetService
   ) { }
 
-  name = new FormControl('', [Validators.required]);
-  member = new FormControl('', [Validators.required]);
+  name = new UntypedFormControl('', [Validators.required]);
+  member = new UntypedFormControl('', [Validators.required]);
 
   userList: Observable<User[]> | undefined;
 

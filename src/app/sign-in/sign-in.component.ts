@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'service/auth/auth.service';
 import { TaskDialogComponent, TaskDialogResult } from '../task-dialog/task-dialog.component';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, UntypedFormControl, Validators, UntypedFormBuilder } from '@angular/forms';
 import { forbiddenNameValidator } from 'service/service/form-validation';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 
@@ -13,7 +13,7 @@ import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 })
 export class SignInComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, public authService: AuthService, private fb: FormBuilder) { }
+  constructor(private dialog: MatDialog, public authService: AuthService, private fb: UntypedFormBuilder) { }
 
   isAuthenticated: any;
 
@@ -25,16 +25,16 @@ export class SignInComponent implements OnInit {
 
   signInForm = this.fb.group({
     // name: new FormControl('', [Validators.minLength(2), forbiddenNameValidator(/bob/i)]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required]),
+    email: new UntypedFormControl('', [Validators.required, Validators.email]),
+    password: new UntypedFormControl('', [Validators.required]),
   });
   
-  get emailControl(): FormControl {
-    return this.signInForm.get('email') as FormControl;
+  get emailControl(): UntypedFormControl {
+    return this.signInForm.get('email') as UntypedFormControl;
   }
   
-  get passwordControl(): FormControl {
-    return this.signInForm.get('password') as FormControl;
+  get passwordControl(): UntypedFormControl {
+    return this.signInForm.get('password') as UntypedFormControl;
   }
 
   signIn_v2(): void {

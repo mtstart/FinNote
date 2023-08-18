@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-navigation',
@@ -13,6 +13,6 @@ export class NavigationComponent implements OnInit {
   ngOnInit(): void {
   }
   
-  mode = new FormControl('over');
+  mode = new UntypedFormControl('over');
 
 }

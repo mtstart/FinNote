@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { ReadingItem } from '../ReadingItem';
 import { DialogType } from 'src/app/task/task';
 import { DatasetService } from 'service/dataset/dataset.service';
@@ -38,9 +38,9 @@ export class ReadingItemDialogComponent implements OnInit {
     private dataset: DatasetService
   ) { }
 
-  title = new FormControl('', [Validators.required]);
-  content = new FormControl('');
-  url = new FormControl('');
+  title = new UntypedFormControl('', [Validators.required]);
+  content = new UntypedFormControl('');
+  url = new UntypedFormControl('');
   img: string = "";
 
   loading: boolean = false;
