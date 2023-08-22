@@ -21,12 +21,12 @@ export interface TaskDialogResult {
   styleUrls: ['./task-dialog.component.scss']
 })
 export class TaskDialogComponent {
-  private backupTask: Partial<Task> = { ...this.data.task };
 
   constructor(
     public dialogRef: MatDialogRef<TaskDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: TaskDialogData
   ) { }
+  private backupTask: Partial<Task> = { ...this.data.task };
 
   ColorWheel = ColorUtility.ColorWheel;
   DialogType = DialogType;

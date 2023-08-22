@@ -30,13 +30,13 @@ export enum dialogDimen {
   styleUrls: ['./reading-item-dialog.component.scss', '../../app.component.scss', '../../shared/shared-style.scss']
 })
 export class ReadingItemDialogComponent implements OnInit {
-  private backupReadingItem: Partial<ReadingItem> = { ...this.data.readingItem };
 
   constructor(
     public dialogRef: MatDialogRef<TextEditorComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ReadingItemDialogData,
     private dataset: DatasetService
   ) { }
+  private backupReadingItem: Partial<ReadingItem> = { ...this.data.readingItem };
 
   title = new UntypedFormControl('', [Validators.required]);
   content = new UntypedFormControl('');

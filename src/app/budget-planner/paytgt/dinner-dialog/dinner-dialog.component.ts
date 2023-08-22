@@ -37,13 +37,13 @@ export enum dialogDimen {
   styleUrls: ['./dinner-dialog.component.scss', '../../paytgt/paytgt-shared.scss', '../../../shared/shared-style.scss']
 })
 export class DinnerDialogComponent implements OnInit {
-  private backupDinner: Partial<Dinner> = { ...this.data.dinner };
 
   constructor(
     public dialogRef: MatDialogRef<DinnerDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DinnerDialogData, 
     private dataset: DatasetService
   ) { }
+  private backupDinner: Partial<Dinner> = { ...this.data.dinner };
 
   name = new UntypedFormControl('', [Validators.required]);
   member = new UntypedFormControl('', [Validators.required]);
