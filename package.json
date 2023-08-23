@@ -9,7 +9,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test", 
     "build-prod": "ng build --output-path docs", 
-    "build-prod-basehref": "ng build --output-path docs --base-href "
+    "build-prod-basehref": "ng build --output-path docs --base-href /FinNote"
   },
   "private": true,
   "dependencies": {

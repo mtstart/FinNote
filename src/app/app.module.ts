@@ -30,9 +30,9 @@ import { ReadingItemDialogComponent } from './text-editor/reading-item-dialog/re
 import { DatasetService } from 'service/dataset/dataset.service';
 
 // Initialize Firebase
-// const app = initializeApp(environment.firebase);
-initializeApp(environment.firebase);
-// const storage = getStorage(app, "gs://finnote2-70a8c.appspot.com/");
+const app = initializeApp(environment.firebase);
+// initializeApp(environment.firebase);
+const storage = getStorage(app, "gs://finnote2-70a8c.appspot.com/");
 
 
 @NgModule({
