@@ -11,6 +11,9 @@ import { UploadResult, getDownloadURL, getStorage, ref, uploadBytes } from "@ang
 
 export type ProjectStatusList = "done" | "todo" | "inProgress";
 
+@Injectable({
+  providedIn: 'root'
+})
 export class DatasetService {
 
   constructor(private store: AngularFirestore) { }

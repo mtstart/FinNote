@@ -27,6 +27,7 @@ import { PipeModule } from './shared/pipe/pipe.module';
 import { DinnerDialogComponent } from './budget-planner/paytgt/dinner-dialog/dinner-dialog.component';
 import { OrderDialogComponent } from './budget-planner/paytgt/order-dialog/order-dialog.component';
 import { ReadingItemDialogComponent } from './text-editor/reading-item-dialog/reading-item-dialog.component';
+import { DatasetService } from 'service/dataset/dataset.service';
 
 // Initialize Firebase
 // const app = initializeApp(environment.firebase);
@@ -65,7 +66,7 @@ initializeApp(environment.firebase);
 
     PipeModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService, DatasetService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

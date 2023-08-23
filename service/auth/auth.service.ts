@@ -20,7 +20,7 @@ export class AuthService {
   private authStatusSub = new BehaviorSubject(this.getUserProfile);
   currentAuthStatus: Observable<() => User | null> = this.authStatusSub.asObservable();
   
-  currentPath: string = this.route.url;
+  currentPath: string = this.route?.url;
 
   // version 1
   public SignUp(email: string, password: string) {
@@ -126,12 +126,10 @@ export class AuthService {
 
   private detectUserStatusChange(): void {
     const auth = getAuth();
-    const currentNav: string = this.route.url;
-    this.authStatusSub = new BehaviorSubject(this.getUserProfile);
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        this.authStatusSub = new BehaviorSubject(this.getUserProfile);
+        this.navigatePage(this.currentPath, false);
       } else {
         this.navigatePage("signin", false);
       }
@@ -139,14 +137,11 @@ export class AuthService {
   }
 
   public navigatePage(page: string, leave?: boolean, parentPath?: string) {
-    if (page == undefined || page == "signin") return;
     const auth = getAuth();
     const user = auth.currentUser;
-    console.log("page param: " + page);
 
     if (user) {
       const uid = user.uid;
-
       // if(parentRoute == undefined) {
       //   this.zone.run(() => {
       //     this.route.navigate(['/' + page]);
@@ -191,10 +186,6 @@ export class AuthService {
     }
   }
 
-  public getAuthStatus(): void {
-    // getauthstat
-  }
-
   public reAuthUser(): void {
     const auth = getAuth();
     const user = auth.currentUser;
@@ -213,6 +204,10 @@ export class AuthService {
 
   }
 
+  public getAuthStatus(): boolean {
+    return this.getUserProfile() !== null;
+  }
+
   public getUserProfile(): User | null {
     const auth = getAuth();
     const user: User | null = auth.currentUser;
@@ -220,9 +215,7 @@ export class AuthService {
     console.log("auth.currentUser")
     console.log(auth.currentUser);
 
-    if (user !== null) return user;
-
-    return null;
+    return user;
   }
 
   // Main Activities

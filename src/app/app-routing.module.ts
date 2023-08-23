@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'signIn'
+    redirectTo: 'project-management'
   },
   {
     path: 'signIn',
@@ -36,7 +36,7 @@ const routes: Routes = [
   },
   // { path: "*", redirectTo: "signIn" }
   {path: '404', redirectTo: 'signIn', pathMatch: 'full'},
-  {path: '**', redirectTo: 'signIn', pathMatch: 'full'}
+  {path: '**', redirectTo: 'project-management', pathMatch: 'full'}
 ];
 
 @NgModule({

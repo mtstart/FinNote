@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { AuthService } from 'service/auth/auth.service';
 import { TaskDialogComponent, TaskDialogResult } from '../task-dialog/task-dialog.component';
-import { FormGroup, UntypedFormControl, Validators, UntypedFormBuilder } from '@angular/forms';
+import { FormGroup, UntypedFormControl, Validators, UntypedFormBuilder, FormBuilder, FormControl } from '@angular/forms';
 import { forbiddenNameValidator } from 'service/service/form-validation';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 
@@ -13,7 +13,12 @@ import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 })
 export class SignInComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, public authService: AuthService, private fb: UntypedFormBuilder) { }
+  constructor(private dialog: MatDialog, public authService: AuthService, private fb: FormBuilder) {
+    // this.profileForm = fb.group({
+    //   email: "", 
+    //   password: ""
+    // })
+  }
 
   isAuthenticated: any;
 
@@ -23,18 +28,17 @@ export class SignInComponent implements OnInit {
 
   }
 
-  signInForm = this.fb.group({
-    // name: new FormControl('', [Validators.minLength(2), forbiddenNameValidator(/bob/i)]),
-    email: new UntypedFormControl('', [Validators.required, Validators.email]),
-    password: new UntypedFormControl('', [Validators.required]),
+  profileForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
   });
   
-  get emailControl(): UntypedFormControl {
-    return this.signInForm.get('email') as UntypedFormControl;
+  get emailControl() {
+    return this.profileForm.get('email') as FormControl;
   }
   
-  get passwordControl(): UntypedFormControl {
-    return this.signInForm.get('password') as UntypedFormControl;
+  get passwordControl(): FormControl {
+    return this.profileForm.get('password') as FormControl;
   }
 
   signIn_v2(): void {
