@@ -102,10 +102,10 @@ export class AuthService {
         const credential = GoogleAuthProvider.credentialFromError(error); // The AuthCredential type that was used.
 
         console.log("error");
-        console.log(errorMessage)
+        alert(errorMessage)
 
       }).finally(()=> {
-        this.logout();
+        this.StartApp();
       });
     
   }
