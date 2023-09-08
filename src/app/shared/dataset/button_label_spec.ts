@@ -15,3 +15,20 @@ export namespace ButtonLabelSpec {
         // itemCount: number,
     }
 }
+
+export interface FunctionSpec {
+    id: string;
+    key: string,
+    displayName: string,
+    functionName: string,
+    ref: string,
+    description: string,
+    shortcutKey: string,
+    parentID: string;
+
+    privilege: string[];
+    size?: ButtonHeight,
+    order?: number,
+    color?: string,
+    icon?: string,
+}

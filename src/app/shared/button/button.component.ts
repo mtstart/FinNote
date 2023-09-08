@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ButtonLabelSpec } from '../dataset/button_label_spec';
+import { ButtonLabelSpec, FunctionSpec } from '../dataset/button_label_spec';
 
 export enum ButtonHeight {
   Small = 36,
@@ -7,14 +7,18 @@ export enum ButtonHeight {
   Large = 200
 }
 
-export enum DefaultButtonSpec {
-  key = "Button", 
-  displayName = "Button",
-  ref = "",
-  shortcutKey = "z", 
-  description = "Button", 
-  icon = "touch_app"
-}
+// export enum DefaultButtonSpec {
+//   id = "",
+//   key = "Button", 
+//   displayName = "Button",
+//   functionName = "Button",
+//   ref = "",
+//   shortcutKey = "z", 
+//   description = "Button", 
+//   icon = "touch_app",
+//   parentID = "",
+//   privilege = Arr,
+// }
 
 @Component({
   selector: 'shared-button',
@@ -23,7 +27,20 @@ export enum DefaultButtonSpec {
 })
 export class ButtonComponent implements OnInit {
   
-  @Input() buttonSpec?: ButtonLabelSpec.AsObject = DefaultButtonSpec;
+  DefaultButtonSpec: FunctionSpec = {
+    id: "",
+    key:  "Button", 
+    displayName:  "Button",
+    functionName:  "Button",
+    ref:  "",
+    shortcutKey:  "z", 
+    description:  "Button", 
+    icon:  "touch_app",
+    parentID:  "",
+    privilege:  [],
+  }
+  
+  @Input() buttonSpec?: FunctionSpec = this.DefaultButtonSpec;
 
   @Input() showSelectedIcon = true;
   @Input() displayName?: string;

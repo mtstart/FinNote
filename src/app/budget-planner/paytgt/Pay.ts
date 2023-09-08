@@ -33,7 +33,7 @@ export interface Dinner {
 
 
 export interface Eaters {
-    Privilege: string;
+    privilege: string[];
     Status: number;
     Username: string;
     icon: string;

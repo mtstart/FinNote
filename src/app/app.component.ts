@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'service/auth/auth.service';
-import { ButtonLabelSpec } from './shared/dataset/button_label_spec';
+import { ButtonLabelSpec, FunctionSpec } from './shared/dataset/button_label_spec';
 import { Observable } from 'rxjs';
+import { DatasetService } from 'service/dataset/dataset.service';
+import { AppService } from 'service/app.service';
 
 @Component({
   selector: 'app-root',
@@ -11,15 +13,9 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.scss', './shared/shared-style.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private route: Router, public authService: AuthService) { }
-  ngOnInit(): void {
-    this.authService?.currentAuthStatus?.subscribe(authService => {
-      this.opened = authService !== null? true : false;
-    });
+  constructor(private route: Router, public authService: AuthService, private appService: AppService) { }
 
-    this.checkBrowser();
-
-  }
+  functions: Observable<FunctionSpec[]> | undefined;
 
   title = 'FinNote';
   mode = new UntypedFormControl('push');
@@ -27,57 +23,69 @@ export class AppComponent implements OnInit {
   browserName: string = "";
 
   buttonSpecList: ButtonLabelSpec.AsObject[] = [
-  // {
-  //   key: "key ha",
-  //   displayName: "key name 1",
-  //   color: "red",
-  //   order: 0,
-  //   description: "",
-  //   shortcutKey: "T",
-  //   // itemCount: 0,
-  // }, {
-  //   key: "signIn",
-  //   displayName: "Sign In",
-  //   color: "red",
-  //   order: 0,
-  //   description: "",
-  //   shortcutKey: "T",
-  //   // itemCount: 0,
-  // },
-  
-  {
-    key: "p",
-    displayName: "Project Management",
-    ref: "project-management",
-    order: 0,
-    description: "Go to PM",
-    shortcutKey: "P",
-    // color: "red",
-    icon: "today", 
-    // itemCount: 0,
-  },
-  {
-    key: "d",
-    displayName: "DO & WATCH",
-    ref: "text-editor",
-    order: 1,
-    description: "Go to To Do List/ To Watch List",
-    shortcutKey: "D",
-    // color: "green",
-    icon: "checklist", 
-    // itemCount: 0,
-  },
-  {
-    key: "t",
-    displayName: "Budget Planner",
-    ref: "budget-planner",
-    order: 1,
-    description: "Go to C",
-    shortcutKey: "C",
-    color: "yellow",
-    icon: "account_balance_wallet", 
-  },
+    // {
+    //   key: "key ha",
+    //   displayName: "key name 1",
+    //   color: "red",
+    //   order: 0,
+    //   description: "",
+    //   shortcutKey: "T",
+    //   // itemCount: 0,
+    // }, {
+    //   key: "signIn",
+    //   displayName: "Sign In",
+    //   color: "red",
+    //   order: 0,
+    //   description: "",
+    //   shortcutKey: "T",
+    //   // itemCount: 0,
+    // },
+
+    {
+      key: "p",
+      displayName: "Project Management",
+      ref: "project-management",
+      order: 0,
+      description: "Go to PM",
+      shortcutKey: "P",
+      // color: "red",
+      icon: "today",
+      // itemCount: 0,
+    },
+    {
+      key: "d",
+      displayName: "DO & WATCH",
+      ref: "text-editor",
+      order: 1,
+      description: "Go to To Do List/ To Watch List",
+      shortcutKey: "D",
+      // color: "green",
+      icon: "checklist",
+      // itemCount: 0,
+    },
+    {
+      key: "t",
+      displayName: "Budget Planner",
+      ref: "budget-planner",
+      order: 1,
+      description: "Go to C",
+      shortcutKey: "C",
+      color: "yellow",
+      icon: "account_balance_wallet",
+    },
   ];
+
+  ngOnInit(): void {
+    const sub = this.appService.currentUser.subscribe(authService => {
+      this.opened = authService !== null ? true : false;
+    });
+    sub.unsubscribe();
+
+    this.getMenu();
+
+    this.checkBrowser();
+
+  }
 
   checkBrowser(): void {
     const userAgent: string = window.navigator.userAgent;
@@ -107,11 +115,27 @@ export class AppComponent implements OnInit {
     return;
   }
 
+  getMenu(): void {
+
+    this.appService.currentUser.subscribe(subscriber => {
+      const user = this.appService.currentUser.getValue();
+
+      if (user) {
+        this.appService.getUserPrivilege().subscribe(privi => {
+          if (privi.length > 0) {
+            this.functions = this.appService.getPrivilegeFunctions(privi[0].privilege);
+          }
+        });
+      }
+
+    });
+  }
+
   // @HostListener('keydown.p', ['$event'])
   // @HostListener('keydown.t', ['$event'])
   // documentKeyDown(event: KeyboardEvent): void {
   // }
-  
+
   changeRoute(spec: ButtonLabelSpec.AsObject) {
     console.log("changeRoute app")
     if (spec.ref != undefined) {
@@ -124,10 +148,10 @@ export class AppComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
-  
+
   get loginStatus(): boolean {
     const userProfile = new Observable<boolean>(observer => {
-      const thing: boolean = this.authService.getUserProfile() !== null ? true: false;
+      const thing: boolean = this.authService.getUserProfile() !== null ? true : false;
       observer.next(thing);
       observer.complete;
     })

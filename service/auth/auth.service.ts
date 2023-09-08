@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, User, user, signOut } from "@angular/fire/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, User, signOut } from "@angular/fire/auth";
 import { onAuthStateChanged, reauthenticateWithCredential, UserCredential, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthResponse, AuthResponseUser } from './authControl';
@@ -17,8 +17,10 @@ export class AuthService {
     this.detectUserStatusChange();
   }
 
-  private authStatusSub = new BehaviorSubject(this.getUserProfile);
-  currentAuthStatus: Observable<() => User | null> = this.authStatusSub.asObservable();
+  private authStatusSub= this.getUserProfile();
+  currentAuthStatus = new Observable((subscribe) => {
+    subscribe.next(this.authStatusSub);
+  })
   
   currentPath: string = this.route?.url;
 
@@ -108,7 +110,7 @@ export class AuthService {
         this.StartApp();
       });
     
-  }
+  }  
 
   public logout(): void {
     const auth = getAuth();
@@ -212,8 +214,8 @@ export class AuthService {
     const auth = getAuth();
     const user: User | null = auth.currentUser;
 
-    console.log("auth.currentUser")
-    console.log(auth.currentUser);
+    // console.log("auth.currentUser")
+    // console.log(user);
 
     return user;
   }

@@ -23,9 +23,7 @@ export class SignInComponent implements OnInit {
   isAuthenticated: any;
 
   ngOnInit(): void {
-    
     this.authService?.currentAuthStatus.subscribe(authService => this.isAuthenticated = authService);
-
   }
 
   profileForm = new FormGroup({

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'service/auth/auth.service';
 import { ButtonHeight } from '../shared/button/button.component';
-import { ButtonLabelSpec } from '../shared/dataset/button_label_spec';
+import { ButtonLabelSpec, FunctionSpec } from '../shared/dataset/button_label_spec';
 
 
 @Component({
@@ -20,27 +20,27 @@ export class BudgetPlannerComponent implements OnInit {
 
   currentRoute!: string;
 
-  plannerSpecList: ButtonLabelSpec.AsObject[] = [
-    {
-      key: "t",
-      displayName: "Pay Together",
-      ref: "paytgt",
-      size: ButtonHeight.Medium,
-      order: 0,
-      description: "Go to PT",
-      shortcutKey: "T",
-      icon: "diversity_1",
-    },
-    {
-      key: "p",
-      displayName: "Planner",
-      ref: "Planner",
-      size: ButtonHeight.Medium,
-      order: 0,
-      description: "Go to P",
-      shortcutKey: "P",
-      icon: "calendar_month",
-    },
+  plannerSpecList: FunctionSpec[] = [
+    // {
+    //   key: "t",
+    //   displayName: "Pay Together",
+    //   ref: "paytgt",
+    //   size: ButtonHeight.Medium,
+    //   order: 0,
+    //   description: "Go to PT",
+    //   shortcutKey: "T",
+    //   icon: "diversity_1",
+    // },
+    // {
+    //   key: "p",
+    //   displayName: "Planner",
+    //   ref: "Planner",
+    //   size: ButtonHeight.Medium,
+    //   order: 0,
+    //   description: "Go to P",
+    //   shortcutKey: "P",
+    //   icon: "calendar_month",
+    // },
   ]
 
   ngOnInit(): void {

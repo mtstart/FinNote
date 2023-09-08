@@ -8,6 +8,7 @@ import { Dinner, Orders } from 'src/app/budget-planner/paytgt/Pay';
 import { User } from 'src/app/shared/User';
 import { ReadingItem } from 'src/app/text-editor/ReadingItem';
 import { UploadResult, getDownloadURL, getStorage, ref, uploadBytes } from "@angular/fire/storage";
+import { ButtonLabelSpec, FunctionSpec } from 'src/app/shared/dataset/button_label_spec';
 
 export type ProjectStatusList = "done" | "todo" | "inProgress";
 
