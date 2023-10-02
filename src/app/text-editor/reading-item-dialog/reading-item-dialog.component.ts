@@ -4,7 +4,7 @@ import { ReadingItem } from '../ReadingItem';
 import { DialogType } from 'src/app/task/task';
 import { DatasetService } from 'service/dataset/dataset.service';
 import { TextEditorComponent } from '../text-editor.component';
-import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface ReadingItemDialogData {
   type: DialogType;
@@ -36,7 +36,7 @@ export class ReadingItemDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: ReadingItemDialogData,
     private dataset: DatasetService
   ) { }
-  private backupReadingItem: Partial<ReadingItem> = { ...this.data.readingItem };
+  private backupReadingItem: Partial<ReadingItem> = {};
 
   title = new UntypedFormControl('', [Validators.required]);
   content = new UntypedFormControl('');
@@ -47,6 +47,7 @@ export class ReadingItemDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.initReadingItem();
+    this.backupReadingItem = { ...this.data.readingItem };
   }
 
   private initReadingItem(): void {

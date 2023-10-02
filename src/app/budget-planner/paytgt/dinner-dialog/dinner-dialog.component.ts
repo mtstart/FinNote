@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormControl, Validators } from '@angular/forms';
-import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { map, Observable, reduce } from 'rxjs';
 import { DatasetService } from 'service/dataset/dataset.service';
 import { User } from 'src/app/shared/User';
@@ -43,7 +43,7 @@ export class DinnerDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DinnerDialogData, 
     private dataset: DatasetService
   ) { }
-  private backupDinner: Partial<Dinner> = { ...this.data.dinner };
+  private backupDinner: Partial<Dinner> = {};
 
   name = new UntypedFormControl('', [Validators.required]);
   member = new UntypedFormControl('', [Validators.required]);
@@ -57,6 +57,7 @@ export class DinnerDialogComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    this.backupDinner = { ...this.data.dinner };
     this.userList = this.dataset.getUserList();
     this.initDinner();
   }

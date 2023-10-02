@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { DatasetService } from 'service/dataset/dataset.service';
 import { NotificationBarService } from '../shared/notification-bar/notification-bar.service';
 import { ReadingItem } from './ReadingItem';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ReadingItemDialogComponent, ReadingItemDialogResult, dialogDimen } from './reading-item-dialog/reading-item-dialog.component';
 import { v4 as uuid } from 'uuid';
 import { DialogType } from '../task/task';

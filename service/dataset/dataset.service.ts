@@ -3,7 +3,7 @@ import { Task } from 'src/app/task/task';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { TaskDialogComponent, TaskDialogResult } from 'src/app/task-dialog/task-dialog.component';
-import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Dinner, Orders } from 'src/app/budget-planner/paytgt/Pay';
 import { User } from 'src/app/shared/User';
 import { ReadingItem } from 'src/app/text-editor/ReadingItem';

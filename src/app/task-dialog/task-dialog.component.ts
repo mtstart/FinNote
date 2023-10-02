@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ColorUtility } from '../shared/type-bubble/color';
 import { DialogType, Task } from '../task/task';
 
@@ -25,13 +25,16 @@ export class TaskDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<TaskDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: TaskDialogData
-  ) { }
-  private backupTask: Partial<Task> = { ...this.data.task };
+  ) {
+    this.backupTask = { ...this.data.task };
+    this.taskColor = this.data.task.color || "";
+  }
+  private backupTask: Partial<Task> = {};
 
   ColorWheel = ColorUtility.ColorWheel;
   DialogType = DialogType;
 
-  taskColor: string = this.data.task.color || "";
+  taskColor: string = "";
 
   cancel(): void {
     this.data.task.title = this.backupTask.title;
