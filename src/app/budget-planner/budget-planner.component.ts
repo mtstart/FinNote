@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'service/auth/auth.service';
 import { ButtonHeight } from '../shared/button/button.component';
 import { ButtonLabelSpec, FunctionSpec } from '../shared/dataset/button_label_spec';
+import { PaytgtService } from './paytgt/paytgt.service';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -12,7 +14,7 @@ import { ButtonLabelSpec, FunctionSpec } from '../shared/dataset/button_label_sp
 })
 export class BudgetPlannerComponent implements OnInit {
 
-  constructor(private route: Router, public authService: AuthService, private activeRoute: ActivatedRoute) {
+  constructor(private route: Router, public authService: AuthService, private paytgtService: PaytgtService) {
     route.events.subscribe((thing) => {
       this.currentRoute = route.url;
     })
@@ -42,15 +44,21 @@ export class BudgetPlannerComponent implements OnInit {
     //   icon: "calendar_month",
     // },
   ]
+  functions: Observable<FunctionSpec[]> | undefined;
 
   ngOnInit(): void {
     console.log("currentRoute: " + this.currentRoute);
     // console.log(this.currentRoute === '/budget-planner');
+    this.getBudgetPlanner();
   }
 
   changeRouteBP(spec: ButtonLabelSpec.AsObject) {
     // this.route.navigate(["paytgt"], { relativeTo: this.activeRoute });
     this.authService.navigatePage(spec.ref, false, this.currentRoute)
+  }
+  
+  getBudgetPlanner(): void {
+    this.functions = this.paytgtService.getBudgetFunctions();
   }
 
   logout() {

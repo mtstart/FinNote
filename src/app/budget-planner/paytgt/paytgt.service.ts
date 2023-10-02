@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Dinner, Eaters, Orders } from 'src/app/budget-planner/paytgt/Pay';
 import { v4 as uuid } from 'uuid';
 import { Observable } from 'rxjs';
+import { FunctionSpec } from 'src/app/shared/dataset/button_label_spec';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,15 @@ import { Observable } from 'rxjs';
 export class PaytgtService {
 
   constructor(private store: AngularFirestore) { }
+
+  
+  public getBudgetFunctions(): Observable<FunctionSpec[]> {
+    const collection = this.store.collection('Functions', ref =>
+      ref.where('parentID', '!=', "")
+    );
+    return collection.valueChanges() as Observable<FunctionSpec[]>;
+  }
+  
   //-------------------------------- Pay Tgt --------------------------------//
   
   public getDinner(): Observable<Dinner[]> {
