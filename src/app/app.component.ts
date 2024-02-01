@@ -76,14 +76,16 @@ export class AppComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    const sub = this.appService.currentUser.subscribe(authService => {
-      this.opened = authService !== null ? true : false;
-    });
-    sub.unsubscribe();
+    // const sub = this.appService.currentUser.subscribe(authService => {
+    //   // this.opened = authService !== null ? true : false;
+    //   this.opened = true;
+    //   console.log("ngOnInit: " + authService);
+    // });
+    // sub.unsubscribe();
 
     this.getMenu();
 
-    this.checkBrowser();
+    // this.checkBrowser();
 
   }
 
@@ -93,7 +95,7 @@ export class AppComponent implements OnInit {
 
     if (userAgent.match(/iPhone/i)) {
       this.browserName = "iPhone, will close";
-      this.opened = false;
+      this.toggleNavClose();
       return;
     } else if (userAgent.match(/firefox|fxios/i)) {
       this.browserName = "firefox";
@@ -107,11 +109,11 @@ export class AppComponent implements OnInit {
       this.browserName = "edge";
     } else {
       this.browserName = "No browser detection";
-      this.opened = false;
+      this.toggleNavClose();
       return;
     }
-    // this.browserName += "\n" + window.navigator.userAgent;
-    this.opened = true;
+    this.browserName += "\n" + window.navigator.userAgent;
+    this.toggleNavOpen();
     return;
   }
 
@@ -124,11 +126,24 @@ export class AppComponent implements OnInit {
         this.appService.getUserPrivilege().subscribe(privi => {
           if (privi.length > 0) {
             this.functions = this.appService.getPrivilegeFunctions(privi[0].privilege);
+            // this.opened = subscriber !== null ? true : false;
+            this.toggleNavOpen();
           }
+          this.checkBrowser();
         });
       }
 
     });
+  }
+
+  toggleNavOpen(): void {
+    this.opened = false;
+    this.opened = true;
+  }
+
+  toggleNavClose(): void {
+    this.opened = true;
+    this.opened = false;
   }
 
   // @HostListener('keydown.p', ['$event'])
@@ -139,6 +154,7 @@ export class AppComponent implements OnInit {
   changeRoute(spec: ButtonLabelSpec.AsObject) {
     console.log("changeRoute app")
     if (spec.ref != undefined) {
+      this.toggleNavClose();
       this.authService.navigatePage(spec.ref);
     } else {
       this.logout();
@@ -157,7 +173,7 @@ export class AppComponent implements OnInit {
     })
 
     userProfile.subscribe(data => {
-      this.opened = data;
+      // this.opened = data;
     })
 
     this.checkBrowser();

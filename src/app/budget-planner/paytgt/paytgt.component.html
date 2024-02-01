@@ -40,7 +40,7 @@
 
             <div *ngIf="dinner$|async as dinner" class="ordinary-section order">
                 <div class="page-title-text ordinary-section">
-                    Your Members
+                    <!-- Your Members -->
                 </div>
                 <div class="order-section member-list">
                     <div *ngFor="let member of (dinner$|async)?.members" class="member" (click)="getUserSum(member)">
@@ -53,7 +53,7 @@
 
                 <div class="order-section">
                     <div class="page-title-text ordinary-section">
-                        Your Orders
+                        <!-- Your Orders -->
                     </div>
                     <div class="order-group header">
                         <div>Items</div>
@@ -68,7 +68,7 @@
                         <div class="icon">
                             <div class="member" *ngFor="let member of order.sharedMember">
                                 <mat-icon [style.color]="member.color" color="primary"> {{member.icon}} </mat-icon>
-                                <!-- <mat-label>{{ member.Username }}</mat-label> -->
+                                <mat-label>{{ member.Username }}</mat-label>
                             </div>
                         </div>
                         <button mat-icon-button color="primary" (click)="deleteOrder(order)">
@@ -78,7 +78,7 @@
 
                     <div class="order-section">
                         <button mat-button *ngIf="dinner" (click)="AddNewOrder_v2()" color="primary" class="order-section">
-                            Click to add order
+                            Add order
                         </button>
                     </div>
 

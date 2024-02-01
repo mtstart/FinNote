@@ -34,14 +34,13 @@ const routes: Routes = [
       // {path: 'Planner', component: DatasetCreateComponent, pathMatch: 'full'},
     ],
   },
-  // { path: "*", redirectTo: "signIn" }
+  { path: "*", redirectTo: "signIn" }, 
   {path: '404', redirectTo: 'signIn', pathMatch: 'full'},
-  {path: '**', redirectTo: 'project-management', pathMatch: 'full'}
+  // {path: '**', redirectTo: 'project-management', pathMatch: 'full'}  // this will cause all refresh go to project-mngt
 ];
 
 @NgModule({
-  // imports: [RouterModule.forRoot(routes)],
-  imports: [RouterModule.forRoot(routes, {useHash: true})],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
