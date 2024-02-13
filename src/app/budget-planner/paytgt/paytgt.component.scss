@@ -1,7 +1,19 @@
 .content-wrapper {
-    overflow: auto;
-    height: 100%;
-    position: absolute;
+    // position: absolute;
+}
+
+.content-real {
+    align-self: center;
+    
+    @media (min-width: 300px) {
+        width: 100vw !important;
+    }
+    @media (min-width: 700px) {
+        width: 80vw !important;
+    }
+    @media (min-width: 1000px) {
+        width: 70vw !important;
+    }
 }
 
 .content {

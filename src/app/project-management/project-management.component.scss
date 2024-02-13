@@ -16,8 +16,12 @@
 .content-wrapper {
   // padding: 24px 24px 0px 24px;
   // height: 550px;
-  overflow: auto;
+  
+  overflow-y: auto;
+  overflow-x: hidden;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .content-real {
