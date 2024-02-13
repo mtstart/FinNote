@@ -137,12 +137,12 @@ export class AppComponent implements OnInit {
   }
 
   toggleNavOpen(): void {
-    this.opened = false;
+    // this.opened = false;
     this.opened = true;
   }
 
   toggleNavClose(): void {
-    this.opened = true;
+    // this.opened = true;
     this.opened = false;
   }
 
@@ -154,7 +154,6 @@ export class AppComponent implements OnInit {
   changeRoute(spec: ButtonLabelSpec.AsObject) {
     console.log("changeRoute app")
     if (spec.ref != undefined) {
-      this.toggleNavClose();
       this.authService.navigatePage(spec.ref);
     } else {
       this.logout();
