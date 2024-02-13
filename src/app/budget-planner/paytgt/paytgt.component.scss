@@ -1,3 +1,9 @@
+.content-wrapper {
+    overflow: auto;
+    height: 100%;
+    position: absolute;
+}
+
 .content {
     display: flex;
     flex-direction: column;
@@ -93,5 +99,18 @@
         display: grid;
         grid-template-columns: 4fr 2fr 2fr;
         font-size: larger;
+    }
+
+    .member-summary {
+        width: 240px;
+
+        .summary-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+    
+            padding: 8px 8px;
+            // background-color: #f2f2f2;
+            font-size: larger;
+        }
     }
 }

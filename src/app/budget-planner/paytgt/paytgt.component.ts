@@ -209,7 +209,7 @@ export class PaytgtComponent implements OnInit {
   async getUserSum(member: Eaters): Promise<number> {
     if (this.dinner === undefined) return 0;
     const sum = await this.service.genDinnerSum(this.dinner, member);
-    this.notiBar.openBar(member.Username + "'s Total: $" + sum);
+    // this.notiBar.openBar(member.Username + "'s Total: $" + sum);
 
     return sum;
   }

@@ -78,7 +78,7 @@
 
                     <div class="order-section">
                         <button mat-button *ngIf="dinner" (click)="AddNewOrder_v2()" color="primary" class="order-section">
-                            Add order
+                            Add order + 
                         </button>
                     </div>
 
@@ -93,21 +93,36 @@
             </div>
 
             <div *ngIf="dinner" class="ordinary-section order">
-                <div class="page-title-text ordinary-section">
+                <div class="page-title-text ordinary-section" style="align-items: center;justify-content: space-between;">
                     Summary
+                    <button mat-icon-button (click)="updateLocalUserSum()" color="primary">
+                        <mat-icon>refresh</mat-icon>
+                    </button>
                 </div>
-                <button mat-raised-button (click)="updateLocalUserSum()" color="primary">
-                    Update <mat-icon>tips_and_updates</mat-icon>
-                </button>
+
+                Add paid by column
+
                 <div *ngIf="!loadingData" style="padding-left: 10px;">
                     <mat-spinner [diameter]="30"></mat-spinner>
                 </div>
 
                 <div class="member-summary">
-                    <div *ngFor="let member of dinner.members">
-                        <div> {{member.Username}} </div>
-                        <div> {{member.sum}} </div>
+                        
+                    <div class="summary-group header">
+                        <div>Name</div>
+                        <div style="justify-content: flex-end;">Sum</div>
                     </div>
+
+                    <div class="summary-group" *ngFor="let member of dinner.members">
+                        <!-- <div> {{member.Username}} </div>
+                        <div> {{member.sum}} </div> -->
+
+                        <div> {{member.Username}} </div>
+                        <div> $ {{member.sum}} </div>
+
+                    </div>
+
+                    
                 </div>
 
             </div>
